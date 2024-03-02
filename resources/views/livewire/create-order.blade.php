@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <span class="ml-2 mr-auto">
-                        Recojo en bodega. DiverPlaza - Bogotá
+                        Recojo en bodega - Bogotá
                     </span>
                     <!-- end toggle -->
 
@@ -93,7 +93,7 @@
                         </div>
                     </label>
 
-                    <div class="px-6 pb-6 grid grid-cols-2 gap-6 hidden" :class="{ 'hidden': envio_type !=2 }">
+                    <div class="px-6 pb-6 grid grid-cols-2 gap-6" :class="{ 'hidden': envio_type !=2 }">
                         {{-- departamento --}}
                         <div>
 
@@ -155,12 +155,12 @@
                 <div class="flex">
                    @if (Cart::count() == 0)
                    <div class="text-sm bg-lese-100 px-4 mt-2 rounded">No tiene agregado ningun item en el carrito</div>
-                   
+
                    <div class="mt-4 mb-4 rounded px-5 ml-auto bg-trueGray-900 text-lese-200 hover:text-teal-50 hover:bg-trueGray-700">
                       <a href="/">Ir a la tienda</a>
                    </div>
                    @else
-                    
+
                    <x-jet-button
                        class="mt-4 mb-4 ml-auto bg-trueGray-900 text-lese-200 hover:text-teal-50 hover:bg-trueGray-700"
                        wire:click="create_order">
@@ -228,14 +228,14 @@
                 </ul>
 
                 <div class="text-gray-700 mt-4">
-                    
+
 
                     <hr class="mt-4 mb-3">
 
                     <p class="flex justify-between items-center font-semibold">
                         <span class="text-lg">Total</span>
-                        
-                         <span>${{ str_replace( ',', '.', Cart::subtotal() ) }}</span>  
+
+                         <span>${{ str_replace( ',', '.', Cart::subtotal() ) }}</span>
                         </p>
                 </div>
             </div>
