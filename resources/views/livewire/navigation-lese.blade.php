@@ -1,4 +1,4 @@
-<header class="bg-gray-700 sticky top-0" x-data="{ open: false }" style="z-index: 900;">
+<header class="bg-gray-500 sticky top-0" x-data="{ open: false }" style="z-index: 900;">
     <div class="container flex items-center h-16 justify-between md:justify-start">
         {{-- Icono hamburguesa --}}
         <a x-on:click="open = !open"

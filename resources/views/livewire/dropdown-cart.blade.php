@@ -4,7 +4,7 @@
 
             <span class="relative inline-block cursor-pointer mt-2">
                 {{-- icono cart --}}
-                <x-cart size="35" color="lese" />
+                <x-cart size="35" />
                  
                 {{-- <span class="absolute top-0 right-0 inline-block w-2 h-2 transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full"></span>                --}}
 
