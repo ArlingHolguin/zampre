@@ -21,18 +21,21 @@ class ProductSeeder extends Seeder
         $products =  Product::factory(100)->create();
 
         foreach ($products as $product) {
-            Image::factory(1)->create([
+            Image::factory(2)->create([
                 'imageable_id' => $product->id,
                 'imageable_type' => Product::class
             ]);
-            $product->brands()->attach([
-                rand(1, 10),
-                rand(11, 20),
-                rand(21, 40),
-                rand(41, 51),
-                rand(52, 61)
-            ]);
-        }
+        $product->brands()->attach([
+            random_int(1, 2),
+        ]);
+    }
+
+    // Product::factory(100)->create()->each(function(Product $product){
+    //     Image::factory(4)->create([
+    //         'imageable_id' => $product->id,
+    //         'imageable_type' => Product::class
+    //     ]);
+    // });
     
     }
 }

@@ -1,10 +1,7 @@
 <x-app-layout>
     <div class="container py-8">
         @foreach ($categories as $category)
-            <section class="mb-6">
-                
-
-
+            {{-- <section class="mb-6">
                 <div class="bg-black rounded-lg shadow-lg mb-6 sticky top-16 z-40">
                     <div class="px-6 py-2 flex justify-between items-center">
                         <div class="flex items-center justify-center">
@@ -12,8 +9,7 @@
                                 class="bg-lese-400 rounded-lg h-10 w-10 flex items-center justify-center">{!! $category->icon !!}</span>
                             <h1 class="ml-2 font-bold text-lese-900 uppercase">
                                 {{ $category->name }}
-                                <span
-                                    class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full font-black">{{ $category->products->count() }}</span>
+                                <span  class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full font-black">{{ $category->products->count() }}</span>
                             </h1>
 
                         </div>
@@ -27,10 +23,11 @@
 
                     </div>
                 </div>
-                {{-- Componente livewire productos por categorias --}}
+                
                 @livewire('category-products', ['category' => $category])
 
-            </section>
+            </section> --}}
+            <div>{{$category->name}}</div>
         @endforeach
 
 

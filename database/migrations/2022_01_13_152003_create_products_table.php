@@ -19,29 +19,29 @@ class CreateProductsTable extends Migration
             $table->string('name');
             //campo slug unico 
             $table->longText('description');
-            $table->string('referencia');
+            $table->string('referencia')->nullable();
             $table->string('slug')->unique();
             $table->integer('price');
+            $table->float('price_discount')->nullable();
+            $table->integer('price_discount_porcent')->nullable();
             $table->integer('quantity')->nullable();
-            //medidas
-            $table->string('cabeza')->nullable();
-            $table->string('rosca')->nullable();
-            $table->string('estria')->nullable();
-            $table->string('largo')->nullable();
-            $table->string('alto')->nullable();
-            $table->string('hex')->nullable();
+            
             //campo boolean
-            $table->boolean('status')->default(false)->nullable();
+            $table->enum('status', [Product::BORRADOR, Product::PUBLICADO])->default(Product::BORRADOR);
             $table->string('keywords')->nullable();
             $table->longText('extracto')->nullable();
 
             //relacion con categorias
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            // $table->unsignedBigInteger('category_id');
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
+            //relacion con subcategorias
+            $table->unsignedBigInteger('subcategory_id');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
 
             //relacion con brands
-            // $table->unsignedBigInteger('brand_id');
-            // $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->unsignedBigInteger('brand_id');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
 
             $table->timestamps();
         });

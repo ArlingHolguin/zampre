@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    // const Borrador = 0;
-    // const Publicado = 1;
+    const BORRADOR = 1;
+    const PUBLICADO = 2;
 
 
     protected $guarded =[
@@ -20,18 +20,31 @@ class Product extends Model
 
     //relacion uno a muchos inversa con category
     public function category(){
-
         return $this->belongsTo(Category::class);
     }
 
-    //relacion uno a muchos inversa con brand
-    // public function brand(){
-    //     return $this->belongsTo(Brand::class);
-    // }
+    // relacion uno a muchos inversa con brand
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
+
+    //relacion uno a muchos inversa con subcategory
+    public function subcategory(){
+        return $this->belongsTo(Subcategory::class);
+    }
+
+    //relacion uno s muchos ocn Sizes
+    public function sizes(){
+        return $this->hasMany(Size::class);
+    }
+
+    //relacion muchos a muchos con color
+    public function colors(){
+        return $this->belongsToMany(Color::class);
+    }
 
     //relacion uno a muchos inversa con category
     public function brands(){
-
         return $this->belongsToMany(Brand::class);
     }
 

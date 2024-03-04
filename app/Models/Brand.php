@@ -27,5 +27,10 @@ class Brand extends Model
         return $this->belongsToMany(Product::class);
     }
 
+     //uno a muchos polimorfica image
+     public function images(){
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
    
 }

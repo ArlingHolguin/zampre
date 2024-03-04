@@ -12,10 +12,19 @@ class Category extends Model
             'id'
     ];
 
+    //relacion uno a muchos con subcategorias
+    public function subcategories(){
+        return $this->hasMany(Subcategory::class);
+    }
+
     //relacion uno a muchos con productos
     public function products(){
-
         return $this->hasMany(Product::class);
+    }
+
+    //relacion uno a muchos a travez de subcateories con productos 
+    public function productsRelacionados(){
+        return $this->hasManyThrough(Product::class, Subcategory::class);
     }
 
     //relacion muchos a muchos con brands
@@ -23,9 +32,14 @@ class Category extends Model
         return $this->belongsToMany(Brand::class);
     }
 
+     //uno a muchos polimorfica image
+     public function images(){
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+
     //URL AMIGABLES
-    public function getRouteKeyName()
-    {
+    public function getRouteKeyName(){
         return 'slug';
     }
 }

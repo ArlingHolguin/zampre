@@ -7,15 +7,21 @@ use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
+    protected $seeder = [
+        CategorySeeder::class,
+        SubcategorySeeder::class,
+        ProductSeeder::class,
+    ];
+
+
     public function run()
     {
         // \App\Models\User::factory(10)->create();
 
+        
+        Storage::deleteDirectory('categories');
+        Storage::makeDirectory('categories');
+        
         Storage::deleteDirectory('brands');
         Storage::makeDirectory('brands');
 
@@ -26,7 +32,12 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(BrandSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(SubcategorySeeder::class);
         $this->call(ProductSeeder::class);
+        $this->call(ColorSeeder::class);
+        $this->call(ColorProductSeeder::class);
+        $this->call(SizeSeeder::class);
+        
         $this->call(DepartamentoSeeder::class);
         $this->call(MunicipioSeeder::class);
     }
