@@ -5,23 +5,23 @@
     <div class="flex px-4 pb-6">
 
         <div class="flex w-full ">
-            {{-- <input type="number" name="" id="" class="w-full rounded-md h-6 text-sm focus:border-yellow-300 focus:ring focus:ring-yellow-200 focus:ring-opacity-50 shadow-sm"> --}}
+            {{-- <input type="number" name="" id="" class="w-full rounded-md h-6 text-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 shadow-sm"> --}}
             <!-- component -->
             <div class="flex w-full">
                 <div class="flex w-11/12">
                     <input type="text" value="{{ $qty }}"
-                        class=" h-8 bg-gray-300 cursor-not-allowed text-gray-900 text-center focus:border-yellow-300 focus:ring focus:ring-yellow-200 focus:ring-opacity-50 shadow-sm rounded-l-md w-full font-bold"
+                        class=" h-8 bg-gray-300 cursor-not-allowed text-gray-900 text-center focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50 shadow-sm rounded-l-md w-full font-bold"
                         style="font-size: 12px" readonly>
                 </div>
                 <div class="flex flex-col w-4/12">
                     <button x-bind:disabled="$wire.qty >= $wire.quantity" wire:loading.attr="disabled"
                         wire:target="increment" wire:click="increment"
-                        class="flex h-4 w-4 text-white  items-center justify-center text-md font-semibold rounded-tr-md px-1 bg-black focus:bg-black focus:outline-none border border-black hover:bg-yellow-400 ">
+                        class="flex h-4 w-4 text-white  items-center justify-center text-md font-semibold rounded-tr-md px-1 bg-black focus:bg-black focus:outline-none border border-black hover:bg-orange-400 ">
                         <span class="hvr-bounce-in">+</span>
                     </button>
                     <button disabled x-bind:disabled="$wire.qty <= 1" wire:loading.attr="disabled"
                         wire:target="decrement" wire:click="decrement"
-                        class="flex h-4 w-4 text-white items-center justify-center text-md font-semibold rounded-br-md px-1 bg-black focus:bg-black focus:outline-none border border-black hover:bg-yellow-400">
+                        class="flex h-4 w-4 text-white items-center justify-center text-md font-semibold rounded-br-md px-1 bg-black focus:bg-black focus:outline-none border border-black hover:bg-orange-400">
                         <span class="hvr-bounce-in">-</span>
                     </button>
                 </div>

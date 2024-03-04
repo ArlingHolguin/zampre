@@ -1,4 +1,4 @@
-<header class="bg-black sticky top-0" x-data="{ open: false }" style="z-index: 900;">
+<header class="bg-gray-700 sticky top-0" x-data="{ open: false }" style="z-index: 900;">
     <div class="container flex items-center h-16 justify-between md:justify-start">
         {{-- Icono hamburguesa --}}
         <a x-on:click="open = !open"
@@ -19,7 +19,7 @@
         {{-- logo --}}
         <a href="/" class="mx-6">
             {{-- <x-jet-application-mark class="block h-9 w-auto" /> --}}
-            <img src="{{asset('lese/img/logo.png')}}" width="75" alt="">
+            <img src="{{asset('img/icono_logo.svg')}}" width="50" alt="logo">
         </a>
         {{-- buscador --}}
         <div class="flex-1 hidden md:block">
@@ -61,7 +61,7 @@
             <div {{-- x-on:click.away="open = false" --}} class="grid grid-cols-4 h-full relative">
                 <ul class="bg-lese-900 h-full">
                     @foreach ($categories as $category)
-                        <li style="margin-top: 0.10rem;" class="navigation-link text-gray-700 font-black hover:bg-yellow-400 hover:text-gray-900 hover:font-black transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-110 duration-300">
+                        <li style="margin-top: 0.10rem;" class="navigation-link text-gray-700 font-black hover:bg-orange-400 hover:text-gray-900 hover:font-black transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-110 duration-300">
                             <a href="{{ route('categories.show', $category) }}"
                                 class="py-2 px-4 text-sm flex items-center">
                                 <span class="flex justify-center w-9 mr-2 hover:animate-spin">
@@ -72,7 +72,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <div class="col-span-3 bg-yellow-400">
+                <div class="col-span-3 bg-orange-400">
                     {{-- Componente blade navigation-subcategories --}}
 
                 </div>
