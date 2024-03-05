@@ -25,17 +25,21 @@ class ProductSeeder extends Seeder
                 'imageable_id' => $product->id,
                 'imageable_type' => Product::class
             ]);
-        $product->brands()->attach([
-            random_int(1, 2),
-        ]);
-    }
 
-    // Product::factory(100)->create()->each(function(Product $product){
-    //     Image::factory(4)->create([
-    //         'imageable_id' => $product->id,
-    //         'imageable_type' => Product::class
-    //     ]);
-    // });
+            $product->brands()->attach([
+                random_int(1, 2),
+            ]);
+
+            // Calcular descuento
+            $discountPercent = random_int(10, 30); // Porcentaje de descuento aleatorio entre 10% y 30%
+            $discountAmount = $product->price * ($discountPercent / 100.0); // Monto del descuento
+
+            // Actualizar precio con descuento y porcentaje de descuento
+            $product->update([
+                'price_discount' => $product->price - $discountAmount,
+                'price_discount_percent' => $discountPercent,
+            ]);
+        }
     
     }
 }

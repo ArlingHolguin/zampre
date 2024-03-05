@@ -21,33 +21,37 @@ class SubcategorySeeder extends Seeder
                 'name' => 'Joguers',
                 'slug' => 'joguers',
                 'category_id' => 1,
-                'color' => true,
-                'size' => true,
+                'color' => false,
+                'size' => false,
             ],
             [
                 'name' => 'Pantalones',
                 'slug' => 'pantalones',
                 'category_id' => 1,
-                'color' => true,
-                'size' => true,
+                'color' => false,
+                'size' => false,
             ],
             //tecnologia 
             [
                 'name' => 'Celulares',
                 'slug' => 'celulares',
                 'category_id' => 2,
-                'color' => true,
+                'color' => false,
             ],
             [
                 'name' => 'Computadoras',
                 'slug' => 'computadoras',
                 'category_id' => 2,
-                'color' => true,
+                'color' => false,
+                'size' => false,
             ],
             [
                 'name' => 'Baterias',
-                'slug' => 'bateriias',
+                'slug' => 'baterias',
                 'category_id' => 2,
+                'color' => false,
+                'size' => false,
+
             ],
            
 

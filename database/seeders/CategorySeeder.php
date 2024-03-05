@@ -18,11 +18,11 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Ropa',
+                'name' => 'Moda',
                 'slug' => Str::slug('ropa'),
                 'keywords' => 'ropa hombre mujer, ropa deportiva, ropa casual, ropa formal',
                 'extracto' => 'Ropa nacionala e importada para hombre y mujer, ropa deportiva, ropa casual, ropa formal, ropa de marca.',
-                'icon' => '<i class="fa-solid fa-shirt"></i>',
+                'icon' => 'icons8-camiseta-48',
             ],
             
             [
@@ -30,7 +30,7 @@ class CategorySeeder extends Seeder
                 'slug' => Str::slug('tecnologia'),
                 'keywords' => 'tecnologia, celulares, computadoras, tablets, televisores',
                 'extracto' => 'Tecnologia nacionala e importada, celulares, computadoras, tablets, televisores, tecnologia de marca.',
-                'icon' => '<i class="fa-solid fa-laptop"></i>',
+                'icon' => 'icons8-ordenador-portátil-48',
             ],
             
            

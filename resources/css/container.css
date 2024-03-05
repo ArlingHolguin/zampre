@@ -2,6 +2,8 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
+
+
 .menu {
     background-color: transparent;
     border: none;
@@ -12,7 +14,7 @@
 
 .line {
     fill: none;
-    stroke: #ff6308;
+    stroke: #fff;
     stroke-width: 4;
     transition: stroke-dasharray 700ms cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -87,4 +89,31 @@ input:checked~.toggle-circle {
 
 input:checked~.toggle-path {
     background-color: #ffdb08;
+}
+
+.carusel_image {
+    width: 800px;
+    height: 300px;
+    object-fit: cover; /* Esto asegura que la imagen se recorte para ajustarse a las dimensiones sin distorsionarse */
+}
+
+
+
+/* Estilo base para los dots */
+.dots .glider-dot {
+    background-color: gray; /* Cambia #tuColorDeFondo al color que desees */
+    border-radius: 50%; /* Para hacerlos circulares */
+    width: 10px; /* Ancho del dot */
+    height: 10px; /* Altura del dot */
+    margin: 5 5px; /* Espaciado entre dots */
+}
+
+/* Estilo para el dot activo */
+.dots .glider-dot.active {
+    background-color: #fd5901; /* Cambia #tuColorActivo al color para el dot activo */
+}
+
+/* Estilo para el hover en los dots */
+.dots .glider-dot:hover {
+    background-color: #ee6b25; /* Cambia #tuColorHover al color para el hover */
 }

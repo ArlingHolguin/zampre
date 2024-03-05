@@ -57,6 +57,10 @@ class Product extends Model
         return $this->id;
     }
 
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
 
 
 }

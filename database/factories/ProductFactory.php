@@ -36,7 +36,7 @@ class ProductFactory extends Factory
             'slug' => $referencia.'-'. Str::slug($name),
             'description' => $this->faker->text(),
             'referencia' =>Str::upper($referencia) ,
-            'price' => $this->faker->randomElement([850, 1200, 3400, 250, 5000, 1000, 1800, 2300, 3000, 4300, 4000, 1500, 900 ]),
+            'price' => $this->faker->randomElement([85000, 12000, 34000, 25000, 50000, 10000, 18000, 23000, 30000, 43000, 40000, 150000, 90000 ]),
             'quantity' => $quantity,
             'status' => 2,
             'keywords' => $name,

@@ -3,20 +3,28 @@
         <div class="glider-contain">
             <ul class="glider-{{ $category->id }}">
                 @foreach ($products as $product)
-                    <li class="bg-black rounded-lg shadow-lg {{ $loop->last ? '' : 'mr-4' }} ">
+                    <li class="bg-white rounded-lg shadow-lg {{ $loop->last ? '' : 'mr-4' }} ">
                         <article>
+                            <a href="{{ route('products.show', $product) }}">
                             <figure>
                                 <img class="h-48 w-full object-cover object-center rounded-t-lg shadow-lg shadow-gray-100/50"
                                     src="{{ Storage::url($product->images->first()->url) }}"
                                     alt="{{ $product->name }}">
                             </figure>
-                            <div class="py-4 px-6 text-white">
-                                <h1 class="text-md font-semibold hover:text-lese-900 hover:font-bold hvr-bounce-in">
-                                    <a
-                                        href="{{ route('products.show', $product) }}">{{ Str::limit($product->name, 15) }}</a>
+                            <div class="py-4 px-6 text-gray-600">
+                                <p class="text-xs line-through ml-2">$ {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <div>
+                                    <span class="font-semibold text-xl ">$  {{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : $product->price }}</span>
+                                    <span class="text-green-400 font-semibold text-xs"> -{{ $product->price_discount_percent }} % OFF</span>
+                                </div>
+                                <h1 class="text-xs font-light">
+                                    <div>{{ Str::limit($product->name, 20) }}</div>
                                 </h1>
-                                <p class="text-sm font-bold">REF: {{ ($product->referencia) }}</p>
+                                <span>{{ $product->subcategory->size ? 'Talla:true' : 'Talla:false' }}</span>
+                                <span>{{ $product->subcategory->color ? 'Color:true' : 'Color:false' }}</span>
+                                
                             </div>
+                        </a>
                         </article>
 
                     </li>
@@ -24,13 +32,13 @@
             </ul>
 
             <button aria-label="Previous" class="glider-prev hvr-bounce-in hvr-icon-back">
-                <span class="bg-black rounded-full h-10 w-10 flex items-center justify-center text-xl ">
-                    <i class="fas fa-angle-left text-lese-900 hvr-icon"></i>
+                <span class="bg-orange-600 text-white rounded-full h-10 w-10 flex items-center justify-center text-xl ">
+                    <i class="fas fa-angle-left hvr-icon"></i>
                 </span>
             </button>
             <button aria-label="Next" class="glider-next hvr-bounce-in hvr-icon-forward">
-                <span class="bg-black rounded-full h-10 w-10 flex items-center justify-center text-xl ">
-                    <i class="fas fa-angle-right text-lese-900 hvr-icon"></i>
+                <span class="bg-orange-600 text-white rounded-full h-10 w-10 flex items-center justify-center text-xl ">
+                    <i class="fas fa-angle-right hvr-icon"></i>
                 </span>
 
             </button>

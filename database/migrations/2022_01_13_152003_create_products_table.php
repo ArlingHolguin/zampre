@@ -22,8 +22,8 @@ class CreateProductsTable extends Migration
             $table->string('referencia')->nullable();
             $table->string('slug')->unique();
             $table->integer('price');
-            $table->float('price_discount')->nullable();
-            $table->integer('price_discount_porcent')->nullable();
+            $table->integer('price_discount')->nullable()->default(0);
+            $table->integer('price_discount_percent')->nullable()->default(0);
             $table->integer('quantity')->nullable();
             
             //campo boolean
@@ -32,8 +32,8 @@ class CreateProductsTable extends Migration
             $table->longText('extracto')->nullable();
 
             //relacion con categorias
-            // $table->unsignedBigInteger('category_id');
-            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
             //relacion con subcategorias
             $table->unsignedBigInteger('subcategory_id');

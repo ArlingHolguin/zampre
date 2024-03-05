@@ -21,7 +21,8 @@ use App\Http\Livewire\ShoppingCart;
 */
 
 Route::get('/', WelcomeController::class)->name('home');
-Route::get('productos/{product}', [ProductController::class, 'show'])->name('products.show');
+// Route::get('productos/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
+Route::get('productos/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 
 Route::get('search', SearchController::class)->name('search');
 Route::get('categorias/{category}', [CategoryController::class, 'show'])->name('categories.show');
