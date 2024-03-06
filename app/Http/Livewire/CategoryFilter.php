@@ -17,34 +17,14 @@ class CategoryFilter extends Component
 
     
 
-    public function limpiar(){
-        $this->reset([
-            
-            'marca'
-        ]);
-            
-    }
+  
     public function render()
     {
-          // $products = $this->category->products()
-        //                     ->where('status', 2)
-        //                     ->paginate(12);
+          $products = $this->category->productsRelacionados()
+                            ->where('status', 2)
+                            ->paginate(12);
         
-        $productsQuery = Product::query()->whereHas('category', function(Builder $query){
-            $query->where('id', $this->category->id);
-        });
-        // if($this->categoria){
-        //     $productsQuery  = $productsQuery->whereHas('category', function(Builder $query){
-        //         $query->where('name', $this->categoria);
-        //     });
-        // }
-
-        if($this->marca){
-            $productsQuery  = $productsQuery->whereHas('brands', function(Builder $query){
-                $query->where('name', $this->marca);
-            });
-        }
-        $products = $productsQuery->paginate(28);
+       
         return view('livewire.category-filter', compact('products'));
     }
 }
