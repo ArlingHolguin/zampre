@@ -30,4 +30,16 @@ class AddCartItemsSize extends Component{
     public function render(){
         return view('livewire.add-cart-items-size');
     }
+
+    public function increment()
+    {
+        $this->qty = $this->qty + 1;
+    }
+
+    public function decrement()
+    {
+        if ($this->qty > 1) {
+            $this->qty = $this->qty - 1;
+        }
+    }
 }

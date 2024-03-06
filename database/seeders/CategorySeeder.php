@@ -19,7 +19,7 @@ class CategorySeeder extends Seeder
         $categories = [
             [
                 'name' => 'Moda',
-                'slug' => Str::slug('ropa'),
+                'slug' => Str::slug('moda'),
                 'keywords' => 'ropa hombre mujer, ropa deportiva, ropa casual, ropa formal',
                 'extracto' => 'Ropa nacionala e importada para hombre y mujer, ropa deportiva, ropa casual, ropa formal, ropa de marca.',
                 'icon' => 'icons8-camiseta-48',

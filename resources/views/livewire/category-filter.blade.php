@@ -3,8 +3,9 @@
     <div class="bg-white rounded-lg shadow-lg mb-6 sticky top-16 z-40">
         <div class="px-6 py-2 flex justify-between items-center">
             <div class="flex items-center justify-center">
-                <span
-                    class="bg-lese-400 rounded-lg h-10 w-10 flex items-center justify-center">{!! $category->icon !!}</span>
+                <span class="bg-lese-400 rounded-lg h-10 w-10 flex items-center justify-center">
+                    <img src="{{ asset('img/' . $category->icon . '.png') }}" width="50" alt="Icono de {{ $category->name }}">
+                </span>
                 <h1 class="ml-2 font-bold text-black uppercase">
                     {{ $category->name }}
                     <span

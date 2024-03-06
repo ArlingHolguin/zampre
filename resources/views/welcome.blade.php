@@ -3,7 +3,7 @@
         @livewire('carousel-home')
         @foreach ($categories as $category)
             <section class="mb-6">
-                <div class="bg-orange-600  rounded-lg shadow-lg mb-6 mt-20">
+                <div class="bg-orange-600  rounded-lg shadow-lg mb-6 mt-8 md:mt-10">
                     <div class="px-6 py-2 flex justify-between items-center">
                         <div class="flex items-center justify-center">
                             <span class="bg-lese-400 rounded-lg h-10 w-10 flex items-center justify-center p-1">
@@ -36,11 +36,10 @@
                 
                 @livewire('category-products', ['category' => $category])
 
-            </section>
-           
+            </section>           
         @endforeach
 
-
+        <div class="h-10"></div>
     </div>
     @push('script')
         <script>
@@ -54,7 +53,16 @@
                         prev: '.glider-' + id + '~ .glider-prev',
                         next: '.glider-' + id + '~ .glider-next'
                     },
-                    responsive: [{
+                    responsive: [
+                        {
+                            breakpoint: 360,
+                            settings: {
+                                slidesToShow: 1.5,
+                                slidesToScroll: 1,
+
+                            }
+                        },
+                            {
                             breakpoint: 500,
                             settings: {
                                 slidesToShow: 2,

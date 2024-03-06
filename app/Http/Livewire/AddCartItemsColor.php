@@ -33,4 +33,16 @@ class AddCartItemsColor extends Component
         }
     }
 
+    public function increment()
+    {
+        $this->qty = $this->qty + 1;
+    }
+
+    public function decrement()
+    {
+        if ($this->qty > 1) {
+            $this->qty = $this->qty - 1;
+        }
+    }
+
 }

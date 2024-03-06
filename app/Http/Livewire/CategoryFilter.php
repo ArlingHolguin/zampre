@@ -15,6 +15,8 @@ class CategoryFilter extends Component
     public $category,  $marca, $categoria;
     public $view = "grid";
 
+    
+
     public function limpiar(){
         $this->reset([
             
@@ -27,6 +29,7 @@ class CategoryFilter extends Component
           // $products = $this->category->products()
         //                     ->where('status', 2)
         //                     ->paginate(12);
+        
         $productsQuery = Product::query()->whereHas('category', function(Builder $query){
             $query->where('id', $this->category->id);
         });

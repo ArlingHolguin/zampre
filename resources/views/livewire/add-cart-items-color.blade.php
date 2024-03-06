@@ -1,4 +1,5 @@
 <div x-data>
+    {{-- <div class="text-sm">Stock Disponible: <span>{{ $quantity }}</span> </div> --}}
     <div class="text-md">Color: </div>
     <select wire:model="color_id" class="form-control w-full">
         <option value="" selected disabled >Seleccione un color</option>
