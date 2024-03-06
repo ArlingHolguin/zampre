@@ -21,8 +21,8 @@ class SubcategorySeeder extends Seeder
                 'name' => 'Joguers',
                 'slug' => 'joguers',
                 'category_id' => 1,
-                'color' => false,
-                'size' => false,
+                'color' => true,
+                'size' => true,
             ],
             [
                 'name' => 'Pantalones',

@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container py-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {{-- FlexSlider img producto  --}}
             <div class="">
                 <div class="flexslider">
@@ -41,6 +41,7 @@
                         @livewire('add-cart-items', ['product' => $product])                        
                     @endif
                 </div>
+                
             </div>
             
 
