@@ -21,6 +21,8 @@ class CategoryFilter extends Component
   
     public function limpiar(){
         $this->reset(['marca', 'subcategoria', 'sortPrice']);
+        $this->resetPage();
+        
     }
 
     public function sortByPrice($sortDirection)
@@ -89,12 +91,8 @@ class CategoryFilter extends Component
             );
         }
 
-
         //creación de la colleccion de productos
-        $products = $productsQuery->paginate(12);
-
-
-        
+        $products = $productsQuery->paginate(12);        
        
         return view('livewire.category-filter', compact('products'));
     }
