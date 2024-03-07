@@ -25,9 +25,23 @@ class CategoryFilter extends Component
 
     public function sortByPrice($sortDirection)
     {
-        $this->sortPrice = $sortDirection;
+        if ($this->sortPrice !== $sortDirection) {
+            $this->resetPage();
+            $this->sortPrice = $sortDirection;
+        }
     }
 
+    public function updatingMarca()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSubcategoria()
+    {
+        $this->resetPage();
+    }
+
+   
     public function render()
     {
        
@@ -48,12 +62,33 @@ class CategoryFilter extends Component
             });
         }
 
-        // Ordenar por precio
-        if($this->sortPrice === 'precio_asc'){
-            $productsQuery = $productsQuery->orderBy('price', 'asc');
-        } elseif($this->sortPrice === 'precio_desc'){
-            $productsQuery = $productsQuery->orderBy('price', 'desc');
+         // Ordenar por precio
+        if ($this->sortPrice === 'precio_asc') {
+            $productsQuery = $productsQuery->when(
+                function ($query) {
+                    return $query->whereNotNull('price_discount')->where('price_discount', '>', 0);
+                },
+                function ($query) {
+                    return $query->orderBy('price_discount', 'asc');
+                },
+                function ($query) {
+                    return $query->orderBy('price', 'asc');
+                }
+            );
+        } elseif ($this->sortPrice === 'precio_desc') {
+            $productsQuery = $productsQuery->when(
+                function ($query) {
+                    return $query->whereNotNull('price_discount')->where('price_discount', '>', 0);
+                },
+                function ($query) {
+                    return $query->orderBy('price_discount', 'desc');
+                },
+                function ($query) {
+                    return $query->orderBy('price', 'desc');
+                }
+            );
         }
+
 
         //creación de la colleccion de productos
         $products = $productsQuery->paginate(12);

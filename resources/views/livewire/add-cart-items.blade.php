@@ -24,7 +24,10 @@
             </x-jet-secondary-button>
         </div>
         <div class="flex-1">
-            <x-jet-button class=" w-full flex justify-center">
+            <x-jet-button wire:click="addItem" 
+                wire:loading.attr="disabled"
+                wire:target="addItem"
+                class=" w-full flex justify-center">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="ml-2">Agregar al carrito</span>
             </x-jet-button>

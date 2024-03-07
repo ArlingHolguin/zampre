@@ -261,7 +261,7 @@
                                             src="{{ $item->options->image }}" alt="{{ $item->name }}">
 
                                         <article class="ml-2">
-                                            <p class="font-bold text-xs">{{ $item->options->referencia }}</p>
+                                            {{-- <p class="font-bold text-xs">{{ $item->options->referencia }}</p> --}}
                                             <div class="flex text-xs">
                                                 <p class="font-bold text-xs">{{ $item->name }}</p>
 

@@ -22,7 +22,7 @@
             left: 0cm;
             right: 0cm;
             height: 2.5cm;
-            background-color: rgb(0, 0, 0);;
+            background-color: #ea580c;
             color: white;
             text-align: center;
             line-height: 40px;
@@ -33,7 +33,7 @@
             left: 0cm;
             right: 0cm;
             height: 2cm;
-            background-color: #000000;
+            background-color: #ea580c;
             color: white;
             text-align: center;
             line-height: 40px;
@@ -55,7 +55,7 @@
     </style>
 </head>
 <header>
-    <img class="avatar mb-2 float-left ml-4 pl-4 pt-2 " src="{{ asset('lese/img/logo-blanco.svg') }}" width="10%">
+    <img class="avatar mb-2 float-left ml-4 pl-4 pt-2 " src="{{ asset('img/zampre_blanco.svg') }}" width="30%">
 </header>
 
 <body>
@@ -92,15 +92,15 @@
                     </div>
 
                     <address class="text-dark" style="font-size: 8pt;">
-                        <h5 class="mb-0"><strong>{{$orden->user->profile->empresa}}</strong></h5>
-                        <p class="mb-0"><strong>{{$orden->user->profile->document_type}}: {{$orden->user->profile->document_number}}</strong></p>
+                        <h5 class="mb-0"><strong>{{$orden->user->profile->empresa ?? ''}}</strong></h5>
+                        <p class="mb-0"><strong>{{$orden->user->profile->document_type ?? ''}}: {{$orden->user->profile->document_number ?? ''}}</strong></p>
                         Recibe: {{$orden->contact}}<br>
                         {{$orden->phone}}<br>
                         {{$orden->municipio ? $orden->municipio->name : 'Recoge en Bodega'}} - {{$orden->departamento ? $orden->departamento->name : '.'}}<br>
-                        {{$orden->address ? $orden->address->name : ''}} - {{$orden->casa ? $orden->casa : ''}}<br>
-                        {{$orden->email}}<br>
+                        {{$orden->address->name ?? ''}} - {{$orden->casa ?? ''}}<br>
+                        {{$orden->email ?? ''}}<br>
                         {{$orden->created_at->format('d/m/Y')}}
-                        Creada por: {{$orden->user->name}}<br>
+                        Creada por: {{$orden->user->name ?? ''}}<br>
                         
                         
                     </address>
@@ -131,7 +131,7 @@
                         
                         <tr> 
                             
-                            <th class="text-left">{{$item->options->referencia}}</th>
+                            {{-- <th class="text-left">{{$item->options->referencia}}</th> --}}
                             <td class="text-sm-left">{{$item->name}}</td>
                             <td class="text-left">{{$item->qty}}</td>
                         </tr>
