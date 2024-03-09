@@ -4,31 +4,44 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Size;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Storage;
 
-class AddCartItemsSize extends Component{
+class AddCartItemsSize extends Component
+{
     public $product, $sizes;
     public $color_id = "";
     public $qty = 1;
     public $quantity = 0;
     public $size_id = "";
-    public $colors = [];
 
-    public function updatedSizeId($value){
+    public $colors = [];
+    public $options = [];
+
+    public function mount()
+    {
+        $this->sizes = $this->product->sizes;
+        $this->options['image'] = Storage::url($this->product->images->first()->url);
+    }
+
+    public function updatedSizeId($value)
+    {
         $size = Size::find($value);
         $this->colors = $size->colors;
+        $this->options['size'] = $size->name;
     }
 
-    public function updatedColorId($value){
-        $size = Size::find($this->size_id);
-        $this->quantity = $size->colors->find($value)->pivot->quantity;
-    }
-
-    public function mount(){
-        $this->sizes = $this->product->sizes;
-    }
-
-    public function render(){
-        return view('livewire.add-cart-items-size');
+    public function updatedColorId($value){    
+        $size = Size::find($value);
+        $color = $size->colors->find($value);
+        if ($color) {
+            $this->quantity = $color->pivot->quantity;
+            $this->options['color'] = $color->name;
+        } else {
+            $this->quantity = 0;
+            // O puedes manejar de otra manera cuando el color no se encuentra.
+        }
+        
     }
 
     public function increment()
@@ -41,5 +54,29 @@ class AddCartItemsSize extends Component{
         if ($this->qty > 1) {
             $this->qty = $this->qty - 1;
         }
+    }
+
+    public function addItem()
+    {
+        Cart::add([
+            'id' => $this->product->id,
+            'name' => $this->product->name,
+            'qty' => $this->qty,
+            'price' => $this->product->price_discount ? $this->product->price_discount : $this->product->price,
+            'weight' => 550,
+            'options' => $this->options
+        ]);
+
+        $this->quantity = qty_available($this->product->id);
+        $this->reset('qty');
+
+        //emitir un evento// vuelve reactivo el cart 
+        $this->emitTo('dropdown-cart', 'render');
+        $this->emitTo('cart-mobile', 'render');
+    }
+
+    public function render()
+    {
+        return view('livewire.add-cart-items-size');
     }
 }

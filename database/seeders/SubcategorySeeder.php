@@ -28,29 +28,30 @@ class SubcategorySeeder extends Seeder
                 'name' => 'Pantalones',
                 'slug' => 'pantalones',
                 'category_id' => 1,
-                'color' => false,
-                'size' => false,
+                'color' => true,
+                'size' => true,
             ],
             //tecnologia 
             [
                 'name' => 'Celulares',
                 'slug' => 'celulares',
                 'category_id' => 2,
-                'color' => false,
+                'color' => true,
+                'size' => true,
             ],
             [
                 'name' => 'Computadoras',
                 'slug' => 'computadoras',
                 'category_id' => 2,
-                'color' => false,
-                'size' => false,
+                'color' => true,
+                'size' => true,
             ],
             [
                 'name' => 'Baterias',
                 'slug' => 'baterias',
                 'category_id' => 2,
-                'color' => false,
-                'size' => false,
+                'color' => true,
+                'size' => true,
 
             ],
            

@@ -13,19 +13,16 @@ class AddCartItems extends Component
     public $qty = 1;
     public $options = [];
 
-    public function mount($product)
-    {
+    public function mount($product){
         $this->quantity = $this->product->quantity;
         $this->options['image'] = Storage::url($this->product->images->first()->url);
     }
 
-    public function increment()
-    {
+    public function increment(){
         $this->qty = $this->qty + 1;
     }
 
-    public function decrement()
-    {
+    public function decrement(){
         if ($this->qty > 1) {
             $this->qty = $this->qty - 1;
         }
@@ -44,12 +41,12 @@ class AddCartItems extends Component
 
         //emitir un evento// vuelve reactivo el cart 
         $this->emitTo('dropdown-cart', 'render');
+        $this->emitTo('cart-mobile', 'render');
     }
 
 
 
-    public function render()
-    {
+    public function render(){
         return view('livewire.add-cart-items');
     }
 }

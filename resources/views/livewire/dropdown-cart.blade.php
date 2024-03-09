@@ -29,9 +29,11 @@
                             <p class="font-bold text-xs text-trueGray-800 uppercase">{{ $item->options->referencia }}</p>
 
                             <div class="flex">
-                                <p class="text-xs text-trueGray-800">Cant: <span class="font-bold">{{ $item->qty }}</span> </p>
+                                <p class="text-xs text-trueGray-800 ">Cant: <span class="font-bold">{{ $item->qty }}</span> </p>
                                
-
+                                 <p class="text-xs text-trueGray-800 ml-2 {{ $item?->options->color ? 'block' : 'hidden' }}">Color: <span class="font-bold">{{ $item?->options->color ?? '' }}</span></p>
+                                 <p class="text-xs text-trueGray-800 ml-2 {{ $item?->options->size ? 'block' : 'hidden' }}">Medidas: <span class="font-bold">{{ $item?->options->size ?? ''  }}</span> 
+                                </p> 
                             </div>
 
                             <p class="text-xs text-trueGray-800">$<span class="font-bold">{{ number_format($item->price) }}</span></p>
@@ -50,7 +52,7 @@
                 <div class="py-2 px-3">
                     <p class="text-md text-gray-700 font-bold mt-2 mb-3"><span class="font-bold">Total: </span>${{ Cart::subtotal() }}</p>
                      <x-danger-enlace href="{{route('shopping-cart')}}" class="w-full justify-center">
-                        <span class=" font-medium hover:font-bold">Ver Pedido</span>
+                        <span class=" font-medium hover:font-bold">Ver Carrito</span>
                      </x-danger-enlace>
          
                  
