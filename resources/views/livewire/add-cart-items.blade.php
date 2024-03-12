@@ -1,5 +1,5 @@
 <div x-data>
-    {{-- <div class="text-sm">Stock Disponible: <span>{{ $quantity }}</span> </div> --}}
+    <div class="text-sm mb-2">Stock Disponible: <span>{{ $quantity }}</span> </div>
     <div class="flex items-center gap-4">
         <div>
             <x-jet-secondary-button
@@ -24,7 +24,8 @@
             </x-jet-secondary-button>
         </div>
         <div class="flex-1">
-            <x-jet-button wire:click="addItem" 
+            <x-jet-button x-bind:disabled="$wire.qty > $wire.quantity" 
+                wire:click="addItem" 
                 wire:loading.attr="disabled"
                 wire:target="addItem"
                 class=" w-full flex justify-center">

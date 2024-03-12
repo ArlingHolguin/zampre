@@ -28,15 +28,15 @@ class AddCartItemsSize extends Component
     {
         $size = Size::find($value);
         $this->colors = $size->colors;
-        $this->options['size'] = $size->name;
+        $this->options['size_id'] = $size->id;
     }
 
     public function updatedColorId($value){    
-        $size = Size::find($value);
+        $size = Size::find($this->size_id);
         $color = $size->colors->find($value);
         if ($color) {
-            $this->quantity = $color->pivot->quantity;
-            $this->options['color'] = $color->name;
+            $this->quantity = qty_available($this->product->id, $color->id, $size->id);
+            $this->options['color_id'] = $color->id;
         } else {
             $this->quantity = 0;
             // O puedes manejar de otra manera cuando el color no se encuentra.
@@ -67,7 +67,7 @@ class AddCartItemsSize extends Component
             'options' => $this->options
         ]);
 
-        $this->quantity = qty_available($this->product->id);
+        $this->quantity = qty_available($this->product->id, $this->color_id, $this->size_id);
         $this->reset('qty');
 
         //emitir un evento// vuelve reactivo el cart 

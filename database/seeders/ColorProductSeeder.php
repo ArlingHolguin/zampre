@@ -24,10 +24,10 @@ class ColorProductSeeder extends Seeder
         
         foreach($products as $product){
             $product->colors()->attach([
-                1 => ['quantity' => 10],
-                2 => ['quantity' => 10],
-                3 => ['quantity' => 10],
-                4 => ['quantity' => 10]
+                1 => ['quantity' => 6],
+                2 => ['quantity' => 6],
+                3 => ['quantity' => 6],
+                4 => ['quantity' => 6]
             ]);
         }
     }

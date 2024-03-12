@@ -18,7 +18,7 @@ class SizeSeeder extends Seeder
     {
         //
 
-        $sizes = ['Talla S', 'Talla M', 'Talla L', 'Talla XL'];
+        $sizes = ['Talla S', 'Talla M', 'Talla L'];
         $products =  Product::whereHas('subcategory', function(Builder $query){
             $query->where('color', true)
                     ->where('size', true);

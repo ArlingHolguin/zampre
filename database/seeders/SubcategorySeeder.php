@@ -36,24 +36,47 @@ class SubcategorySeeder extends Seeder
                 'name' => 'Celulares',
                 'slug' => 'celulares',
                 'category_id' => 2,
-                'color' => true,
-                'size' => true,
+                // 'color' => true,
+                // 'size' => true,
             ],
             [
                 'name' => 'Computadoras',
                 'slug' => 'computadoras',
                 'category_id' => 2,
-                'color' => true,
-                'size' => true,
+                // 'color' => true,
+                // 'size' => true,
             ],
             [
                 'name' => 'Baterias',
                 'slug' => 'baterias',
                 'category_id' => 2,
-                'color' => true,
-                'size' => true,
+                // 'color' => true,
+                // 'size' => true,
 
             ],
+
+            //hogar
+            [
+                'name' => 'Toalla de cuerpo',
+                'slug' => 'toalla-de-cuerpo',
+                'category_id' => 3,
+                'color' => true,
+                // 'size' => true,
+            ], 
+            [
+                'name' => 'Toalla de mano',
+                'slug' => 'toalla-de-mano',
+                'category_id' => 3,
+                'color' => true,
+                // 'size' => true,
+            ],
+            [
+                'name' => 'Toalla de playa',
+                'slug' => 'toalla-de-playa',
+                'category_id' => 3,
+                'color' => true,
+                // 'size' => true,
+            ]
            
 
         ];

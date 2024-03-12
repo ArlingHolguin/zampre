@@ -9,27 +9,38 @@ use Illuminate\Support\Facades\Storage;
 class AddCartItemsColor extends Component
 {
     public $product, $colors;
-    public $color_id = '';
+    public $color_id = "";
+
     public $qty = 1;
     public $quantity = 0;
-    public $options = [];
+    
+    public $options = [
+        'size_id' => null
+    ];
 
     public function mount(){
-        $this->colors = $this->product->colors;
+        $this->colors = $this->product->colors;        
         $this->options['image'] = Storage::url($this->product->images->first()->url);
 
     }
 
     public function updatedColorId($value){    
-        $color = $this->product->colors->find($value);
+        $color = $this->product->colors->find($value); 
         if ($color) {
+            // $this->quantity = qty_available($this->product->id, $color->id);
             $this->quantity = $color->pivot->quantity;
-            $this->options['color'] = $color->name;
+            $this->options['color_id'] = $color->id;
+            
         } else {
             $this->quantity = 0;
-            // O puedes manejar de otra manera cuando el color no se encuentra.
+            $this->options['color_id'] = null;
         }
     }
+
+    // public function updatedColorId($value){
+    //     $this->quantity = $this->product->colors->find($value)->pivot->quantity;
+    // }
+    
 
     public function increment(){
         $this->qty = $this->qty + 1;
@@ -42,6 +53,7 @@ class AddCartItemsColor extends Component
     }
 
     public function addItem(){
+        
         Cart::add(['id' => $this->product->id,
                     'name' => $this->product->name,
                     'qty' => $this->qty,
@@ -49,7 +61,7 @@ class AddCartItemsColor extends Component
                     'weight' => 550,
                     'options' => $this->options
         ]);
-        $this->quantity = qty_available($this->product->id);
+        $this->quantity = qty_available($this->product->id, $this->color_id);
         $this->reset('qty');
 
         //emitir un evento// vuelve reactivo el cart 

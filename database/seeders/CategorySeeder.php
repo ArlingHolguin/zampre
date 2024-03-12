@@ -32,6 +32,13 @@ class CategorySeeder extends Seeder
                 'extracto' => 'Tecnologia nacionala e importada, celulares, computadoras, tablets, televisores, tecnologia de marca.',
                 'icon' => 'icons8-ordenador-portátil-48',
             ],
+            [
+                'name' => 'Hogar',
+                'slug' => Str::slug('hogar'),
+                'keywords' => 'hogar',
+                'extracto' => 'Hogar nacionala e importada, muebles, electrodomesticos, decoracion, hogar de marca.',
+                'icon' => 'icons8-sillón-48',
+            ],
             
            
 

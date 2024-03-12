@@ -11,10 +11,13 @@ class AddCartItems extends Component
     public $product;
     public $quantity;
     public $qty = 1;
-    public $options = [];
+    public $options = [
+        'size_id' => null,
+        'color_id' => null
+    ];
 
-    public function mount($product){
-        $this->quantity = $this->product->quantity;
+    public function mount(){
+        $this->quantity = qty_available($this->product->id);
         $this->options['image'] = Storage::url($this->product->images->first()->url);
     }
 

@@ -1,5 +1,5 @@
 <div x-data>
-    {{-- <div class="text-sm">Stock Disponible: <span>{{ $quantity }}</span> </div> --}}
+    
     <div class="text-md">Color: </div>
     <select wire:model="color_id" class="form-control w-full">
         <option value="" selected disabled >Seleccione un color</option>
@@ -7,6 +7,7 @@
               <option value="{{ $color->id }}" >{{ $color->name }}</option>
         @endforeach
     </select>
+    <div class="text-sm mb-2">Stock Disponible: <span>{{ $quantity }}</span> </div>
 
     <div class="flex items-center gap-4 mt-8">
         <div>
@@ -32,7 +33,8 @@
             </x-jet-secondary-button>
         </div>
         <div class="flex-1">
-            <x-jet-button x-bind:disabled="!$wire.quantity"
+            <x-jet-button 
+                x-bind:disabled="!$wire.quantity"
                 wire:click="addItem" 
                 wire:loading.attr="disabled"
                 wire:target="addItem"
@@ -40,6 +42,8 @@
                 <i class="fas fa-shopping-cart"></i>
                 <span class="ml-2">Agregar al carrito</span>
             </x-jet-button>
+
+            
         </div>
     </div>
 

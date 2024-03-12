@@ -32,6 +32,7 @@
                         <div class="text-sm">Recíbelo a partir del {{ Date::now()->addday(2)->locale('es')->format('l j F') }}.</div>
                     </div>
                 </div>
+                
                 <div class="my-4">
                     @if ($product->subcategory->size)
                         @livewire('add-cart-items-size', ['product' => $product])
