@@ -15,5 +15,19 @@ return [
 
     'previous' => '&laquo; Anterior',
     'next'     => 'Siguiente &raquo;',
+    'showing'  => 'Mostrando',
+    'to'       => 'a',
+    'of'       => 'de',
+    'results'  => 'resultados',
+    'all'      => 'Todos',
+    'show'     => 'Mostrar',
+    'entries'  => 'entradas',
+    'search'   => 'Buscar:',
+    'no_results' => 'No se encontraron resultados',
+    'showing_all' => 'Mostrando todos los resultados',
+    'showing_all_of' => 'Mostrando todos los',
+    'showing_all_results' => 'Mostrando todos los resultados',
+    'no_results' => 'No se encontraron resultados',
+    'showing_results' => 'Mostrando resultados'
 
 ];

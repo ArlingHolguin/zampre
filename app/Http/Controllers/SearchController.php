@@ -12,10 +12,18 @@ class SearchController extends Controller
 
         $name = $request->name;
 
-        $products = Product::where('name', 'LIKE' ,'%' . $name . '%')
-                                ->where('status', 2)
-                                ->paginate(8);
+        $searchTerm = str_replace(' ', '', $name);
 
-        return view('search', compact('products'));
+            $products = Product::where(function ($query) use ($searchTerm) {
+                                $query->whereRaw("REPLACE(name, ' ', '') LIKE ?", ['%' . $searchTerm . '%'])
+                                      ->orWhereHas('subcategory.category', function ($subQuery) use ($searchTerm) {
+                                          $subQuery->whereRaw("REPLACE(name, ' ', '') LIKE ?", ['%' . $searchTerm . '%']);
+                                      });
+                            })
+                            ->where('status', 2)
+                            ->paginate(12);
+            $products = $products->appends(['name' => $name]);
+
+        return view('search', compact('products', 'name'));
     }
 }
