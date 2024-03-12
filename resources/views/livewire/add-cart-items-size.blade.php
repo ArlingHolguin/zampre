@@ -1,5 +1,16 @@
 <div x-data>
-    <div class="text-sm">Stock Disponible: <span>{{ $quantity }}</span> </div>
+    <div class="text-sm">Stock Disponible: 
+        <span>
+            @if ($quantity > 0)
+                {{ $quantity }}
+                
+            @else
+            {{ $product->stock }}
+                
+            @endif
+        </span> 
+    </div>
+    
     <div>
         <span>Talla:</span>
         <select wire:model="size_id" class="form-control w-full">

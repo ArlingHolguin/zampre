@@ -1,5 +1,6 @@
 <div x-data>
     <div class="text-sm mb-2">Stock Disponible: <span>{{ $quantity }}</span> </div>
+    {{-- <div class="text-sm mb-2">Prueba<span>{{ $product->stock }}</span> </div> --}}
     <div class="flex items-center gap-4">
         <div>
             <x-jet-secondary-button

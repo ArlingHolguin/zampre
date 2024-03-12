@@ -7,7 +7,17 @@
               <option value="{{ $color->id }}" >{{ $color->name }}</option>
         @endforeach
     </select>
-    <div class="text-sm mb-2">Stock Disponible: <span>{{ $quantity }}</span> </div>
+    <div class="text-sm mt-2">Stock Disponible: 
+        <span>
+            @if ($quantity > 0)
+                {{ $quantity }}
+                
+            @else
+            {{ $product->stock }}
+                
+            @endif
+        </span> 
+    </div>
 
     <div class="flex items-center gap-4 mt-8">
         <div>
