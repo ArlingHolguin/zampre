@@ -25,10 +25,17 @@ class Search extends Component
         //Tv de 32" Full HD
 
         if ($this->search) {
-            $products = Product::where('name', 'LIKE' ,'%' . $this->search . '%')
-                                ->where('status', 1)
-                                ->take(8)
-                                ->get();
+            $searchTerm = str_replace(' ', '', $this->search);
+
+            $products = Product::where(function ($query) use ($searchTerm) {
+                                $query->whereRaw("REPLACE(name, ' ', '') LIKE ?", ['%' . $searchTerm . '%'])
+                                      ->orWhereHas('subcategory.category', function ($subQuery) use ($searchTerm) {
+                                          $subQuery->whereRaw("REPLACE(name, ' ', '') LIKE ?", ['%' . $searchTerm . '%']);
+                                      });
+                            })
+                            ->where('status', 2)
+                            ->take(12)
+                            ->get();
                                 
         } else {
             $products = [];

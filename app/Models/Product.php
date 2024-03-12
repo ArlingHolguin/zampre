@@ -19,14 +19,7 @@ class Product extends Model
 
     //Accesores Stock
     public function getStockAttribute(){
-        // if($this->quantity > 5){
-        //     return 'Disponible';
-        // }elseif($this->quantity <= 5 && $this->quantity > 0){
-        //     return 'Quedan pocas unidades';
-        // }else{
-        //     return 'Agotado';
-        // }
-
+        
         if($this->subcategory->size){
            return  ColorSize::whereHas('size.product', function(Builder $query){
                 $query->where('id', $this->id);
