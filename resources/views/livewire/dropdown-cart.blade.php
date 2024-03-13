@@ -30,9 +30,12 @@
 
                             <div class="flex">
                                 <p class="text-xs text-trueGray-800 ">Cant: <span class="font-bold">{{ $item->qty }}</span> </p>
-                               
-                                 <p class="text-xs text-trueGray-800 ml-2 {{ $item?->options->color ? 'block' : 'hidden' }}">Color: <span class="font-bold">{{ $item?->options->color ?? '' }}</span></p>
-                                 <p class="text-xs text-trueGray-800 ml-2 {{ $item?->options->size ? 'block' : 'hidden' }}">Medidas: <span class="font-bold">{{ $item?->options->size ?? ''  }}</span> 
+                                @php
+                                    $colorName = App\Models\Color::where('id', $item->options->color_id)->first()->name ?? '';
+                                    $sizeName = App\Models\Size::where('id', $item->options->size_id)->first()->name ?? '';
+                                @endphp
+                                 <p class="text-xs text-trueGray-800 ml-2 {{ $item?->options->color_id ? 'block' : 'hidden' }}">Color: <span class="font-bold">{{  $colorName }}</span></p>
+                                 <p class="text-xs text-trueGray-800 ml-2 {{ $item?->options->size_id ? 'block' : 'hidden' }}">Medidas: <span class="font-bold">{{ $sizeName  }}</span> 
                                 </p> 
                             </div>
 

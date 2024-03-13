@@ -2,17 +2,17 @@
     <section class="bg-white rounded-lg shadow-lg p-6 text-trueGray-900">
         <div class="flex items-center bg-gray-100 p-2 rounded-md">
             <div>
-                <span class="bg-lese-400 rounded-md h-8 w-8 flex items-center justify-center">
-                    {{-- <i class="fas fa-shopping-cart"></i> --}}
+                <span class="bg-lese-900 rounded-md h-8 w-8 flex items-center justify-center">
+                    <i class="fas fa-shopping-cart text-white"></i>
                     {{-- <i class="fas fa-box"></i> --}}
                     {{-- <i class="fas fa-boxes-packing"></i> --}}
-                    <i class="fas fa-box"></i>
+                    {{-- <i class="fas fa-box"></i> --}}
                 </span>
 
             </div>
             <div class="items-center">
                 @if (Cart::count())
-                    <h1 class="text-xl font-bold ml-2"> Mi Pedido en curso</h1>
+                    <h1 class="text-xl font-bold ml-2"> Carrito de compras</h1>
                 @else
                     <h1 class="text-xl font-bold ml-2"> Crea tu pedido</h1>
                 @endif
@@ -22,77 +22,89 @@
         </div>
 
         @if (Cart::count())
-
-            <table class="table-auto w-full mt-2">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Precio</th>
-                        <th>Cant</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @foreach (Cart::content() as $item)
-
-                        <tr>
-                            <td>
-                                <div class="flex">
-                                    <img class="h-15 w-20 object-cover mr-4" src="{{ $item->options->image }}" alt="">
-                                    <div>
-                                        <p class="font-bold text-sm">{{ $item->name }}</p>
-                                        <p class="text-xs uppercase">{{ $item->options->referencia }}</p>
-                                        {{-- <p class="text-xs uppercase">{{ $item->qty_available }}</p> --}}
-
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full mt-2">
+                    <thead class=" w-full">
+                        <tr class="flex justify-items-start w-full">
+                            <th class="w-96"></th>
+                            <th class="w-80">Precio</th>
+                            <th class="w-48">Cant</th>
+                            <th class="w-30">Total</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+    
+                        @foreach (Cart::content() as $item)
+    
+                            <tr class="flex items-center">
+                                <td class="">
+                                    <div class="flex w-96">
+                                        <img class="h-15 w-20 object-cover mr-4" src="{{ $item->options->image }}" alt="">
+                                        <div class="flex justify-center flex-col">
+                                            <p class="font-bold text-sm">{{ $item->name }}</p>
+                                            @php
+                                                $colorName = App\Models\Color::where('id', $item->options->color_id)->first()->name ?? '';
+                                                $sizeName = App\Models\Size::where('id', $item->options->size_id)->first()->name ?? '';
+                                            @endphp
+                                            
+                                            @if ($item->options->color_id)
+                                                <p class="text-xs capitalize">Color: {{ $colorName }}</p>                                            
+                                            @endif
+    
+                                            @if ($item->options->size_id)
+                                                <p class="text-xs capitalize">Medidas: {{ $sizeName }}</p>
+                                            @endif
+                                            {{-- <p class="text-xs uppercase">{{ $item->qty_available }}</p> --}}
+    
+                                            
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="flex items-center justify-center">
+                                    <div class="flex justify-center items-center w-80">$ {{ number_format($item->price, 0, ',', '.')}}</div>    
+                                </td>
+                                <td class="">
+                                    <div class="flex justify-center items-center w-48">
+                                        @if ($item->options->size_id)
+                                            @livewire('update-cart-item-size', ['rowId' => $item->rowId], key($item->rowId))
+                                        @elseif($item->options->color_id)
+                                            @livewire('update-cart-item-color', ['rowId' => $item->rowId], key($item->rowId))
+                                        @else
+                                        @livewire('update-cart-item', ['rowId' => $item->rowId], key($item->rowId))
+                                            
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="flex justify-center">
+                                    <div class="text-center w-30 inline-flex">
+                                        <span>$</span> <div>{{ number_format($item->price * $item->qty, 0, ',', '.')}}</div>
                                         
                                     </div>
-                                </div>
-                            </td>
+                                </td>
+                                <td class="items-center inline-flex ml-8">
+                                    <a class=" cursor-pointer hover:text-greenLime-500 ml-2"
+                                        wire:click="delete('{{ $item->rowId }}')"
+                                        wire:loading.class="text-red-600 opacity-25"
+                                        wire:target="delete('{{ $item->rowId }}')">
+                                        <span
+                                            class="bg-lese-900 rounded-md h-7 w-7 flex items-center justify-center cursor-pointer hover:bg-orange-800 hover:text-white">
+                                            <i class="fas fa-trash-alt text-white"></i>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+    
+                        @endforeach
+    
+                    </tbody>
+                </table>
 
-
-
-                            <td class="text-center">
-                                <div class="flex">
-                                    <span>$ {{ $item->price }}</span>
-
-
-                                </div>
-
-                            </td>
-
-                            <td>
-                                <div class="flex justify-center">
-                                    @livewire('update-cart-item', ['rowId' => $item->rowId], key($item->rowId))
-                                </div>
-                            </td>
-
-                            <td class="text-center">
-                                $ {{ $item->price * $item->qty }}
-                            </td>
-                            <td class="flex items-center pt-3">
-                                <a class="ml-6 cursor-pointer hover:text-greenLime-500"
-                                    wire:click="delete('{{ $item->rowId }}')"
-                                    wire:loading.class="text-red-600 opacity-25"
-                                    wire:target="delete('{{ $item->rowId }}')">
-                                    <span
-                                        class="bg-lese-200 rounded-md h-7 w-7 flex items-center justify-center cursor-pointer hover:bg-trueGray-800 hover:text-white">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </span>
-                                </a>
-                            </td>
-                        </tr>
-
-                    @endforeach
-
-                </tbody>
-            </table>
+            </div>
 
             <div class=" my-4 flex justify-between items-center bg-gray-100 p-4 rounded-md">
                 <div class="items-center">
-                    <p class="font-bold text-sm">Borrar Pedido <i
-                            class="fas fa-arrow-right pt-2 mx-2 text-lg text-greenLime-500"></i> </p>
+                    <p class="font-bold text-sm">Vaciar carrito <i class="fas fa-arrow-right pt-2 mx-2 text-lg text-greenLime-500"></i> </p>
                 </div>
                 <div>
 
@@ -103,9 +115,9 @@
                         Quitar todo
                     </a> --}}
 
-                    <a class="bg-lese-200 rounded-md h-8 w-8 flex items-center justify-center cursor-pointer hover:bg-trueGray-800 hover:text-white"
+                    <a class="bg-lese-900 rounded-md h-8 w-8 flex items-center justify-center cursor-pointer hover:bg-orange-800 hover:text-white"
                         wire:click="destroy">
-                        <i class="fas fa-trash"></i>
+                        <i class="fas fa-trash text-white"></i>
                     </a>
                 </div>
 
@@ -142,6 +154,7 @@
                     <p class="text-gray-700 ml-2">
                         <span class="font-bold text-lg bg-gray-100 p-2 rounded-md">
                             $ {{ Cart::subTotal() }}
+                            
                         </span>
 
                     </p>

@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Color;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
-
-class UpdateCartItem extends Component
+class UpdateCartItemColor extends Component
 {
 
     public $rowId, $qty, $quantity;
@@ -14,8 +14,8 @@ class UpdateCartItem extends Component
     public function mount(){
         $item = Cart::get($this->rowId);
         $this->qty = $item->qty;
-
-        $this->quantity = qty_available($item->id);
+        $color = Color::where('id', $item->options->color_id)->first();
+        $this->quantity = qty_available($item->id, $color->id);
     }
 
     public function decrement(){
@@ -34,7 +34,6 @@ class UpdateCartItem extends Component
 
     public function render()
     {
-        return view('livewire.update-cart-item');
+        return view('livewire.update-cart-item-color');
     }
 }
-

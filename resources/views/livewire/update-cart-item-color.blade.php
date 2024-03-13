@@ -1,10 +1,9 @@
 <div>
-    <div class="flex items-center" x-data>
+    <div class="flex items-center">
         <div class="mr-8 inline-flex">
             {{-- Boton restar --}}
             <x-jet-secondary-button
-                class="border-lese-900 text-orange-600  mr-1 hover:text-trueGray-500" 
-                disabled
+                class="border-lese-900 text-orange-600 mr-1 hover:text-trueGray-500" disabled
                 x-bind:disabled="$wire.qty <= 1" 
                 wire:loading.attr="disabled" 
                 wire:target="decrement"
