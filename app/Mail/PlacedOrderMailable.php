@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class PlacedOrderMailable extends Mailable
 {
     use Queueable, SerializesModels;
-    Public $subject = "Nuevo Pedido - Lese";
+    Public $subject = "Nuevo Pedido - Zampreonline";
     Public $orden;
 
     /**

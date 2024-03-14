@@ -85,7 +85,7 @@ class CreateOrder extends Component
             return $prefix.'-'.$zeros.$last_number;
         }//end funcion que genera el consecutivo de la orden 
 
-        $code_id = IDGenerator(new Orden, 'code_id', 3, 'PWL');/// consecutivo de la orden 3 ceros y letras
+        $code_id = IDGenerator(new Orden, 'code_id', 3, 'ZON');/// consecutivo de la orden 3 ceros y letras
         $orden = new Orden();
 
         $orden->user_id = auth()->user()->id;
@@ -123,7 +123,7 @@ class CreateOrder extends Component
         // Evia correo confirmacion al cliente
         Mail::to($orden->user->email)->send(new PedidoMailable($orden)); 
         // Evia correo confirmacion al admin
-        Mail::to(['pedidos@lese.com', 'otrocorreo@gmail.com'])->send(new PlacedOrderMailable($orden)); 
+        Mail::to(['arlingholguin@gmail.com'])->send(new PlacedOrderMailable($orden)); 
         
         $this->emit('showSuccessMessage', __('Revisa tu correo electrónico para ver el detalle de la orden '.$orden->user->email));
          //whatsapp notification al cliente - > activar linea

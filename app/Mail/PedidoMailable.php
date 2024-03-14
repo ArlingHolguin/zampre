@@ -11,7 +11,7 @@ class PedidoMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-    Public $subject = "Pedido recibido - Lese";
+    Public $subject = "Pedido recibido - Zampre Online";
     Public $orden;
 
     /**

@@ -11,8 +11,7 @@ class WelcomeController extends Controller
 {
     public function __invoke()
     {
-        visitor()->visit();
-        
+        visitor()->visit();       
 
         $categories = Category::all();
         return view('welcome', compact('categories'));

@@ -53,8 +53,8 @@
                         style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
                         <tr>
                             <td style="background-color:#ffffff;padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold;">
-                                <a href="https://lesedistribuciones.com/" style="text-decoration:none;"><img
-                                        src="https://i.ibb.co/xJ71T3G/logo-lese.png" width="200" alt="lese"
+                                <a href="#" style="text-decoration:none;"><img
+                                        src="https://i.ibb.co/9t9Pk9w/zampre-color.png" width="200" alt="lese"
                                         style="width:165px;max-width:80%;height:auto;border:none;text-decoration:none;color:#ffffff;"></a>
                             </td>
                         </tr>
@@ -66,22 +66,22 @@
                                 <p style="margin:0;">{{ $orden->user->name }}, hemos recibido tu pedido
                                     {{ $orden->code_id }}, vamos a empezar el proceso de embalaje lo más prontro
                                     posible. Gracias por confiar en nosotros. <a href="{{route('orders.resumen', $orden)}}"
-                                        style="color:#f0e117;text-decoration:underline;">Ver orden: 
+                                        style="color:#f06e17;text-decoration:underline;">Ver orden: 
                                         {{ $orden->code_id }}</a></p>
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color:#ffffff;padding:0;font-size:24px;line-height:28px;font-weight:bold;">
-                                <a href="https://lesedistribuciones.com/" style="text-decoration:none;"><img
+                                <a href="#" style="text-decoration:none;"><img
                                         src="https://i.ibb.co/RTg27cg/recibe-predidos.png" width="600" alt=""
                                         style="width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;"></a>
                             </td>
                         </tr>
                         <tr>
                             <td
-                                style="padding:30px;text-align:center;font-size:11px;background-color:#404040;color:#ddd903;">
-                                <p style="margin:0;">© {{date("Y")}} Lese Distribuciones. Todos los derechos reservados.</p>
-                                <p style="margin:0;font-size:9px;line-height:20px;">&reg;Powered by <a href="https://arling.pro"></a>arling.pro</p>
+                                style="padding:30px;text-align:center;font-size:11px;background-color:#404040;color:#dd6c03;">
+                                <p style="margin:0;">© {{date("Y")}} Zampre online. Todos los derechos reservados.</p>
+                                <p style="margin:0;font-size:9px;line-height:20px;">&reg;Powered by <a href="https://arling.me"></a>arling.me</p>
                             </td>
                         </tr>
                     </table>
