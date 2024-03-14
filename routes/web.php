@@ -27,6 +27,7 @@ Route::get('productos/{product}', [\App\Http\Controllers\ProductController::clas
 Route::get('search', SearchController::class)->name('search');
 Route::get('categorias/{category}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('mi-orden', ShoppingCart::class)->name('shopping-cart');
+
 Route::get('orden/crear', CreateOrder::class)->middleware('auth')->name('orders-create');
 
 Route::middleware(['auth'] )->group(function(){
@@ -44,6 +45,6 @@ Route::middleware(['auth'] )->group(function(){
 
 Route::get('pdf', [PDFController::class, 'PDF'])->name('pdf');
 Route::get('pdfpedido/{orden}', [OrderController::class, 'pdfpedido'])->name('pdfpedido');
-// Route::get('/pdf', function () {
-//     return view('prueba');
-// });
+Route::get('/pdf', function () {
+    return view('prueba');
+});

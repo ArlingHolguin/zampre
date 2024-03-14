@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
     {
         // superadmin 
         $c_superAdmin = User::create([
-            'name' => 'Super',
+            'name' => 'superadmin',
             'email' => 'super@super.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -77,13 +77,17 @@ class RoleSeeder extends Seeder
         $addPermissionPermission = Permission::create(['name' => 'add permission']);   
         $editPermissionPermission = Permission::create(['name' => 'edit permission']);    
         $deletePermissionPermission = Permission::create(['name' => 'delete permission']);
+
+        //cambiar el estado de una orden admin y super
+        $changeOrderStatusPermission = Permission::create(['name' => 'change order status']);
+
         
 
         //Assign permissions to admin user
         $r_admin->syncPermissions([
                     $viewAllUserPermission, $viewSingleUserPermission, $addUserPermission, $editUserPermission, $deleteUserPermission, $viewAllRolePermission,
                     $viewSingleRolePermission, $addRolePermission, $editRolePermission, $deleteRolePermission, $viewAllPermissionPermission, $viewSinglePermissionPermission,
-                    $addPermissionPermission, $editPermissionPermission, $deletePermissionPermission, $manageUserRolesPermission
+                    $addPermissionPermission, $editPermissionPermission, $deletePermissionPermission, $manageUserRolesPermission, $changeOrderStatusPermission
                 ]);
 
         $c_superAdmin->assignRole($r_superAdmin);
