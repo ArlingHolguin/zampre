@@ -113,8 +113,9 @@
                                </div>
                            </td>
                            <td class="pl-5">
-                               <button
-                                   class="py-3 px-3 text-sm focus:outline-none leading-none text-trueGray-500 bg-lese-100 rounded">{{ $product->category->name }}</button>
+                               <button class="py-3 px-3 text-sm focus:outline-none leading-none text-trueGray-500 bg-lese-100 rounded">
+                                {{ $product->subcategory->category->name }}
+                            </button>
                            </td>
                            <td class="pl-4">
                                {{-- <button

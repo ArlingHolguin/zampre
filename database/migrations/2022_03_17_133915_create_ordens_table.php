@@ -27,6 +27,7 @@ class CreateOrdensTable extends Migration
              $table->integer('shipping_cost');
              $table->integer('total');
              $table->json('content');
+             $table->json('info_ip')->nullable()->default(null);
 
              $table->unsignedBigInteger('departamento_id')->nullable();
             $table->foreign('departamento_id')->references('id')->on('departamentos');

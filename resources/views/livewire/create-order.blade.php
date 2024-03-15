@@ -36,37 +36,73 @@
 
                 <p class="mt-6 mb-3 text-lg font-semibold text-trueGray-800">Envíos</p>
                 {{-- Tarjeta de envios --}}
-                <label class="flex items-center justify-between bg-white rounded-lg shadow-md px-6 py-4 mb-4">
+                <div class="bg-white rounded-lg shadow-md">
+                    <label class="flex items-center justify-between px-6 py-4 mb-4 cursor-pointer">
 
-                    <!-- toggle -->
-                    <div class="relative">
-                        <input id="toogleButton" name="envio_type" value="1" type="radio" class="hidden"
-                            x-model="envio_type" />
-                        <!-- path -->
-                        <div class="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner  cursor-pointer"></div>
-                        <!-- crcle -->
-                        <div
-                            class="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0  cursor-pointer">
+                        <!-- toggle -->
+                        <div class="relative">
+                            <input id="toogleButton" name="envio_type" value="1" type="radio" class="hidden"
+                                x-model="envio_type" />
+                            <!-- path -->
+                            <div class="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner  cursor-pointer"></div>
+                            <!-- crcle -->
+                            <div class="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0  cursor-pointer">
+                            </div>
                         </div>
-                    </div>
-                    <span class="ml-2 mr-auto">
-                        Recojo en bodega - Bogotá
-                    </span>
-                    <!-- end toggle -->
-
-
-                    <div class="font-semibold text-trueGray-800 ml-2">
-                        <span
-                            class="bg-trueGray-800 rounded-md h-8 w-8 flex items-center justify-center cursor-pointer text-greenLime-400  hover:text-greenLime-50">
-                            <img src="{{ asset('vendor/icons/producto.gif') }}" alt="Card">
-                            {{-- <i class="fas fa-gift text-lg "></i> --}}
+                        <span class="ml-2 mr-auto">
+                            Recibir en oficina de la empresa de envíos
                         </span>
+                        <!-- end toggle -->
+
+
+                        <div class="font-semibold text-trueGray-800 ml-2">
+                            <span
+                                class="bg-trueGray-800 rounded-md h-8 w-8 flex items-center justify-center cursor-pointer text-greenLime-400  hover:text-greenLime-50">
+                                <img src="{{ asset('vendor/icons/producto.gif') }}" alt="Card">
+                                {{-- <i class="fas fa-gift text-lg "></i> --}}
+                            </span>
+                        </div>
+                    </label>                
+                    <div class="px-6 pb-6 grid grid-cols-2 gap-6 mb-4" :class="{ 'hidden': envio_type !=1 }">
+                        {{-- departamento --}}
+                        <div>
+
+                            <x-jet-label value="Departamento***" />
+                            <select class="form-control w-full" wire:model="departamento_id">
+                                <option value="" disabled selected>Seleccione el departamento</option>
+                                @foreach ($departamentos as $departamento)
+                                    <option value="{{ $departamento->id }}">{{ $departamento->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-jet-input-error for="departamento_id" />
+                        </div> {{-- Fin departamentos --}}
+
+                        {{-- Ciudades --}}
+                        <div>
+                            <x-jet-label value="Ciudad o Municipio**" />
+                            <select class="form-control w-full" wire:model="municipio_id">
+                                <option value="" disabled selected>Seleccione Ciudad o Municipio</option>
+                                @foreach ($municipios as $municipio)
+                                    <option value="{{ $municipio->id }}">{{ $municipio->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-jet-input-error for="municipio_id" />
+                        </div> {{-- Fin Ciudades --}}
+
+                        {{-- referencia --}}
+                        <div class="col-span-2">
+                            <x-jet-label value="Oficina y/o referencia" />
+                            <x-jet-input type="text" wire:model="references" class="form-control w-full"
+                                placeholder="Ingrese nombre de la la oficina si es necesario dirección" />
+                                <x-jet-input-error for="references" />
+
+                        </div> {{-- end referencia --}}
                     </div>
-                </label>
+                </div>
 
                 {{-- Tarjeta envio a domicilio --}}
                 <div class="bg-white rounded-lg shadow-md">
-                    <label class="flex items-center justify-between  px-6 py-4">
+                    <label class="flex items-center justify-between  px-6 py-4 cursor-pointer">
                         <!-- toggle a dmomicilio radio -->
                         <div class="relative">
                             <input id="toogleButton" name="envio_type" value="2" type="radio" class="hidden"

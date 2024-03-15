@@ -221,22 +221,24 @@
                     <p class="ml-2 text-lg font-bold text-trueGray-700">Envío</p>
                 </div>
                 @if ($orden->envio_type == 1)
-                    <p class="">{{ $orden->contact }}, los productos deben ser recogidos en bodega.</p>
-                    <a href="https://www.google.com/maps/place/Cra.+57+%234b-48,+Bogot%C3%A1/@4.6225628,-74.1201713,17z/data=!3m1!4b1!4m5!3m4!1s0x8e3f995155693551:0x708bb21a7ec37fbd!8m2!3d4.6225628!4d-74.1179826?hl=es"
-                        target="_blank">
-                        <div class="mb-2 mt-4 flex items-center rounded bg-gray-200 p-2">
-                            <i class="fas fa-route mr-2 text-xl"></i>
-                            <p class="uppercase hover:font-bold hover:underline">Calle 57 # 4b - 45 Local 203 -
-                                Bogotá</p>
-                        </div>
-                    </a>
-                    <a href="https://api.whatsapp.com/send?phone=573124533707&text=Hola mi nombre es {{ $orden->contact }}, mi número de orden es {{ $orden->consecutivo }}, cuando puedo pasar a recoger.?"
-                        target="_blank">
-                        <div class="flex items-center rounded bg-gray-200 p-2">
-                            <i class="fab fa-whatsapp-square mr-2 text-3xl text-greenLime-500"></i>
-                            <p class="hover:font-bold hover:underline">Número de contacto: 3124533707</p>
-                        </div>
-                    </a>
+                <p class="">😉 {{$orden->contact}}, debes recoger su pedido en:</p>
+                <div class="flex flex-col">
+                    <div>
+                        <span>Oficina:</span>
+                        <span class="uppercase font-semibold">{{ $orden->references}}</span>
+                    </div>
+                    <div>
+                        <span>Ciudad/Municipio:</span>
+                        <span class="uppercase font-semibold">{{ $orden->municipio->name}}</span>
+                    </div>
+                    <div>
+                        <span>Departamento:</span>
+                        <span class="uppercase font-semibold">{{ $orden->departamento->name}}</span>
+                    </div>
+                    
+                    <span>Tienes 8 días para recoger la mercancía.</span>
+
+                </div>
                 @else
                     <p>Su pedido será enviado a: </p>
                     <div class="flex items-center">

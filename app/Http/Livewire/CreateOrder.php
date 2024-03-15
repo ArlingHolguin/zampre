@@ -57,10 +57,7 @@ class CreateOrder extends Component
         $rules = $this->rules;
 
         if($this->envio_type == 2){
-            $rules['departamento_id'] = 'required';
-            $rules['municipio_id'] = 'required';
             $rules['address'] = 'required';
-            $rules['references'] = 'required';
         }
 
         $this->validate($rules);
@@ -86,6 +83,7 @@ class CreateOrder extends Component
         }//end funcion que genera el consecutivo de la orden 
 
         $code_id = IDGenerator(new Orden, 'code_id', 3, 'ZON');/// consecutivo de la orden 3 ceros y letras
+        $infoClient = getClientInfo();
         $orden = new Orden();
 
         $orden->user_id = auth()->user()->id;
@@ -97,18 +95,19 @@ class CreateOrder extends Component
         $subtotal = str_replace( ',', '', Cart::subtotal() );
         $orden->total = $this->shipping_cost + $subtotal;
         $orden->content = Cart::content();
+        $orden->info_ip = json_encode($infoClient);
+        $orden->shipping_cost = $this->shipping_cost;
+        $orden->departamento_id = $this->departamento_id;
+        $orden->municipio_id = $this->municipio_id;
+        $orden->references = $this->references;
         
         
         
         
 
         if ($this->envio_type == 2) {
-            $orden->shipping_cost = $this->shipping_cost;
-            $orden->departamento_id = $this->departamento_id;
-            $orden->municipio_id = $this->municipio_id;
             $orden->address = $this->address;
             $orden->casa = $this->casa;
-            $orden->references = $this->references;
             
         }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,10 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Livewire\CreateOrder;
 use App\Http\Livewire\ShoppingCart;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +24,11 @@ use App\Http\Livewire\ShoppingCart;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+ 
+Route::get('/login-google', [GoogleAuthController::class, 'redirectToGoogle'])->name('login-google');
+Route::get('/google-callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 
 Route::get('/', WelcomeController::class)->name('home');
 // Route::get('productos/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
@@ -45,6 +55,7 @@ Route::middleware(['auth'] )->group(function(){
 
 Route::get('pdf', [PDFController::class, 'PDF'])->name('pdf');
 Route::get('pdfpedido/{orden}', [OrderController::class, 'pdfpedido'])->name('pdfpedido');
+
 Route::get('/pdf', function () {
     return view('prueba');
 });

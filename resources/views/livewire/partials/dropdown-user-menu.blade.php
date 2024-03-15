@@ -1,13 +1,15 @@
-<div class="mx-6 relative hidden md:block" style="z-index: 900;">
+<div class="relative mx-6 hidden md:block" style="z-index: 900;">
     @auth
         <x-jet-dropdown align="right" width="48">
             <x-slot name="trigger">
 
                 <button
-                    class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
+                    class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none">
+                    <img class="h-8 w-8 rounded-full object-cover"
+                        src="{{ Auth::user()->external_auth == 'google' && Auth::user()->profile_photo_path ? Auth::user()->profile_photo_path : Auth::user()->profile_photo_url }}"
                         alt="{{ Auth::user()->name }}" />
                 </button>
+
 
             </x-slot>
 
@@ -21,11 +23,11 @@
                     {{ __('Profile') }}
                 </x-jet-dropdown-link>
 
-                <x-jet-dropdown-link href="{{route('orders.index')}}">
+                <x-jet-dropdown-link href="{{ route('orders.index') }}">
                     {{ __('Orders') }}
                 </x-jet-dropdown-link>
 
-                <x-jet-dropdown-link href="{{route('dashboard')}}">
+                <x-jet-dropdown-link href="{{ route('dashboard') }}">
                     {{ __('Administrator') }}
                 </x-jet-dropdown-link>
 
@@ -37,7 +39,8 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <x-jet-dropdown-link href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
                                             this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-jet-dropdown-link>

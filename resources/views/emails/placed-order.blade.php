@@ -63,12 +63,18 @@
                             <td style="padding:30px;background-color:#ffffff;">
                                 <h1
                                     style="margin-top:0;margin-bottom:16px;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">
-                                    Nuevo pedido!😎</h1>
+                                    😎 Nuevo pedido! 😎</h1>
                                 <p style="margin:0;">{{ $orden->user->name }}, ha relalizado un pedido
-                                    {{ $orden->code_id }}, contactalo y confirma la orden.<a href="{{route('orders.resumen', $orden)}}"
+                                    {{ $orden->code_id }}, contáctalo y confirma la orden.<a href="{{route('orders.resumen', $orden)}}"
                                         style="color:#f06717;text-decoration:underline;">Ver orden: 
                                         {{ $orden->code_id }}</a></p>
+                                        <h2 style="margin-top:10px;margin-bottom:4px;font-size:20px;line-height:28px;font-weight:bold;letter-spacing:-0.02em;">
+                                            Detalles del pedido</h2>
+                                        <p style="margin:0; font-size: 12px;"><b>Ip:</b> {{ $ip }}</p>
+                                        <p style="margin:0; font-size: 12px;"><b>Hora y fecha:</b> {{ $ts }}</p>
+                                        <p style="margin:0; font-size: 12px;"><b>Total:</b> ${{ $orden->total }}</p>
                             </td>
+                           
                         </tr>
                         <tr>
                             <td style="background-color:#ffffff;padding:0;font-size:24px;line-height:28px;font-weight:bold;">

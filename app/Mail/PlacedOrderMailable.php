@@ -12,6 +12,8 @@ class PlacedOrderMailable extends Mailable
     use Queueable, SerializesModels;
     Public $subject = "Nuevo Pedido - Zampreonline";
     Public $orden;
+    Public $ip;
+    Public $ts;
 
     /**
      * Create a new message instance.
@@ -22,6 +24,10 @@ class PlacedOrderMailable extends Mailable
     {
         //
         $this->orden = $orden;
+        $infoClient = json_decode($orden->info_ip, true);
+        $infoClient = json_decode($orden->info_ip, true);
+        $this->ip = $infoClient['ip'];
+        $this->ts = $infoClient['ts'];
     }
 
     /**

@@ -23,7 +23,7 @@ class EditProduct extends Component
         $this->product = $product;
         $this->categories = Category::all();
 
-        $this->category_id = $product->category->id;
+        $this->category_id = $product->subcategory->category->id;
 
     }
 

@@ -41,12 +41,14 @@ class OrderController extends Controller
         // $this->authorize('author', $orden);
 
         $items = json_decode($orden->content);
+        
         return view('orders.resumen', compact('orden', 'items'));
     }
 
     public function show(Orden $orden){
         $this->authorize('author', $orden);
         $items = json_decode($orden->content);
+        
         // dd($items);
         
         
