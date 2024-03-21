@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Livewire\CreateOrder;
 use App\Http\Livewire\ShoppingCart;
@@ -25,6 +26,7 @@ use Illuminate\Support\Str;
 |
 */
 
+Route::post('/envia', [ShippingController::class, 'calculateShipping'])->name('envia');
 
  
 Route::get('/login-google', [GoogleAuthController::class, 'redirectToGoogle'])->name('login-google');
@@ -49,6 +51,10 @@ Route::middleware(['auth'] )->group(function(){
     // Route::get('pedidos/{order}/pago', PaymentOrder::class)->name('orders.payment');
     // Route::get('pedidos/{order}/pay', [OrderController::class, 'pay'])->name('orders.pay');
     // Route::get('webhooks', WebhooksController::class)->name('webhooks');
+
+    //ruta post para el pago
+
+ 
     
 
 });

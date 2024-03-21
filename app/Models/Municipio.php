@@ -17,4 +17,9 @@ class Municipio extends Model
     public function ordenes(){
         return $this->hasMany(Orden::class);
     }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
 }

@@ -2,9 +2,9 @@
     <div class="md:py-8 md:px-6 md:mb-4">
         <div class="glider-contain pt-4">
             <div class="glider-carousel flex items-center">
-              <div class="flex items-center justify-center">
+              {{-- <div class="flex items-center justify-center">
                 <img  class=" object-center object-cover" src="{{asset('img/tienda.jpg')}}" alt="">
-              </div>
+              </div> --}}
               <div class="flex items-center justify-center">
                 <img  class=" object-center object-cover" src="{{asset('img/new.jpg')}}" alt="">
               </div>

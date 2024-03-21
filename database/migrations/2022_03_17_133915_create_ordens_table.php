@@ -24,6 +24,7 @@ class CreateOrdensTable extends Migration
              $table->string('phone');
              $table->enum('status', [Orden::PENDIENTE,Orden::RECIBIDO, Orden::ENVIADO, Orden::ENTREGADO, Orden::ANULADO])->default(Orden::PENDIENTE);
              $table->enum('envio_type', [1, 2]);
+             $table->string('identification')->nullable();
              $table->integer('shipping_cost');
              $table->integer('total');
              $table->json('content');

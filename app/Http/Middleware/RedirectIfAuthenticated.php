@@ -23,7 +23,9 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                //retorna  ala pagina de inicio si no ha visitado alguna pagian antes si np redirige a la pagina que visito
+                $urlIntended = session('url.intended');
+                return $urlIntended ? redirect($urlIntended) : redirect(RouteServiceProvider::HOME);
             }
         }
 

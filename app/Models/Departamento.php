@@ -13,6 +13,11 @@ class Departamento extends Model
         'name'
     ];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
+
     //Relacion uno a muchos
     public function municipios(){
         return $this->hasMany(Municipio::class);

@@ -1,27 +1,35 @@
 <div>
     {{-- Titulo --}}
-    <div class="bg-lese-100 sticky top-16 z-40">
-        <div class=" flex items-center container  py-2">
+    <div class="sticky top-16 z-40 bg-lese-100">
+        <div class="container flex items-center py-2">
             {{-- icono --}}
-            <span class="bg-trueGray-800 rounded-md h-8 w-8 flex items-center justify-center">
-                <i class="fas fa-box-open text-xl text-lese-400"></i>
+            <span class="flex h-8 w-8 items-center justify-center rounded-md bg-orange-600">
+                <i class="fas fa-box-open text-xl text-white"></i>
             </span>
             {{-- end icono --}}
-            <p class="text-xl font-black text-trueGray-900 mx-2 uppercase">Datos de envío </p>
+            <p class="mx-2 text-xl font-black uppercase text-trueGray-600">Datos de envío </p>
         </div>
 
     </div>
     {{-- End Titulo --}}
 
-    <div class="container py-8 grid grid-cols-5 gap-6">
+    <div class="container grid grid-cols-5 gap-6 py-8">
         <div class="col-span-3">
-            <div class="bg-white rounded-lg shadow-md p-4 pb-5">
+            <div class="rounded-lg bg-white p-4 pb-5 shadow-md">
                 {{-- Nombre Contacto --}}
                 <div class="mb-4">
                     <x-jet-label value="Nombre de contacto" />
                     <x-jet-input type="text" placeholder="Nombre de la persona que recibe el producto"
-                        class=" form-control w-full focus:border-lese-200" wire:model.defer="contact"/>
+                        class="form-control w-full focus:border-lese-200" wire:model.defer="contact" />
                     <x-jet-input-error for="contact" />
+                </div>
+
+                <div class="mb-4">
+                    <x-jet-label value="Número de identificación" />
+                    <x-jet-input type="text"
+                        placeholder="Número de identificación sin comas, ni espacios ej: 1234567890"
+                        class="form-control w-full focus:border-lese-200" wire:model.defer="identification" />
+                    <x-jet-input-error for="identification" />
                 </div>
 
                 {{-- Telefono Contacto --}}
@@ -34,41 +42,43 @@
             </div>
             <div x-data="{ envio_type: @entangle('envio_type') }">
 
-                <p class="mt-6 mb-3 text-lg font-semibold text-trueGray-800">Envíos</p>
+                <p class="mb-3 mt-6 text-lg font-semibold text-trueGray-800">Envíos</p>
                 {{-- Tarjeta de envios --}}
-                <div class="bg-white rounded-lg shadow-md">
-                    <label class="flex items-center justify-between px-6 py-4 mb-4 cursor-pointer">
+                <div class="rounded-lg bg-white shadow-md">
+                    <label class="mb-4 flex cursor-pointer items-center justify-between px-6 py-4">
 
                         <!-- toggle -->
                         <div class="relative">
                             <input id="toogleButton" name="envio_type" value="1" type="radio" class="hidden"
                                 x-model="envio_type" />
                             <!-- path -->
-                            <div class="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner  cursor-pointer"></div>
+                            <div class="toggle-path h-5 w-9 cursor-pointer rounded-full bg-gray-200 shadow-inner"></div>
                             <!-- crcle -->
-                            <div class="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0  cursor-pointer">
+                            <div
+                                class="toggle-circle absolute inset-y-0 left-0 h-3.5 w-3.5 cursor-pointer rounded-full bg-white shadow">
                             </div>
                         </div>
-                        <span class="ml-2 mr-auto">
-                            Recibir en oficina de la empresa de envíos
+                        <span class="ml-2 mr-auto font-medium">
+                            Recibo en agencia de envios
                         </span>
                         <!-- end toggle -->
 
 
-                        <div class="font-semibold text-trueGray-800 ml-2">
+                        <div class="ml-2 font-semibold text-trueGray-800">
                             <span
-                                class="bg-trueGray-800 rounded-md h-8 w-8 flex items-center justify-center cursor-pointer text-greenLime-400  hover:text-greenLime-50">
+                                class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md bg-trueGray-800 text-greenLime-400 hover:text-greenLime-50">
                                 <img src="{{ asset('vendor/icons/producto.gif') }}" alt="Card">
                                 {{-- <i class="fas fa-gift text-lg "></i> --}}
                             </span>
                         </div>
-                    </label>                
-                    <div class="px-6 pb-6 grid grid-cols-2 gap-6 mb-4" :class="{ 'hidden': envio_type !=1 }">
+                    </label>
+                    <div class="mb-4 grid grid-cols-2 gap-6 px-6 pb-6" :class="{ 'hidden': envio_type != 1 }">
                         {{-- departamento --}}
                         <div>
 
                             <x-jet-label value="Departamento***" />
-                            <select class="form-control w-full" wire:model="departamento_id">
+                            {{ $departamento_id }}
+                            <select class="form-control w-full" wire:model="departamento_id" :disabled="$isLoading">
                                 <option value="" disabled selected>Seleccione el departamento</option>
                                 @foreach ($departamentos as $departamento)
                                     <option value="{{ $departamento->id }}">{{ $departamento->name }}</option>
@@ -79,11 +89,13 @@
 
                         {{-- Ciudades --}}
                         <div>
+                            {{ $municipio_id }}
                             <x-jet-label value="Ciudad o Municipio**" />
-                            <select class="form-control w-full" wire:model="municipio_id">
+                            <select class="form-control w-full" wire:model="municipio_id" :disabled="$isLoading">
                                 <option value="" disabled selected>Seleccione Ciudad o Municipio</option>
                                 @foreach ($municipios as $municipio)
-                                    <option value="{{ $municipio->id }}">{{ $municipio->name }}</option>
+                                    <option value="{{ $municipio->id }}">{{ $municipio->name . ' - ' . $municipio->code }}
+                                    </option>
                                 @endforeach
                             </select>
                             <x-jet-input-error for="municipio_id" />
@@ -91,52 +103,53 @@
 
                         {{-- referencia --}}
                         <div class="col-span-2">
-                            <x-jet-label value="Oficina y/o referencia" />
+                            <x-jet-label value="Oficina y/o dirección" />
                             <x-jet-input type="text" wire:model="references" class="form-control w-full"
-                                placeholder="Ingrese nombre de la la oficina si es necesario dirección" />
-                                <x-jet-input-error for="references" />
+                                placeholder="Nombre de la agencia y/o dirección" />
+                            <x-jet-input-error for="references" />
 
                         </div> {{-- end referencia --}}
                     </div>
                 </div>
 
                 {{-- Tarjeta envio a domicilio --}}
-                <div class="bg-white rounded-lg shadow-md">
-                    <label class="flex items-center justify-between  px-6 py-4 cursor-pointer">
+                <div class="rounded-lg bg-white shadow-md">
+                    <label class="flex cursor-pointer items-center justify-between px-6 py-4">
                         <!-- toggle a dmomicilio radio -->
                         <div class="relative">
                             <input id="toogleButton" name="envio_type" value="2" type="radio" class="hidden"
                                 x-model="envio_type" />
                             <!-- path -->
-                            <div class="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner  cursor-pointer">
+                            <div class="toggle-path h-5 w-9 cursor-pointer rounded-full bg-gray-200 shadow-inner">
                             </div>
                             <!-- circle -->
                             <div
-                                class="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0  cursor-pointer">
+                                class="toggle-circle absolute inset-y-0 left-0 h-3.5 w-3.5 cursor-pointer rounded-full bg-white shadow">
                             </div>
                         </div>
-                        <span class="ml-2 mr-auto">
-                            A domicilio
+                        <span class="ml-2 mr-auto font-medium">
+                            Recibo a domicilio
                         </span>
                         <!-- end toggle -->
 
-                        <div class="font-semibold text-trueGray-800 ml-2">
+                        <div class="ml-2 font-semibold text-trueGray-800">
                             <span
-                                class="bg-trueGray-800 rounded-md h-8 w-8 flex items-center justify-center cursor-pointer text-greenLime-400  hover:text-greenLime-50">
+                                class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md bg-trueGray-800 text-greenLime-400 hover:text-greenLime-50">
                                 {{-- <i class="fas fa-truck text-lg"></i> --}}
                                 <img src="{{ asset('vendor/icons/entrega.gif') }}" alt="Card">
                             </span>
                         </div>
                     </label>
 
-                    <div class="px-6 pb-6 grid grid-cols-2 gap-6" :class="{ 'hidden': envio_type !=2 }">
+                    <div class="grid grid-cols-2 gap-6 px-6 pb-6" :class="{ 'hidden': envio_type != 2 }">
                         {{-- departamento --}}
                         <div>
 
                             <x-jet-label value="Departamento***" />
-                            <select class="form-control w-full" wire:model="departamento_id">
+                            <select class="form-control w-full uppercase" wire:model="departamento_id" :disabled="$isLoading">
                                 <option value="" disabled selected>Seleccione el departamento</option>
                                 @foreach ($departamentos as $departamento)
+                                    {{-- <option value="{{ $departamento->id }}">{{ $departamento->name }}</option> --}}
                                     <option value="{{ $departamento->id }}">{{ $departamento->name }}</option>
                                 @endforeach
                             </select>
@@ -146,10 +159,12 @@
                         {{-- Ciudades --}}
                         <div>
                             <x-jet-label value="Ciudad o Municipio**" />
-                            <select class="form-control w-full" wire:model="municipio_id">
+                            <select class="form-control w-full uppercase" wire:model="municipio_id" :disabled="$isLoading">
                                 <option value="" disabled selected>Seleccione Ciudad o Municipio</option>
                                 @foreach ($municipios as $municipio)
-                                    <option value="{{ $municipio->id }}">{{ $municipio->name }}</option>
+                                    {{-- <option value="{{ $municipio->id }}">{{ $municipio->name }}</option> --}}
+                                    <option value="{{ $municipio->id }}">
+                                        {{ $municipio->name . ' - ' . $municipio->code }}</option>
                                 @endforeach
                             </select>
                             <x-jet-input-error for="municipio_id" />
@@ -177,7 +192,7 @@
                             <x-jet-label value="Referencia / Barrio" />
                             <x-jet-input type="text" wire:model="references" class="form-control w-full"
                                 placeholder="Opcional *ingrese una referencia si es necesario" />
-                                <x-jet-input-error for="references" />
+                            <x-jet-input-error for="references" />
 
                         </div> {{-- end referencia --}}
                     </div>
@@ -189,25 +204,32 @@
             {{-- Continuar con la venta --}}
             <div>
                 <div class="flex">
-                   @if (Cart::count() == 0)
-                   <div class="text-sm bg-lese-100 px-4 mt-2 rounded">No tiene agregado ningun item en el carrito</div>
+                    @if (Cart::count() == 0)
+                        <div class="mt-2 rounded bg-lese-100 px-4 text-sm">No tiene agregado ningun item en el carrito
+                        </div>
 
-                   <div class="mt-4 mb-4 rounded px-5 ml-auto bg-trueGray-900 text-lese-200 hover:text-teal-50 hover:bg-trueGray-700">
-                      <a href="/">Ir a la tienda</a>
-                   </div>
-                   @else
-
-                   <x-jet-button
-                       class="mt-4 mb-4 ml-auto bg-trueGray-900 text-lese-200 hover:text-teal-50 hover:bg-trueGray-700"
-                       wire:click="create_order">
-                       <div wire:loading.delay wire:target="create_order">
-                           <div class="animate-spin h-5 w-5 mr-3">
-                               <i class="fas fa-spinner text-lese-300 text-md"></i>
-                           </div>
-                       </div>
-                       Continuar con el pedido
-                   </x-jet-button>
-                   @endif
+                        <div
+                            class="mb-4 ml-auto mt-4 rounded bg-trueGray-900 px-5 text-lese-200 hover:bg-trueGray-700 hover:text-teal-50">
+                            <a href="/">Ir a la tienda</a>
+                        </div>
+                    @else
+                        <x-jet-button
+                            class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50"
+                            wire:click="create_order"
+                            wire:loading.attr="disabled"
+                            wire:target="create_order"
+                            :disabled="!$selectedShippingOption || !$shipping_cost">
+                            <div wire:loading.delay wire:target="create_order">
+                                <div class="flex items-center justify-center">
+                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                      </svg>
+                                </div>
+                            </div>
+                            Continuar con el pedido
+                        </x-jet-button>
+                    @endif
 
                 </div>
 
@@ -215,7 +237,7 @@
 
                 <hr>
 
-                <p class="text-sm text-trueGray-700 mt-2">El contenido de este sitio web está sujeto a las condiciones
+                <p class="mt-2 text-sm text-trueGray-700">El contenido de este sitio web está sujeto a las condiciones
                     aquí expuestas. Las personas (en adelante Ciudadanos-Usuarios) al acceder, navegar o usar este
                     sitio, reconocen que han leído, entendido y se obligan a cumplir con estos términos, leyes y
                     reglamentos. <a href="#politicas" class="font-bold text-lese-700">Políticas de Privacidad</a> </p>
@@ -229,16 +251,16 @@
 
         {{-- descripcion de la venta --}}
         <div class="col-span-2">
-            <div class="bg-white rounded-lg shadow p-6">
+            <div class="rounded-lg bg-white p-6 shadow">
 
-                <ul class="overflow-y-auto h-64">
+                <ul class="h-64 overflow-y-auto">
                     @forelse (Cart::content() as $item)
-                        <li class="flex p-2 border-b border-gray-200">
-                            <img class="h-15 w-20 object-cover mr-4 rounded-md" src="{{ $item->options->image }}">
+                        <li class="flex border-b border-gray-200 p-2">
+                            <img class="h-15 mr-4 w-20 rounded-md object-cover" src="{{ $item->options->image }}">
 
                             <article class="flex-1">
-                                <p class="font-regular text-xs text-trueGray-800 uppercase">{{ $item->name }}</p>
-                                <p class="font-bold text-xs text-trueGray-800 uppercase">
+                                <p class="font-regular text-xs uppercase text-trueGray-800">{{ $item->name }}</p>
+                                <p class="text-xs font-bold uppercase text-trueGray-800">
                                     {{ $item->options->referencia }}</p>
 
                                 <div class="flex">
@@ -255,32 +277,50 @@
 
                     @empty
                         <li>
-                            <div class="py-6 px-4">
-                                <p class="text-center text-gray-800 text-xs">No tiene agregado ningun item en el carrito
+                            <div class="px-4 py-6">
+                                <p class="text-center text-xs text-gray-800">No tiene agregado ningun item en el
+                                    carrito
                                 </p>
                             </div>
                         </li>
                     @endforelse
                 </ul>
 
-                <div class="text-gray-700 mt-4">
+                <div class="mt-4 text-gray-700">
 
 
-                    <hr class="mt-4 mb-3">
+                    <hr class="mb-3 mt-4">
 
-                    <p class="flex justify-between items-center font-semibold">
+                    <div class="flex items-center justify-between font-semibold">
+                        <span class="text-lg">Subotal</span>
+
+                        <span>
+                            ${{ str_replace(',', '', Cart::subtotal()) }}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between font-semibold">
+                        <span class="text-lg">Costo de envio</span>
+
+                        <span>
+                            ${{ str_replace(',', '', $shipping_cost ?? 0) }}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center justify-between font-semibold">
                         <span class="text-lg">Total</span>
 
-                         <span>${{ str_replace( ',', '.', Cart::subtotal() ) }}</span>
-                        </p>
+                        <span>
+                            ${{ str_replace(',', '', Cart::subtotal()) + $shipping_cost }}
+                        </span>
+                    </div>
                 </div>
             </div>
 
             {{-- card compra protegida --}}
-            <div class=" flex justify-between mt-2 bg-lesez-50 p-2 rounded-md items-center">
+            <div class="bg-lesez-50 mt-2 flex items-center justify-between rounded-md p-2">
                 <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 172 172"
-                        style=" fill:#000000;">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32"
+                        viewBox="0 0 172 172" style=" fill:#000000;">
                         <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
                             stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
                             font-family="none" font-weight="none" font-size="none" text-anchor="none"
@@ -305,17 +345,55 @@
                             </g>
                         </g>
                     </svg>
-                    <p class="text-xs ml-2">Datos Seguros</p>
+                    <p class="ml-2 text-xs">Datos Seguros</p>
                 </div>
 
                 <div class="mr-2">
-                    <img class="h-5 w-full object-center " src="{{ asset('vendor/icons/mercadopago-ancho.svg') }}"
-                        alt="Mercado Pago">
+                    Paga con nequi o efecty .....
                 </div>
 
 
 
             </div>{{-- end card compra protegida --}}
+
+            <div class="mt-4">
+                <x-jet-button wire:click="calculateShippingCost" wire:loading.attr="disabled"
+                    wire:target="calculateShippingCost" :disabled="!$departamento_id || !$municipio_id" class="flex w-full items-center justify-center bg-orange-600">
+                    <div class="flex items-center gap-1" wire:loading wire:target="calculateShippingCost">
+                        <div class="flex justify-center items-center">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                            <span>Calculando envío</span>
+                        </div>
+                        
+                    </div>
+                    <span wire:loading.remove wire:target="calculateShippingCost">Calcular Envío</span>
+                </x-jet-button>
+
+                @php
+                    $couriers = \App\Models\Courier::pluck('logo', 'id');
+                @endphp
+
+                @foreach ($validResponses as $data)
+                    @php
+                        $logo = $couriers[$data['carrierId']] ?? '';
+                    @endphp
+                    <div wire:key
+                        wire:click="selectShippingOption({{ $data['totalPrice'] }}, '{{ $data['carrierId'] }}-{{ $data['serviceId'] }}')"
+                        class="{{ $selectedShippingOption == $data['carrierId'] . '-' . $data['serviceId'] ? 'bg-orange-600 text-white' : 'text-gray-600' }} my-4 flex w-full cursor-pointer items-center gap-1 rounded border-2 border-transparent bg-white px-4 py-1 text-xs shadow-lg hover:border-orange-600">
+                        <img src="{{ asset($logo) }}" alt="Logo"
+                            class="mr-3 h-8 w-8 rounded object-cover object-center">
+                        <p>{{ $data['serviceDescription'] }}</p> |
+                        <p>{{ $data['deliveryEstimate'] }}</p>|
+                        <p>{{ number_format($data['totalPrice'], 0, ',', '.') }} {{ $data['currency'] }}</p>
+
+                    </div>
+                @endforeach
+
+
+            </div>
 
         </div>
     </div>
