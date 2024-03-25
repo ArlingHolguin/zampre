@@ -38,7 +38,7 @@ class ProductFactory extends Factory
             'referencia' =>Str::upper($referencia) ,
             'price' => $this->faker->randomElement([85000, 12000, 34000, 25000, 50000, 10000, 18000, 23000, 30000, 43000, 40000, 150000, 90000 ]),
             'quantity' => $quantity,
-            'status' => 2,
+            'status' => $this->faker->randomElement(['0', '1']),
             'keywords' => $name,
             'extracto' => $name.','. $this->faker->text(15),
             // 'category_id' => $cat->id,

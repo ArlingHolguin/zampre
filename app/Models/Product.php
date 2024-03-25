@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    const BORRADOR = 1;
-    const PUBLICADO = 2;
+    const BORRADOR = '0';
+    const PUBLICADO = '1';
 
 
     protected $guarded =[

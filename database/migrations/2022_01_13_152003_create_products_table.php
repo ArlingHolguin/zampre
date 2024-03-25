@@ -35,7 +35,8 @@ class CreateProductsTable extends Migration
             //     "weight": "1"
             //   },    
             //campo boolean
-            $table->enum('status', [Product::BORRADOR, Product::PUBLICADO])->default(Product::BORRADOR);
+            // $table->enum('status', [Product::BORRADOR, Product::PUBLICADO])->default(Product::BORRADOR);
+            $table->enum('status', ['0', '1'])->default('0');
             $table->string('keywords')->nullable();
             $table->longText('extracto')->nullable();
 
