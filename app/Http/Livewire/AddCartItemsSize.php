@@ -22,6 +22,10 @@ class AddCartItemsSize extends Component
     {
         $this->sizes = $this->product->sizes;
         $this->options['image'] = Storage::url($this->product->images->first()->url);
+        $this->options['dimensions'] = json_decode($this->product->dimensions, true);
+        //prodcuto con envio gratis
+        $this->options['free_shipping'] = $this->product->free_shipping;
+        
     }
 
     public function updatedSizeId($value)
@@ -58,12 +62,20 @@ class AddCartItemsSize extends Component
 
     public function addItem()
     {
+        $dimensions = json_decode($this->product->dimensions, true);
+
+        if ($dimensions && isset($dimensions['weight'])) {
+            $weight = $dimensions['weight'];
+        } else {
+            // Establece un valor predeterminado para weight si no está disponible
+            $weight = 0;
+        }
         Cart::add([
             'id' => $this->product->id,
             'name' => $this->product->name,
             'qty' => $this->qty,
             'price' => $this->product->price_discount ? $this->product->price_discount : $this->product->price,
-            'weight' => 550,
+            'weight' => $weight,
             'options' => $this->options
         ]);
 

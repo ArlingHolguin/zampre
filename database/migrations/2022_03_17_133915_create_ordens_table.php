@@ -24,11 +24,19 @@ class CreateOrdensTable extends Migration
              $table->string('phone');
              $table->enum('status', [Orden::PENDIENTE,Orden::RECIBIDO, Orden::ENVIADO, Orden::ENTREGADO, Orden::ANULADO])->default(Orden::PENDIENTE);
              $table->enum('envio_type', [1, 2]);
+             $table->enum('payment_type', [1, 2])->nullable()->default(1);
              $table->string('identification')->nullable();
              $table->integer('shipping_cost');
              $table->integer('total');
              $table->json('content');
              $table->json('info_ip')->nullable()->default(null);
+             $table->json('dimensions')->nullable();      
+             // "dimensions": {
+             //     "width": null,
+             //     "height": null,
+             //     "length": null,
+             //     "weight": "1"
+             //   },
 
              $table->unsignedBigInteger('departamento_id')->nullable();
             $table->foreign('departamento_id')->references('id')->on('departamentos');

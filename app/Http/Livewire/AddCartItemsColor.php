@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class AddCartItemsColor extends Component
 {
     public $product, $colors;
+    
     public $color_id = "";
 
     public $qty = 1;
@@ -19,8 +20,13 @@ class AddCartItemsColor extends Component
     ];
 
     public function mount(){
+        
         $this->colors = $this->product->colors;        
         $this->options['image'] = Storage::url($this->product->images->first()->url);
+        //dimensions es un campo json en la base de datos
+        $this->options['dimensions'] = json_decode($this->product->dimensions, true);
+        //prodcuto con envio gratis
+        $this->options['free_shipping'] = $this->product->free_shipping;
 
     }
 
@@ -53,12 +59,21 @@ class AddCartItemsColor extends Component
     }
 
     public function addItem(){
+
+        $dimensions = json_decode($this->product->dimensions, true);
+
+        if ($dimensions && isset($dimensions['weight'])) {
+            $weight = $dimensions['weight'];
+        } else {
+            // Establece un valor predeterminado para weight si no está disponible
+            $weight = 0;
+        }
         
         Cart::add(['id' => $this->product->id,
                     'name' => $this->product->name,
                     'qty' => $this->qty,
                     'price' => $this->product->price_discount ? $this->product->price_discount : $this->product->price,
-                    'weight' => 550,
+                    'weight' => $weight,
                     'options' => $this->options
         ]);
         $this->quantity = qty_available($this->product->id, $this->color_id);

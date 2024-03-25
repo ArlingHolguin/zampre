@@ -22,6 +22,7 @@ use App\Notifications\OrderProcessed;
 class CreateOrder extends Component
 {
     public $envio_type = 1;
+    public $payment_type = 1;
     public $departamentos, $municipios = [];
     public $phone, $address, $casa, $references, $shipping_cost = 0;
     
@@ -35,6 +36,8 @@ class CreateOrder extends Component
     public $validResponses = [];
 
     public $selectedShippingOption = null;
+
+    public $freeShipping = null;
     
     
     public $rules = [
@@ -59,6 +62,13 @@ class CreateOrder extends Component
         $this->address = Auth::user()->profile ? Auth::user()->profile->address : '';
         $this->identification = Auth::user()->profile ? Auth::user()->profile->identification : '';
         $this->isLoading = false;
+        // $this->freeShipping = Cart::content()->where('options.free_shipping', true)->count();
+        $this->freeShipping = Cart::content()->contains(function ($item) {
+            return $item->options->free_shipping == 0;
+        }) ? 0 : 1;
+
+
+        // dd(Cart::content());
        
     }
 
@@ -186,13 +196,6 @@ class CreateOrder extends Component
 
 
     public function create_order(){
-        // $c = 100;
-        // $cart = Cart::subtotal();
-
-        // $subtotal =str_replace( ',', '', Cart::subtotal() );
-        // $operation = $var + $c ;
-        // dd($operation, $var, $cart);
-         
 
         $rules = $this->rules;
 
@@ -222,12 +225,7 @@ class CreateOrder extends Component
             return $prefix.'-'.$zeros.$last_number;
         }//end funcion que genera el consecutivo de la orden 
 
-
-        //calcular shipping cost debo tener en cuenta este body 
-
-
-
-        $code_id = IDGenerator(new Orden, 'code_id', 3, 'ZON');/// consecutivo de la orden 3 ceros y letras
+        $code_id = IDGenerator(new Orden, 'code_id', 3, 'ZON');
         $infoClient = getClientInfo();
         $orden = new Orden();
 
@@ -253,8 +251,10 @@ class CreateOrder extends Component
             
         }
 
-        $orden->save();
+        $orden->payment_type = $this->payment_type;
 
+        $orden->save();
+        
         foreach (Cart::content() as $item) {
             discount($item);
         }

@@ -17,10 +17,11 @@ class CategoryFilter extends Component
     public $precio_asc;
     public $precio_desc;
     public $sortPrice = null;
+    public $freeShipping = null;
 
   
     public function limpiar(){
-        $this->reset(['marca', 'subcategoria', 'sortPrice']);
+        $this->reset(['marca', 'subcategoria', 'sortPrice', 'freeShipping']);
         $this->resetPage();
         
     }
@@ -89,6 +90,10 @@ class CategoryFilter extends Component
                     return $query->orderBy('price', 'desc');
                 }
             );
+        }
+
+        if (!is_null($this->freeShipping)) {
+            $productsQuery = $productsQuery->where('free_shipping', $this->freeShipping);
         }
 
         //creación de la colleccion de productos

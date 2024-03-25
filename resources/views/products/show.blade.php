@@ -24,12 +24,18 @@
                 </div>
                 <p class="text-4xl font-bold text-gray-600 my-4">${{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : number_format($product->price, 0, ',', '.')  }}</p>
                 <div class="bg-white rounded-lg shadow-lg p-4 flex items-center gap-4">
-                    <div class="flex items-center justify-center h-10 w-10 bg-greenLime-500 rounded-full">
+                    <div class="flex items-center justify-center h-10 w-10 bg-greenLime-600 rounded-full">
                         <i class="fas fa-truck text-white"></i>
                     </div>
                     <div>
-                        <p class="text-lg font- text-greenLime-500 font-semibold">Envíos a todo Colombia.</p>
-                        <div class="text-sm">Recíbelo a partir del {{ Date::now()->addday(2)->locale('es')->format('l j F') }}.</div>
+                        <p class="text-lg font- text-greenLime-600 font-semibold">Envíos a todo Colombia.</p>
+                        @if ($product->free_shipping)
+                            <div class="flex items-center gap-1 mt-1">
+                                <i class="fas fa-bolt text-green-600"></i>
+                                <span class="text-xs font-medium text-green-600">Envío Gratis</span>
+                                
+                            </div>
+                            @endif
                     </div>
                 </div>
                 
@@ -42,8 +48,14 @@
                         @livewire('add-cart-items', ['product' => $product])                        
                     @endif
                 </div>
+                <div class="mt-10">
+                    <h2 class="text-lg font-semibold">Descripción</h2>
+                    <p>{{ $product->description }}</p>
+                </div>
                 
             </div>
+
+            
             
 
             

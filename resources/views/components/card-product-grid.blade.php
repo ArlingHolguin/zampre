@@ -11,13 +11,23 @@
             <p class="text-xs line-through ml-2">$ {{ number_format($product->price, 0, ',', '.') }}</p>
             <div>
                 <span class="font-semibold text-xl ">$  {{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : $product->price }}</span>
-                <span class="text-green-400 font-semibold text-xs"> -{{ $product->price_discount_percent }} % OFF</span>
+                @if ($product->price_discount_percent)
+                    <span class="text-green-600 font-semibold text-xs"> -{{ $product->price_discount_percent }} % OFF</span>
+                @endif
+                                        
             </div>
             <h1 class="text-md font-light">
                 <div>{{ Str::limit($product->name, 20) }}</div>
             </h1>
             {{-- <span>{{ $product->subcategory->size ? 'Talla:true' : 'Talla:false' }}</span>
             <span>{{ $product->subcategory->color ? 'Color:true' : 'Color:false' }}</span> --}}
+            @if ($product->free_shipping)
+            <div class="flex items-center gap-1 mt-1">
+                <i class="fas fa-bolt text-green-600"></i>
+                <span class="text-xs font-medium text-green-600">Envío Gratis</span>
+                
+            </div>
+            @endif
             
         </div>
     </a>

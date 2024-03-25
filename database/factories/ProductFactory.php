@@ -44,6 +44,13 @@ class ProductFactory extends Factory
             // 'category_id' => $cat->id,
             'subcategory_id' => $subcategory->id,
             'brand_id' => $brand->id,
+            'free_shipping' => $this->faker->randomElement([0, 1]),
+            'dimensions' => json_encode([
+                'width' => 15,
+                'height' => 15,
+                'length' => 10,
+                'weight' => 1
+            ]),
 
             
         ];

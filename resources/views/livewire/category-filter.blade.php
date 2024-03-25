@@ -25,6 +25,11 @@
     {{-- grid 5 columnas --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <aside>
+            <button wire:click="$toggle('freeShipping')" 
+            class="{{ $freeShipping ? 'text-orange-600 font-bold' : 'text-gray-700' }} hover:text-orange-700 font-medium hover:underline mb-2">
+            <i class="fas fa-bolt {{  $freeShipping ? 'text-orange-600': '' }}"></i> Envío Gratis
+            </button>
+
             <div class="font-bold text-left capitalize mb-2">Precio</div>
             <button wire:click="sortByPrice('precio_asc')" class="{{ $sortPrice == 'precio_asc' ? 'text-orange-600 font-bold' : 'text-gray-700' }} hover:text-orange-700 font-medium hover:underline">Menor precio</button><br>
              <button wire:click="sortByPrice('precio_desc')" class="{{ $sortPrice == 'precio_desc' ? 'text-orange-600 font-bold' : 'text-gray-700' }} hover:text-orange-700 font-medium hover:underline mb-4">Mayor precio</button>
