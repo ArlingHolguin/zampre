@@ -24,7 +24,7 @@ class AddCartItemsColor extends Component
         $this->colors = $this->product->colors;        
         $this->options['image'] = Storage::url($this->product->images->first()->url);
         //dimensions es un campo json en la base de datos
-        $this->options['dimensions'] = json_decode($this->product->dimensions, true);
+        $this->options['dimensions'] = ($this->product->dimensions);
         //prodcuto con envio gratis
         $this->options['free_shipping'] = $this->product->free_shipping;
 
@@ -60,7 +60,7 @@ class AddCartItemsColor extends Component
 
     public function addItem(){
 
-        $dimensions = json_decode($this->product->dimensions, true);
+        $dimensions = ($this->product->dimensions);
 
         if ($dimensions && isset($dimensions['weight'])) {
             $weight = $dimensions['weight'];

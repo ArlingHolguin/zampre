@@ -13,7 +13,7 @@
                         </span>
                         {{-- Boton lese componente btn-action-lese --}}
                           {{-- Boton lese componente <components>btn-lese-link --}}
-                       <x-btn-lese-link href="/">Pedidos</x-btn-lese-link>
+                       <x-btn-lese-link href="{{ route('admin.ordenes.index') }}">Pedidos</x-btn-lese-link>
                         
                     </h5>
                 </div>

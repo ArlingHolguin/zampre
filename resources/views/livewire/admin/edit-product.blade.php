@@ -32,224 +32,159 @@
         </div>
     </x-slot>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8">
-        {{-- <input type="text" class="mt-1 block text-trueGray-900 w-full rounded-md  bg-white  focus:border-gray-500 focus:bg-lese-50 focus:border focus:ring-0 border-none" placeholder="Hola ingresa el texto ca"/> --}}
-        {{-- <input type="checkbox" class="form-checkbox rounded text-lese-600" /> --}}
-        {{-- <form action="" class="form"> --}}
-        {{-- <h1 class="form__title">Sign In</h1> --}}
-
-        {{-- <div class="form__div">
-            <textarea class="form__input" style="height: 120px !important;" placeholder=" "></textarea>
-            <label for="" class="form__label">Descripción del producto</label>
-        </div> --}}
-        {{-- <input type="submit" class="form__button" value="Sign In"> --}}
-        {{-- </form> --}}
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {{-- name --}}
-            <div>
-                <div class="form__div mx-2">
-                    <input wire:model="product.name" type="text" class="form__input" placeholder=" "
-                        style="{{ $errors->has('product.name') ? 'border: 1px solid red' : '' }}">
-                    <label for="" class="form__label">
-                        @if ($errors->has('product.name'))
-                            {{ $errors->first('product.name') }}
-                        @else
-                            Nombre*
-                        @endif
-                    </label>
-
+        <div class="bg-white rounded-lg shadow-md p-8">
+            {{-- categoria y sub categoria  --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {{-- Categoria  --}}
+                <div>
+                    <x-jet-label value="Categoría*" />
+                    <select class="form-control w-full uppercase" wire:model="category_id">
+                        <option value="" disabled selected>Seleccione una categoría</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-jet-input-error for="category_id" />
+                </div> 
+                {{-- Sub caregoria  --}}
+                <div>
+                    <x-jet-label value="Subcategoría*" />
+                    <select class="form-control w-full uppercase" wire:model="product.subcategory_id">
+                        <option value="" disabled selected>Seleccione una subcategoría</option>
+                        @foreach ($subcategories as $subcategory)
+                            <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-jet-input-error for="product.subcategory_id" />
+                </div> 
+            </div>
+            {{-- nombre y slug  --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                {{-- nombre  --}}
+                <div>
+                    <x-jet-label value="Título / nombre*" />
+                    <x-jet-input type="text" wire:model="product.name" class="form-control w-full"
+                        placeholder="Ingrese nombre del producto" />
+                    <x-jet-input-error for="product.name" />
                 </div>
-
-            </div>
-
-
-            {{-- slug --}}
-            <div>
-                <div class="form__div mx-2">
-                    <input wire:model="product.slug" type="text" class="form__input" placeholder=" " disabled>
-                    <label for="" class="form__label">Slug*
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2">
-            {{-- description  textarea --}}
-            <div class="px-2 mb-2">
-                <label for="description" class="text-xs">Descripción *</label>
-                <textarea wire:model="product.description"
-                    class="w-full rounded {{ $errors->has('producto.description') ? 'border-red-500' : ' ' }}" cols="30"
-                    rows="3" placeholder="Descripción del producto"></textarea>
-                <span class="text-sm text-red-500">
-                    @if ($errors->has('producto.description'))
-                        {{ $errors->first('producto.description') }}
-                    @endif
-                </span>
-
-            </div>
-            <div class="px-2 flex-wrap">
-                {{-- extracto null  --}}
-                <label for="extracto" class="text-xs">Extracto (150 caracteres)</label>
-                <textarea wire:model="product.extracto"
-                    class="w-full rounded mb-2 {{ $errors->has('product.extracto') ? 'border-red-500' : ' ' }}" cols="30"
-                    rows="3" placeholder="Extracto"></textarea>
-                <span class="text-sm text-red-500">
-                    @if ($errors->has('product.extracto'))
-                        {{ $errors->first('product.extracto') }}
-                    @endif
-                </span>
-            </div>
-
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="form__div mx-2">
-                {{-- keywords null --}}
-                <input wire:model="product.keywords" class="form__input"placeholder=" "
-                    style="{{ $errors->has('product.keywords') ? 'border: 1px solid red' : '' }}" />
-                <label for="" class="form__label">
-                    @if ($errors->has('product.keywords'))
-                        {{ $errors->first('product.keywords') }}
-                    @else
-                        Keywords Ej: tornillo, tuerca
-                    @endif
-                </label>
-            </div>
-
-            <div class="form__div mx-2">
-                {{-- keywords null --}}
-                <input wire:model="product.referencia" class="form__input"placeholder=" "
-                    style="{{ $errors->has('producto.referencia') ? 'border: 1px solid red' : '' }}" />
-                <label for="" class="form__label">
-                    @if ($errors->has('product.referencia'))
-                        {{ $errors->first('product.referencia') }}
-                    @else
-                        Referencia: AK-011*
-                    @endif
-
-                </label>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-                {{-- price --}}
-                <div class="form__div mx-2">
-                    <input wire:model="product.price" type="text" class="form__input" placeholder=" "
-                        style="{{ $errors->has('product.price') ? 'border: 1px solid red' : '' }}">
-                    <label for="" class="form__label">
-                        @if ($errors->has('product.price'))
-                            {{ $errors->first('product.price') }}
-                        @else
-                            Precio*
-                        @endif
-                    </label>
-                </div>
-
-            </div>
-            <div>
-                {{-- quantity null --}}
-                <div class="form__div mx-2">
-                    <input wire:model="product.quantity" type="text" class="form__input" placeholder=" "
-                        style="{{ $errors->has('product.quantity') ? 'border: 1px solid red' : '' }}">
-                    <label for="" class="form__label">
-                        @if ($errors->has('product.quantity'))
-                            {{ $errors->first('product.quantity') }}
-                        @else
-                            Cantidad
-                        @endif
-                    </label>
+                {{-- slug  --}}
+                <div>
+                    <x-jet-label value="Slug*" />
+                    <x-jet-input disabled type="text" wire:model="product.slug" class="form-control w-full bg-gray-200 cursor-not-allowed"
+                        placeholder="Ingrese slug del producto" />
+                    <x-jet-input-error for="product.slug" />
                 </div>
             </div>
-            <div class="px-2">
-                <select wire:model="category_id" class="form-select w-full px-4 py-3 rounded">
-                    <!-- ... -->
-                    <option value=" ">Selecione una categoría *</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
+    
+            {{-- descripcion  --}}
+            <div class="w-full mt-6" wire:ignore>
+                <x-jet-label value="Descripción*" />
+                <textarea 
+                    x-data 
+                    x-init=" ClassicEditor
+                    .create( $refs.editor)
+                    .then(function(editor){
+                        editor.model.document.on('change:data', () => {
+                            @this.set('product.description', editor.getData());
+                        });
+                    })
+                    .catch( error => {
+                        console.error( error );
+                    } );"
+                    x-ref="editor"
+                    wire:model="product.description" class="form-control w-full" rows="4"
+                        placeholder="Ingrese descripción del producto">
+                </textarea>
+                <x-jet-input-error for="product.description" />
+            </div>
+            {{-- marca y price  --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                {{-- Brand  --}}
+                <div>
+                    <x-jet-label value="Marca*" />
+                    <select class="form-control w-full uppercase" wire:model="product.brand_id">
+                        <option value="" disabled selected>Seleccione una marca</option>
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-jet-input-error for="product.brand_id" />
+                </div> 
+    
+                {{-- price  --}}
+                <div>
+                    <x-jet-label value="Precio*" />
+                    <x-jet-input type="text" wire:model="product.price" class="form-control w-full"
+                        placeholder="Ingrese precio del producto" />
+                    <x-jet-input-error for="product.price" />
+                </div>
 
-                </select>
+                <div>
+                    <x-jet-label value="Referencia(ZAM-00878)*" />
+                    <x-jet-input type="text" wire:model="product.referencia" class="form-control w-full"
+                        placeholder="Ingrese referencia del producto" />
+                    <x-jet-input-error for="product.referencia" />
+                </div>
             </div>
 
-
-
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-            {{-- cabeza null perno --}}
-            <div class="form__div mx-2">
-                <input wire:model="product.cabeza" type="text" class="form__input" placeholder=" "
-                    style="{{ $errors->has('product.cabeza') ? 'border: 1px solid red' : '' }}">
-                <label for="" class="form__label">
-                    @if ($errors->has('product.cabeza'))
-                        {{ $errors->first('product.cabeza') }}
-                    @else
-                        Cabeza: Hex 19mm, Medialuna, redonda
-                    @endif
-                </label>
-            </div>
-
-            {{-- estria null perno --}}
-            <div class="form__div mx-2">
-                <input wire:model="product.estria" type="text" class="form__input" placeholder=" "
-                    style="{{ $errors->has('product.estria') ? 'border: 1px solid red' : '' }}">
-                <label for="" class="form__label">
-                    @if ($errors->has('product.estria'))
-                        {{ $errors->first('product.estria') }}
-                    @else
-                        Estria: Plana, Cónica, 1.5mm
-                    @endif
-                </label>
-            </div>
-            {{-- largo null para pernos --}}
-            <div class="form__div mx-2">
-                <input wire:model="product.largo" type="text" class="form__input" placeholder=" "
-                    style="{{ $errors->has('product.largo') ? 'border: 1px solid red' : '' }}">
-                <label for="" class="form__label">
-                    @if ($errors->has('product.largo'))
-                        {{ $errors->first('product.largo') }}
-                    @else
-                        Largo: (Pernos, mm)
-                    @endif
-                </label>
-            </div>
-            {{-- rosca null perno y tuerca --}}
-            <div class="form__div mx-2">
-                <input wire:model="product.rosca" type="text" class="form__input" placeholder=" "
-                    style="{{ $errors->has('product.rosca') ? 'border: 1px solid red' : '' }}">
-                <label for="" class="form__label">
-                    @if ($errors->has('product.rosca'))
-                        {{ $errors->first('product.rosca') }}
-                    @else
-                        Rosca: Perno o tuerca
-                    @endif
-                </label>
-            </div>
-            {{-- hex null para tuerca --}}
-            <div class="form__div mx-2">
-                <input wire:model="product.hex" type="text" class="form__input" placeholder=" "
-                    style="{{ $errors->has('product.hex') ? 'border: 1px solid red' : '' }}">
-                <label for="" class="form__label">
-                    @if ($errors->has('product.hex'))
-                        {{ $errors->first('product.hex') }}
-                    @else
-                        Hexágono: Tuerca
-                    @endif
-                </label>
-            </div>
-
-            <div class="form__div mx-2">
-                <input wire:model="product.alto" type="text" class="form__input" placeholder=" "
-                    style="{{ $errors->has('product.alto') ? 'border: 1px solid red' : '' }}">
-                <label for="" class="form__label">
-                    @if ($errors->has('product.alto'))
-                        {{ $errors->first('product.alto') }}
-                    @else
-                        Alto: Tuerca
-                    @endif
-                </label>
+            {{-- dimensiones  --}}
+            {{-- @json($dimensions) --}}
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                <div>
+                    <x-jet-label value="Ancho(cm)*" />
+                    <x-jet-input type="text" wire:model="product.dimensions.width" class="form-control w-full"
+                        placeholder="Ingrese ancho del producto empacado." />
+                    <x-jet-input-error for="product.dimensions.width" />
+                </div>
+                <div>
+                    <x-jet-label value="Alto(cm)*" />
+                    <x-jet-input type="text" wire:model="product.dimensions.height" class="form-control w-full"
+                        placeholder="Ingrese alto del producto empacado." />
+                    <x-jet-input-error for="product.dimensions.height" />
+                </div>
+                <div>
+                    <x-jet-label value="Largo(cm)*" />
+                    <x-jet-input type="text" wire:model="product.dimensions.length" class="form-control w-full"
+                        placeholder="Ingrese largo del producto empacado." />
+                    <x-jet-input-error for="product.dimensions.length" />
+                </div>
+                <div>
+                    <x-jet-label value="Peso(Kg)*" />
+                    <x-jet-input type="text" wire:model="product.dimensions.weight" class="form-control w-full"
+                        placeholder="Ingrese peso del producto empacado." />
+                    <x-jet-input-error for="product.dimensions.weight" />
+                </div>
             </div>
         </div>
-        <div class="flex">
-            <div wire:loading wire:target="save" class="mr-4 font-black ml-auto">
-                Actualizando ....
+        {{-- Configuracion seo  --}}
+        <div class="bg-white rounded-lg shadow-md p-8 mt-4">
+            <p>Configuración SEO</p>
+            <div class="grid grid-cols-1 mt-6">
+                {{-- extracto  --}}
+                <div>
+                    <x-jet-label value="Extracto" />
+                    <textarea type="text" wire:model="product.extracto" class="form-control w-full"
+                        placeholder="Ingrese extracto del producto" ></textarea>
+                    <x-jet-input-error for="product.extracto" />
+                </div> 
+                {{-- keywords  --}}
+                <div>
+                    {{-- @json($keywords) --}}
+                    <x-jet-label value="Keywords" />
+                    <div class="rounded-lg" style="border: 1px solid #ccc; display: flex; flex-wrap: wrap; align-items: center; ">
+                        @foreach ($keywords as $keyword)
+                            <span class="ml-2" style="background-color: lightgray; margin-right: 5px; padding: 3px 5px; border-radius: 3px;">
+                                {{ $keyword }}
+                                <button wire:click="removeKeyword('{{ $keyword }}')" style="background: none; border: none;">x</button>
+                            </span>
+                        @endforeach
+                        <input class="form-control focus:ring-transparent focus:border-transparent" 
+                            style="flex: 1; border: none; outline: none;" type="text" 
+                            wire:model="input" wire:keydown.enter="addKeyword" placeholder="Ingrese una o varias keyword, coma y enter.">
+
+                    </div>
+                    <x-jet-input-error for="product.keywords" />
+                </div>               
             </div>
         </div>
         <div class="flex justify-end items-center mt-4 px-2">
@@ -261,6 +196,29 @@
                 Actualizar Producto
             </x-jet-button>
         </div>
+        {{-- Configuracion de stock  --}}
+        @if ($this->subcategory)        
+            @if (!$this->subcategory->color && !$this->subcategory->color)
+                <div class="bg-white px-8 py-4 rounded mt-4">
+                    <x-jet-label value="Cantidad*" />
+                    <x-jet-input type="text" wire:model="product.quantity" class="form-control w-full"
+                        placeholder="Ingrese la cantidad del producto"/>
+                    <x-jet-input-error for="product.quantity" />
+                </div>
+                @elseif ($this->subcategory->size)
+                    @livewire('admin.size-product', ['product' => $product], key('size-product-'.$product->id))
+                @elseif ($this->subcategory->color)
+                    @livewire('admin.color-product', ['product' => $product], key('color-product-'.$product->id))
+
+            @endif  
+
+            @endif
+        <div class="flex">
+            <div wire:loading wire:target="save" class="mr-4 font-black ml-auto">
+                Actualizando ....
+            </div>
+        </div>
+        
 
 
         <div class="bg-white shadow-lg p-4 my-4 mx-2 rounded-lg">
@@ -347,6 +305,70 @@
                     }
                 });
             });
+
+            // size product 
+            Livewire.on('deleteSize', sizeId => {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.size-product', 'delete', sizeId);
+                    }
+                })
+            });
+
+            // color prodcut 
+            Livewire.on('deletePivot', pivot => {
+                Swal.fire({
+                    title: "Estás seguro?",
+                    text: "¡No podrás revertir esto!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, eliminar!"
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.color-product', 'delete', pivot);
+                        Swal.fire({
+                        title: "Eliminado!",
+                        text: "El registro ha sido eliminado.",
+                        icon: "success"
+                        });
+                    }
+                    });
+
+            })
+
+            // color size 
+            Livewire.on('deleteColorSize', pivot => {
+                Swal.fire({
+                    title: "Estás seguro?",
+                    text: "¡No podrás revertir esto!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, eliminar!"
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.color-size', 'delete', pivot);
+                        Swal.fire({
+                        title: "Eliminado!",
+                        text: "El registro ha sido eliminado.",
+                        icon: "success"
+                        });
+                    }
+                    });
+
+            })
         </script>
     @endpush
 </div>

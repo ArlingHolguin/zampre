@@ -22,7 +22,7 @@ class AddCartItems extends Component
         $this->quantity = qty_available($this->product->id);
         $this->options['image'] = Storage::url($this->product->images->first()->url);
         //dimensions es un campo json en la base de datos
-        $this->options['dimensions'] = json_decode($this->product->dimensions, true);
+        $this->options['dimensions'] = ($this->product->dimensions);
         //prodcuto con envio gratis
         $this->options['free_shipping'] = $this->product->free_shipping;
     }
@@ -39,7 +39,7 @@ class AddCartItems extends Component
 
     public function addItem(){
         // dd($this->product);
-        $dimensions = json_decode($this->product->dimensions, true);
+        $dimensions = ($this->product->dimensions);
 
         if ($dimensions && isset($dimensions['weight'])) {
             $weight = $dimensions['weight'];

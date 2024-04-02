@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CategoryProducts extends Component
@@ -11,7 +13,10 @@ class CategoryProducts extends Component
     public $products = [];
 
     public function loadPosts(){
-        $this->products = $this->category->productsRelacionados()->where('status', 1)->take(15)->get();
+
+        $this->products = $this->category->productsRelacionados()->where('status', '1')->latest()->get();
+        
+
         $this->emit('glider', $this->category->id);
     }
 

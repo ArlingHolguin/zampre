@@ -17,6 +17,14 @@ class Product extends Model
         'id'
     ];
 
+    protected $casts = [
+        'dimensions' => 'array',
+        'keywords' => 'array',
+        // 'price' => 'integer',
+        // 'price_discount' => 'integer',
+        // 'price_discount_percent' => 'integer',
+    ];
+
     //Accesores Stock
     public function getStockAttribute(){
         
@@ -37,10 +45,7 @@ class Product extends Model
         }
 
         return 'prueba';
-    }
-
-
-    
+    }    
 
     //relacion uno a muchos inversa con category
     public function category(){
@@ -64,7 +69,7 @@ class Product extends Model
 
     //relacion muchos a muchos con color
     public function colors(){
-        return $this->belongsToMany(Color::class)->withPivot('quantity');
+        return $this->belongsToMany(Color::class)->withPivot('quantity', 'id');
     }
 
     //relacion uno a muchos inversa con category

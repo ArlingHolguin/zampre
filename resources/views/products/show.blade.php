@@ -6,8 +6,8 @@
                 <div class="flexslider">
                     <ul class="slides">
                         @foreach ($product->images as $image)
-                            <li data-thumb="{{ Storage::url($image->url) }}">
-                                <img src="{{ Storage::url($image->url) }}" alt="{{ $product->name}}"/>
+                            <li data-thumb="{{ Storage::url($image->url) ? Storage::url($image->url) : '' }}">
+                                <img src="{{ Storage::url($image->url) ? Storage::url($image->url) : ''  }}" alt="{{ $product->name}}"/>
                             </li>                            
                         @endforeach
                      

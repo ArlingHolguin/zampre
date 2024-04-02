@@ -26,17 +26,9 @@ class CreateProductsTable extends Migration
             $table->integer('price_discount_percent')->nullable()->default(0);
             $table->integer('quantity')->nullable();
             //campo boolean free shipping
+            $table->json('dimensions')->nullable();
             $table->boolean('free_shipping')->default(0);  
-            $table->json('dimensions')->nullable();      
-            // "dimensions": {
-            //     "width": null,
-            //     "height": null,
-            //     "length": null,
-            //     "weight": "1"
-            //   },    
-            //campo boolean
-            // $table->enum('status', [Product::BORRADOR, Product::PUBLICADO])->default(Product::BORRADOR);
-            $table->enum('status', ['0', '1'])->default('0');
+            $table->enum('status', [Product::BORRADOR, Product::PUBLICADO])->default(Product::BORRADOR);
             $table->string('keywords')->nullable();
             $table->longText('extracto')->nullable();
 

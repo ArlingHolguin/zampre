@@ -11,7 +11,7 @@
                 @forelse ($products as $product)
                     <a href="{{ route('products.show', $product) }}" class="flex items-center gap-2 bg-white hover:bg-gray-100 px-3 mt-3" >
                         
-                            <img class="w-16 h-16 object-cover rounded-md" src="{{ Storage::url($product->images->first()->url) }}" alt="{{$product->name}}">
+                            <img class="w-16 h-16 object-cover rounded-md" src="{{  Storage::url($product->images->first()->url) }}" alt="{{$product->name}}">
                             <div class="text-gray-700 py-1">
                                 <p class="text-lg font-medium">{{$product->name}}</p>
                                 <p class="text-sm font-bold text-gray-600">${{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : number_format($product->price, 0, ',', '.')  }}</p>

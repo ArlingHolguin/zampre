@@ -33,7 +33,7 @@ class Search extends Component
                                           $subQuery->whereRaw("REPLACE(name, ' ', '') LIKE ?", ['%' . $searchTerm . '%']);
                                       });
                             })
-                            ->where('status', 2)
+                            ->where('status', 1)
                             ->take(12)
                             ->get();
                                 

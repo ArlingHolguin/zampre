@@ -4,13 +4,13 @@
         <a href="{{ route('products.show', $product) }}">
         <figure>
             <img class="h-48 w-full md:w-56 object-cover object-center rounded-t-lg shadow-lg shadow-gray-100/50"
-                src="{{ Storage::url($product->images->first()->url) }}"
+                src="{{ Storage::url($product->images->first()->url) ? Storage::url($product->images->first()->url) : '' }}"
                 alt="{{ $product->name }}">
         </figure>
         <div class="py-4 px-6 text-gray-600">
             <p class="text-xs line-through ml-2">$ {{ number_format($product->price, 0, ',', '.') }}</p>
             <div>
-                <span class="font-semibold text-xl ">$  {{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : $product->price }}</span>
+                <span class="font-semibold text-xl ">$  {{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : number_format($product->price, 0, ',', '.') }}</span>
                 @if ($product->price_discount_percent)
                     <span class="text-green-600 font-semibold text-xs"> -{{ $product->price_discount_percent }} % OFF</span>
                 @endif

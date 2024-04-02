@@ -49,7 +49,8 @@ class CategoryFilter extends Component
     {
        
         //creacion de la copnsulta para filtrar los productos
-        $productsQuery = Product::query()->whereHas('subcategory.category', function(Builder $query){
+        $productsQuery = Product::query()->where('status', '1')
+                    ->whereHas('subcategory.category', function(Builder $query){
             $query->where('id', $this->category->id);
         });
 
@@ -66,38 +67,46 @@ class CategoryFilter extends Component
         }
 
          // Ordenar por precio
+        // if ($this->sortPrice === 'precio_asc') {
+        //     $productsQuery = $productsQuery->when(
+        //         function ($query) {
+        //             return $query->whereNotNull('price_discount')->where('price_discount', '>', 0);
+        //         },
+        //         function ($query) {
+        //             return $query->orderBy('price_discount', 'asc');
+        //         },
+        //         function ($query) {
+        //             return $query->orderBy('price', 'asc');
+        //         }
+        //     );
+        // } elseif ($this->sortPrice === 'precio_desc') {
+        //     $productsQuery = $productsQuery->when(
+        //         function ($query) {
+        //             return $query->whereNotNull('price_discount')->where('price_discount', '>', 0);
+        //         },
+        //         function ($query) {
+        //             return $query->orderBy('price_discount', 'desc');
+        //         },
+        //         function ($query) {
+        //             return $query->orderBy('price', 'desc');
+        //         }
+        //     );
+        // }
+
         if ($this->sortPrice === 'precio_asc') {
-            $productsQuery = $productsQuery->when(
-                function ($query) {
-                    return $query->whereNotNull('price_discount')->where('price_discount', '>', 0);
-                },
-                function ($query) {
-                    return $query->orderBy('price_discount', 'asc');
-                },
-                function ($query) {
-                    return $query->orderBy('price', 'asc');
-                }
-            );
+            $productsQuery->orderByRaw('IF(price_discount > 0, price_discount, price) ASC');
         } elseif ($this->sortPrice === 'precio_desc') {
-            $productsQuery = $productsQuery->when(
-                function ($query) {
-                    return $query->whereNotNull('price_discount')->where('price_discount', '>', 0);
-                },
-                function ($query) {
-                    return $query->orderBy('price_discount', 'desc');
-                },
-                function ($query) {
-                    return $query->orderBy('price', 'desc');
-                }
-            );
+            $productsQuery->orderByRaw('IF(price_discount > 0, price_discount, price) DESC');
         }
 
         if (!is_null($this->freeShipping)) {
             $productsQuery = $productsQuery->where('free_shipping', $this->freeShipping);
         }
 
-        //creación de la colleccion de productos
-        $products = $productsQuery->paginate(12);        
+        $productsQuery = $productsQuery->orderBy('created_at', 'desc');
+
+        // Creación de la colección de productos
+        $products = $productsQuery->paginate(12);      
        
         return view('livewire.category-filter', compact('products'));
     }

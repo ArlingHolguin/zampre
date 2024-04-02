@@ -15,6 +15,9 @@ class Orden extends Model
     const ENVIADO = 3;
     const ENTREGADO = 4;
     const ANULADO = 5;
+    const PERDIDO = 6;
+    const DEVUELTO = 7;
+
 
     //Relacion uno a muchos inversa
     public function departamento(){

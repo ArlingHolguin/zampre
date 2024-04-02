@@ -32,6 +32,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.7/glider.min.js" integrity="sha512-tHimK/KZS+o34ZpPNOvb/bTHZb6ocWFXCtdGqAlWYUcz+BGHbNbHMKvEHUyFxgJhQcEO87yg5YqaJvyQgAEEtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {{-- Mensajes de error de validación --}}
         <script defer src="{{ asset('js/messages.js') }}"></script>
+
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -58,6 +62,15 @@
 
         @livewireScripts
 
+        <script>
+            Livewire.on('errorSize', message =>{
+                Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: message,
+            });
+            })
+        </script>  
 
         @stack('script')
     </body>

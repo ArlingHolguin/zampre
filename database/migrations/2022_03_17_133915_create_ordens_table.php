@@ -22,7 +22,7 @@ class CreateOrdensTable extends Migration
 
              $table->string('contact');
              $table->string('phone');
-             $table->enum('status', [Orden::PENDIENTE,Orden::RECIBIDO, Orden::ENVIADO, Orden::ENTREGADO, Orden::ANULADO])->default(Orden::PENDIENTE);
+             $table->enum('status', [Orden::PENDIENTE, Orden::RECIBIDO, Orden::ENVIADO, Orden::ENTREGADO, Orden::ANULADO, Orden::PERDIDO, Orden::DEVUELTO])->default(Orden::PENDIENTE);
              $table->enum('envio_type', [1, 2]);
              $table->enum('payment_type', [1, 2])->nullable()->default(1);
              $table->string('identification')->nullable();

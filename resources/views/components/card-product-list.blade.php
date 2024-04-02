@@ -9,7 +9,7 @@
             <div>{{ $product->name }}</div> 
             <p class="text-xs line-through ml-2">$ {{ number_format($product->price, 0, ',', '.') }}</p>
             <div>
-                <span class="font-semibold text-xl ">$  {{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : $product->price }}</span>
+                <span class="font-semibold text-xl ">$  {{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : number_format($product->price, 0, ',', '.') }}</span>
                 @if ($product->price_discount_percent)
                     <span class="text-green-600 font-semibold text-xs"> -{{ $product->price_discount_percent }} % OFF</span>
                 @endif
