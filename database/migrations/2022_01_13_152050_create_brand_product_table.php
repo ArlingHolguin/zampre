@@ -22,7 +22,7 @@ class CreateBrandProductTable extends Migration
  
              //relacion con products
              $table->unsignedBigInteger('product_id');
-             $table->foreign('product_id')->references('id')->on('products');
+             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             
             $table->timestamps();
         });

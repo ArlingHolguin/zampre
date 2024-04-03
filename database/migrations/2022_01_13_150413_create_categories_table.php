@@ -18,8 +18,9 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('keywords')->nullable();
-            $table->longText('extracto');
-            $table->longText('icon')->nullable();
+            $table->longText('extracto')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -19,9 +19,16 @@ class CategoryFilter extends Component
     public $sortPrice = null;
     public $freeShipping = null;
 
+    protected $queryString = [
+        'marca' => ['except' => ''],
+        'subcategoria' => ['except' => ''],
+        'sortPrice' => ['except' => null],
+        'freeShipping' => ['except' => null],
+    ];
+
   
     public function limpiar(){
-        $this->reset(['marca', 'subcategoria', 'sortPrice', 'freeShipping']);
+        $this->reset(['marca', 'subcategoria', 'sortPrice', 'freeShipping', 'page']);
         $this->resetPage();
         
     }
@@ -106,7 +113,9 @@ class CategoryFilter extends Component
         $productsQuery = $productsQuery->orderBy('created_at', 'desc');
 
         // Creación de la colección de productos
-        $products = $productsQuery->paginate(12);      
+        $products = $productsQuery->paginate(12);  
+        
+        
        
         return view('livewire.category-filter', compact('products'));
     }

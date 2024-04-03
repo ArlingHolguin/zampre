@@ -21,7 +21,7 @@
                                     @endif                                   
                                 </div>
                                 <h1 class="text-md font-light">
-                                    <div>{{ $product->id .' - '.Str::limit($product->name, 25) }}</div>
+                                    <div>{{ Str::limit($product->name, 25) }}</div>
                                 </h1>
                                 {{-- <span>{{ $product->subcategory->size ? 'Talla:true' : 'Talla:false' }}</span>
                                 <span>{{ $product->subcategory->color ? 'Color:true' : 'Color:false' }}</span> --}}

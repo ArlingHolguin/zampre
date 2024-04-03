@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Livewire\Admin\CreateProducts;
 use App\Http\Livewire\Admin\EditProduct;
+use App\Http\Livewire\Admin\ShowCategory;
 use App\Http\Livewire\Admin\ShowProducts;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +24,8 @@ Route::get('/editar-producto/{product}/edit', EditProduct::class)->name('EditPro
 
 //ruta para subir imagenes del prodcuto 
 Route::post('/product/{product}/file', [ProductController::class, 'files'])->name('ProductFile');
+
+// Category Routes
+Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+Route::get('/categories/{category}', ShowCategory::class)->name('admin.categories.show');
+

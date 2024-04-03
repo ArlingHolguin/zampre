@@ -39,7 +39,7 @@
                    <li wire:click="$set('subcategoria', '{{ $subcategory->name }}')" class=" {{ $subcategoria == $subcategory->name ? 'text-orange-600 font-bold' : '' }}cursor-pointer text-gray-700 hover:text-orange-700 font-medium hover:underline capitalize mb-1">                   
                         {{ $subcategory->name }}
                         @if ($subcategory->products)
-                            <span class="text-xs">({{ $subcategory->products->count() }})</span>
+                            <span class="text-sm">({{ $subcategory->products->where('status', 1)->count() }})</span>
                         @endif
                    </li>
 
@@ -52,6 +52,9 @@
                     @if ($brand->status == 2)
                     <li wire:click="$set('marca', '{{ $brand->name }}')" class=" {{ $marca == $brand->name ? 'text-orange-600 font-bold' : '' }}cursor-pointer text-gray-700 hover:text-orange-700 font-medium hover:underline capitalize mb-1">
                         {{ $brand->name }}
+                        {{-- @if ($brand->products)
+                            <span class="text-xs">({{ $brand->products->where('status', 1)->count() }})</span>
+                        @endif --}}
                     </li>
                     
                     @endif
@@ -72,19 +75,28 @@
             </div>
             @if ($view == 'grid')
                 <ul class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    @foreach ($products as $product )
+                    @forelse ($products as $product )
                         <div>
                             <x-card-product-grid :product="$product" />
                         </div>
-                    @endforeach
+                        @empty
+                        <x-not-found-message>
+                            😑 No se encontraron productos con este filtro.                            
+                        </x-not-found-message>
+                    @endforelse
                 </ul>
             @else
             <ul class="grid grid-cols-1 gap-y-4">
-                @foreach ($products as $product )
+                @forelse ($products as $product )
                     <div>
                         <x-card-product-list :product="$product" />
                     </div>
-                @endforeach
+                    @empty
+                    <x-not-found-message>
+                        😑 No se encontraron productos con este filtro.                        
+                    </x-not-found-message>
+
+                @endforelse
             </ul>
 
             @endif

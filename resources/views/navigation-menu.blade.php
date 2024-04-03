@@ -5,8 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-12 w-auto" />
+                    <a href="/" class="uppercase font-extrabold text-lg text-orange-600 hover:text-orange-500 hover:underline">
+                        Zampre
                     </a>
                 </div>
 
@@ -15,12 +15,15 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('admin.ordenes.index') }}" :active="request()->routeIs('admin.ordenes')">
+                    <x-jet-nav-link href="{{ route('admin.ordenes.index') }}" :active="request()->routeIs('admin.ordenes.*')">
                         {{ __('Ordenes') }}
                     </x-jet-nav-link>
                     {{-- {{route('ShowProducts')}} --}}
                     <x-jet-nav-link href="{{route('ShowProducts')}}" :active="request()->routeIs('ShowProducts')">
                         {{ __('Productos') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{route('admin.categories.index')}}" :active="request()->routeIs('admin.categories.*')">
+                        {{ __('Categorias') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -98,8 +101,15 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.ordenes.index') }}" :active="request()->routeIs('admin.ordenes.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.ordenes.index') }}" :active="request()->routeIs('admin.ordenes.*')">
                 {{ __('Ordenes') }}
+            </x-jet-responsive-nav-link>
+            
+            <x-jet-responsive-nav-link href="{{route('ShowProducts')}}" :active="request()->routeIs('ShowProducts')">
+                {{ __('Productos') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{route('admin.categories.index')}}" :active="request()->routeIs('admin.categories.*')">
+                {{ __('Categorias') }}
             </x-jet-responsive-nav-link>
         </div>
 

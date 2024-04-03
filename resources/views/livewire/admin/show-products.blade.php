@@ -98,15 +98,19 @@
 
                         <div class="flex flex-col gap-y-2 w-full">
                             <div>
-                                <x-jet-label value="Incrementar precios en %*" />
+                                <x-jet-label value="Aumente o baja los precios en %*" />
                                 <x-jet-input type="number" wire:model="increasePercent" class="form-control w-full"
-                                    placeholder="Ingrese el % de incremento" />
+                                    placeholder="Ingrese el % (ej: -50 o 50)" />
                                 <x-jet-input-error for="increasePercent" />
                             </div> 
                             <x-jet-button wire:click="updatePrice">
                                 Actualizar Precio
                             </x-jet-button>
                         </div>
+
+                        <x-jet-button wire:click="deleteProducts"  class="bg-red-500 hover:bg-red-600">
+                            Eliminar seleccionados
+                        </x-jet-button>
                     @endif
                     <div class="w-full flex justify-end">
                         <select class="form-control" wire:model="perPage">

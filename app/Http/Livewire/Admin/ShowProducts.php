@@ -28,7 +28,7 @@ class ShowProducts extends Component
     public $increasePercent;
 
     protected $rulesIncreasePercent = [
-        'increasePercent' => 'required|numeric|min:0'
+        'increasePercent' => 'required|numeric'
     ];
 
     //validacion de los campos  freeShipping y discountPercent
@@ -116,20 +116,62 @@ class ShowProducts extends Component
         // session()->flash('message', 'Descuento actualizado correctamente');
     }
 
+    // public function updatePrice()
+    // {
+    //     $rules = $this->rulesIncreasePercent;
+    //     $this->validate($rules);
+
+    //     $selectedProducts = Product::whereIn('id', $this->selectedProducts)->get();
+
+    //     foreach ($selectedProducts as $product) {
+    //         // Calcula el nuevo precio incrementado
+    //         $increaseAmount = $product->price * ($this->increasePercent / 100);
+    //         $newPrice = $product->price + $increaseAmount;
+
+    //         // Actualiza el producto con el nuevo precio
+    //         $product->update(['price' => $newPrice]);
+    //     }
+
+    //     // Opcional: resetear las propiedades o enviar un mensaje de éxito
+    //     $this->increasePercent = null;
+    //     $this->selectedProducts = [];
+    //     $this->selectAll = false;
+    // }
     public function updatePrice()
     {
-        $rules = $this->rulesIncreasePercent;
-        $this->validate($rules);
+        // Verificar si el valor ingresado es negativo para disminuir el precio
+        if ($this->increasePercent < 0) {
+            // Convertir el porcentaje negativo a positivo
+            $decreasePercent = abs($this->increasePercent);
 
-        $selectedProducts = Product::whereIn('id', $this->selectedProducts)->get();
+            $rules = $this->rulesIncreasePercent;
+            $this->validate($rules);
 
-        foreach ($selectedProducts as $product) {
-            // Calcula el nuevo precio incrementado
-            $increaseAmount = $product->price * ($this->increasePercent / 100);
-            $newPrice = $product->price + $increaseAmount;
+            $selectedProducts = Product::whereIn('id', $this->selectedProducts)->get();
 
-            // Actualiza el producto con el nuevo precio
-            $product->update(['price' => $newPrice]);
+            foreach ($selectedProducts as $product) {
+                // Calcula el nuevo precio disminuido
+                $decreaseAmount = $product->price * ($decreasePercent / 100);
+                $newPrice = $product->price - $decreaseAmount;
+
+                // Actualiza el producto con el nuevo precio
+                $product->update(['price' => $newPrice]);
+            }
+        } else {
+            // Si el valor ingresado es positivo, se aplica el aumento de precio como antes
+            $rules = $this->rulesIncreasePercent;
+            $this->validate($rules);
+
+            $selectedProducts = Product::whereIn('id', $this->selectedProducts)->get();
+
+            foreach ($selectedProducts as $product) {
+                // Calcula el nuevo precio aumentado
+                $increaseAmount = $product->price * ($this->increasePercent / 100);
+                $newPrice = $product->price + $increaseAmount;
+
+                // Actualiza el producto con el nuevo precio
+                $product->update(['price' => $newPrice]);
+            }
         }
 
         // Opcional: resetear las propiedades o enviar un mensaje de éxito
@@ -137,8 +179,6 @@ class ShowProducts extends Component
         $this->selectedProducts = [];
         $this->selectAll = false;
     }
-
-
 
     public function updateFreeShipping()
     {
@@ -148,4 +188,29 @@ class ShowProducts extends Component
         Product::whereIn('id', $this->selectedProducts)
             ->update(['free_shipping' => $this->freeShipping]);
     }
+
+    public function deleteProducts()
+    {
+        // Validar que haya productos seleccionados para eliminar
+        if (count($this->selectedProducts) > 0) {
+            // Obtener los productos seleccionados
+            $selectedProducts = Product::whereIn('id', $this->selectedProducts)->get();
+
+            // Eliminar cada producto seleccionado
+            foreach ($selectedProducts as $product) {
+                $product->delete();
+            }
+
+            // Opcional: enviar un mensaje de éxito
+            session()->flash('message', 'Productos eliminados correctamente.');
+
+            // Limpiar la lista de productos seleccionados y desactivar la selección de todos
+            $this->selectedProducts = [];
+            $this->selectAll = false;
+        } else {
+            // Si no hay productos seleccionados, enviar un mensaje de advertencia
+            session()->flash('warning', 'No hay productos seleccionados para eliminar.');
+        }
+    }
+
 }
