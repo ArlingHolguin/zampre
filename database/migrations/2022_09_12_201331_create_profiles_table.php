@@ -22,6 +22,10 @@ class CreateProfilesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
+            $table->enum('document_type', ['CC', 'CE', 'TI', 'PASS', 'RUT', 'NIT'])->nullable();
+            $table->string('document_number')->nullable();
+            $table->unique(['document_type', 'document_number']);
+
             $table->timestamps();
         });
     }

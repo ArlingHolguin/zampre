@@ -34,11 +34,11 @@
             </div>
 
             {{-- empresa --}}
-            <div class="col-span-6 sm:col-span-4">
+            {{-- <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="empresa" value="{{ __('Empresa') }}" />
                 <x-jet-input id="empresa" type="text" class="mt-1 block w-full" wire:model.defer="empresa" placeholder="Ej: Mi empresa"/>
                 <x-jet-input-error for="empresa" class="mt-2" />
-            </div>
+            </div> --}}
 
             {{-- document_type --}}
             <div class="col-span-6 sm:col-span-4">
@@ -66,7 +66,7 @@
     
         <x-slot name="actions">
             <x-jet-action-message class="mr-3" on="saved">
-                {{ __('Saved.') }}
+                {{ __('Guardado.') }}
             </x-jet-action-message>
     
             <x-jet-button wire:click="updateProfileContact" wire:loading.attr="disabled" wire:target="updateProfileContact">

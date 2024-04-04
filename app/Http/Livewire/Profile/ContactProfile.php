@@ -3,9 +3,8 @@
 namespace App\Http\Livewire\Profile;
 
 use App\Models\Profile;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 
 
 
@@ -15,7 +14,7 @@ class ContactProfile extends Component
     public $phone;
     public $address;
     public $city;
-    public $empresa;
+    public $profile;
     public $document_type;
     public $document_number;
 
@@ -25,52 +24,56 @@ class ContactProfile extends Component
         $this->phone = $userAuth ? $userAuth->phone : '';
         $this->address = $userAuth ? $userAuth->address : '';
         $this->city = $userAuth ? $userAuth->city : '';
-        $this->empresa = $userAuth ? $userAuth->empresa : '';
         $this->document_type = $userAuth ? $userAuth->document_type : '';
         $this->document_number = $userAuth ? $userAuth->document_number : '';
+        $this->profile = Profile::where('user_id', auth()->user()->id)->first();
     }
 
    
 
     public function updateProfileContact()
-    {
-        // $this->validate([
-        //     'phone' => 'required',
-        //     'address' => 'required',
-        //     'city' => 'required',
-        //     'empresa' => '',
-        //     'document_type' => 'required|unique_with:profiles,document_number',
-        //     'document_number' => 'required|min:6,max:15',
-        // ]);
-
+    {        
         $this->validate([
-            'phone' => 'required',
+            'phone' => 'required|numeric',
             'address' => 'required',
             'city' => 'required',
-            'empresa' => 'nullable',
-            'document_type' => 'required|unique_with:profiles,document_number',            
-            'document_number' => 'required|min:6,max:15',
-        ]);
-
-       
+            'document_type' => 'required',
+            'document_number' => [
+                'required',
+                'numeric',
+                Rule::unique('profiles')->where(function ($query) {
+                    // Excluir el perfil actual de la consulta
+                    return $query->where('document_type', $this->document_type)
+                                 ->where('document_number', $this->document_number)
+                                 ->where('id', '!=', $this->profile->id); // Asumiendo que tienes el perfil actual en $this->profile
+                })
+            ]
+        ]);        
         
-
-
-        Profile::updateOrCreate(
-            ['user_id' => auth()->user()->id],
-            
-            ['phone' => $this->phone,
-            'address' => $this->address,
-            'city' => $this->city,
-            'empresa' => $this->empresa,
-            'document_type' => $this->document_type,
-            'document_number' => $this->document_number
-            ]           
-            
-        );
-
-        $this->emit('updateProfileContact');
+        if ($this->profile) {
+            // Si ya existe un perfil, actualiza los datos
+            $this->profile->update([
+                'phone' => $this->phone,
+                'address' => $this->address,
+                'city' => $this->city,
+                'document_type' => $this->document_type,
+                'document_number' => $this->document_number
+            ]);
+        } else {
+            // Si no existe un perfil, crea uno nuevo
+            Profile::create([
+                'user_id' => auth()->user()->id,
+                'phone' => $this->phone,
+                'address' => $this->address,
+                'city' => $this->city,
+                'document_type' => $this->document_type,
+                'document_number' => $this->document_number
+            ]);
+        }
+    
+        $this->emit('saved');
     }
+    
 
     public function render()
     {
