@@ -13,7 +13,7 @@
     </div>
     {{-- End Titulo --}}
 
-    <div class="container grid grid-cols-5 gap-6 py-8">
+    <div class="container grid md:grid-cols-5 gap-6 py-8">
         <div class="col-span-3">
             <div class="rounded-lg bg-white p-4 pb-5 shadow-md">
                 {{-- Nombre Contacto --}}
@@ -71,10 +71,9 @@
                             </span>
                         </div>
                     </label>
-                    <div class="mb-4 grid grid-cols-2 gap-6 px-6 pb-6" :class="{ 'hidden': envio_type != 1 }">
+                    <div class="mb-4 flex-flex-col space-y-2 px-6 pb-6" :class="{ 'hidden': envio_type != 1 }">
                         {{-- departamento --}}
                         <div>
-
                             <x-jet-label value="Departamento***" />
                             {{-- {{ $departamento_id }} --}}
                             <select class="form-control w-full" wire:model="departamento_id" :disabled="$isLoading">
@@ -141,7 +140,7 @@
                         </div>
                     </label>
 
-                    <div class="grid grid-cols-2 gap-6 px-6 pb-6" :class="{ 'hidden': envio_type != 2 }">
+                    <div class="mb-4 flex-flex-col space-y-2 px-6 pb-6" :class="{ 'hidden': envio_type != 2 }">
                         {{-- departamento --}}
                         <div>
 
@@ -205,7 +204,7 @@
 
             {{-- Continuar con la venta --}}
             <div>
-                <div class="flex">
+                <div class="hidden md:flex">
                     @if (Cart::count() == 0)
                         <div class="mt-2 rounded bg-lese-100 px-4 text-sm">No tiene agregado ningun item en el carrito
                         </div>
@@ -247,7 +246,7 @@
 
                 <hr>
 
-                <p class="mt-2 text-sm text-trueGray-700">El contenido de este sitio web está sujeto a las condiciones
+                <p class="hidden md:block mt-2 text-sm text-trueGray-700">El contenido de este sitio web está sujeto a las condiciones
                     aquí expuestas. Las personas (en adelante Ciudadanos-Usuarios) al acceder, navegar o usar este
                     sitio, reconocen que han leído, entendido y se obligan a cumplir con estos términos, leyes y
                     reglamentos. <a href="#politicas" class="font-bold text-lese-700">Políticas de Privacidad</a> </p>
@@ -256,10 +255,10 @@
         </div>
 
         {{-- descripcion de la venta --}}
-        <div class="col-span-2">
+        <div class="col-span-3 md:col-span-2 w-full">
             <div class="rounded-lg bg-white p-6 shadow">
 
-                <ul class="h-64 overflow-y-auto">
+                <ul class="md:h-64 overflow-y-auto">
                     @forelse (Cart::content() as $item)
                         <li class="flex border-b border-gray-200 p-2">
                             <img class="h-15 mr-4 w-20 rounded-md object-cover" src="{{ $item->options->image }}">
@@ -373,7 +372,7 @@
             @endif
 
             {{-- card compra protegida --}}
-            <div class="bg-lese-50 mt-2 rounded-md px-2 pt-4 pb-8">
+            <div class="mt-2 rounded-md px-2 pt-4 pb-8">
                 <div class="flex items-center justify-between">
 
                     <div class="flex items-center">
@@ -403,10 +402,10 @@
                                 </g>
                             </g>
                         </svg>
-                        <p class="ml-2 text-xs">Datos Seguros</p>
+                        <p class="ml-2 text-xs">Compra Segura</p>
                     </div>
     
-                    <div class="mr-2 ">
+                    <div class="hidden md:block mr-2 ">
                         Paga con nequi o contraentrega
                     </div>
                 </div>
@@ -499,7 +498,46 @@
             </div>{{-- end card compra protegida --}}
             
 
+            
         </div>
     </div>
+    <div class="md:hidden sticky bottom-0 z-40 bg-white shadow-t-lg px-2 py-2 grid justify-center">
+        <div class="flex">
+            @if (Cart::count() == 0)
+                <div class="mt-2 rounded bg-lese-100 px-4 text-sm">No tiene agregado ningun item en el carrito
+                </div>
 
+                <div
+                    class="mb-4 ml-auto mt-4 rounded bg-trueGray-900 px-5 text-lese-200 hover:bg-trueGray-700 hover:text-teal-50">
+                    <a href="/">Ir a la tienda</a>
+                </div>
+            @else
+            @if ($userAuth->status)
+                <x-jet-button
+                    class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50"
+                    wire:click="create_order" wire:loading.attr="disabled" wire:target="create_order"
+                    :disabled="(!$selectedShippingOption || !$shipping_cost) && $freeShipping != 1">
+                    <div wire:loading.delay wire:target="create_order">
+                        <div class="flex items-center justify-center">
+                            <svg class="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                    stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                    Continuar
+                </x-jet-button>
+                
+            @else
+                <div class="my-4 bg-red-600 text-white p-2 rounded-lg shadow">Su usuario por alguna razón ha sido bloqueado.</div>
+            @endif
+        
+            @endif
+
+        </div>
+    </div>
 </div>

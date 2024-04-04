@@ -274,7 +274,7 @@ class CreateOrder extends Component
         // $orden->user->notify(new OrderProcessed($orden));
 
         // $this->emit('alert', 'success', __('Orden creada con éxito. '. $orden->code_id));
-        $this->emit('showSuccessMessage', __('Orden '. $orden->code_id.''.' creada.'));
+        $this->emit('showSuccessMessage', __('Orden '. $orden->code_id.''.' creada, tes estaremos llamando para confirmar el envio.'));
 
         return redirect()->route('orders.resumen', $orden);
 
