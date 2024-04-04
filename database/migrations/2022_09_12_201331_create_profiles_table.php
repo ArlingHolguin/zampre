@@ -18,7 +18,6 @@ class CreateProfilesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->enum('status', [Profile::Activo, Profile::Inactivo])->default(Profile::Activo);
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();

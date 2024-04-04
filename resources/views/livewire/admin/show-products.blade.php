@@ -216,8 +216,10 @@
 
        </div>
        @else
-        <div class="bg-lese-100 text-trueGray-600  text-sm leading-normal p-2 rounded">
-            <p class=" text-gray-500">No se encontraron resultados</p>
+        <div class="text-trueGray-600  text-sm leading-normal p-2 rounded">
+            <x-not-found-message>
+                😑 No se encontraron productos para esta búsqueda.                            
+            </x-not-found-message>
         </div>
        @endif
     </div>

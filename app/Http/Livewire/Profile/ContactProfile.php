@@ -32,47 +32,37 @@ class ContactProfile extends Component
    
 
     public function updateProfileContact()
-    {        
-        $this->validate([
-            'phone' => 'required|numeric',
-            'address' => 'required',
-            'city' => 'required',
-            'document_type' => 'required',
-            'document_number' => [
-                'required',
-                'numeric',
-                Rule::unique('profiles')->where(function ($query) {
-                    // Excluir el perfil actual de la consulta
-                    return $query->where('document_type', $this->document_type)
-                                 ->where('document_number', $this->document_number)
-                                 ->where('id', '!=', $this->profile->id); // Asumiendo que tienes el perfil actual en $this->profile
-                })
-            ]
-        ]);        
-        
-        if ($this->profile) {
-            // Si ya existe un perfil, actualiza los datos
-            $this->profile->update([
-                'phone' => $this->phone,
-                'address' => $this->address,
-                'city' => $this->city,
-                'document_type' => $this->document_type,
-                'document_number' => $this->document_number
-            ]);
-        } else {
-            // Si no existe un perfil, crea uno nuevo
-            Profile::create([
-                'user_id' => auth()->user()->id,
-                'phone' => $this->phone,
-                'address' => $this->address,
-                'city' => $this->city,
-                'document_type' => $this->document_type,
-                'document_number' => $this->document_number
-            ]);
-        }
-    
-        $this->emit('saved');
-    }
+{        
+    $this->validate([
+        'phone' => 'required|numeric',
+        'address' => 'required',
+        'city' => 'required',
+        'document_type' => 'required',
+        'document_number' => [
+            'required',
+            'numeric',
+            Rule::unique('profiles')->where(function ($query) {
+                // Excluir el perfil actual de la consulta
+                return $query->where('document_type', $this->document_type)
+                             ->where('document_number', $this->document_number)
+                             ->where('id', '!=', $this->profile->id); 
+            })
+        ]
+    ]);        
+
+    // Actualizar los datos del perfil
+    $this->profile->update([
+        'phone' => $this->phone,
+        'address' => $this->address,
+        'city' => $this->city,
+        'document_type' => $this->document_type,
+        'document_number' => $this->document_number
+    ]);
+
+    // Emitir evento de guardado exitoso
+    $this->emit('saved');
+}
+
     
 
     public function render()

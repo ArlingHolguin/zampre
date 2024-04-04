@@ -8,6 +8,7 @@ use App\Http\Livewire\Admin\CreateProducts;
 use App\Http\Livewire\Admin\EditProduct;
 use App\Http\Livewire\Admin\ShowCategory;
 use App\Http\Livewire\Admin\ShowProducts;
+use App\Http\Livewire\Admin\UserComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -32,5 +33,10 @@ Route::get('/categories/{category}', ShowCategory::class)->name('admin.categorie
 
 //routes brand 
 Route::get('/brands', BrandComponent::class)->name('admin.brands.index');
+
+//users
+Route::get('/users', UserComponent::class)->name('admin.users.index');
+
+
 
 

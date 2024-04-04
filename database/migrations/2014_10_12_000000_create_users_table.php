@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->string('external_id')->nullable();
             $table->string('external_auth')->nullable();
+            //status del usuario por defecto activo
+            $table->tinyInteger('status')->default(1);
             $table->rememberToken();
             
             $table->timestamps();

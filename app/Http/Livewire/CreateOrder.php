@@ -38,6 +38,8 @@ class CreateOrder extends Component
     public $selectedShippingOption = null;
 
     public $freeShipping = null;
+
+    public $userAuth;
     
     
     public $rules = [
@@ -56,6 +58,7 @@ class CreateOrder extends Component
    
 
     public function mount(){
+        $this->userAuth = Auth::user();
         $this->departamentos = Departamento::all();
         $this->contact = Auth::user()->name;
         $this->phone = Auth::user()->profile ? Auth::user()->profile->phone : '';

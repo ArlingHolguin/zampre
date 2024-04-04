@@ -52,6 +52,8 @@ class RoleSeeder extends Seeder
             'remember_token' => Str::random(16),
         ]);
 
+        
+
         //Roles
         $r_superAdmin = Role::create(['name' => 'superadmin']);
 

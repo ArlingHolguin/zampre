@@ -60,6 +60,25 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    // Define el evento created
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            // Crea un perfil por defecto para el nuevo usuario
+            $user->profile()->create([
+                'phone' => '',
+                'address' => '',
+                'city' => '',
+                'document_type' => null,
+                'document_number' => ''
+            ]);
+            // Asigna el rol de 'cliente' al nuevo usuario
+            // $user->assignRole('cliente');
+        });
+    }
+
     //relacion one to one con profile
     public function profile()
     {
