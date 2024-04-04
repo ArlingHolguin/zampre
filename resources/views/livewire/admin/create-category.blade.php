@@ -1,4 +1,5 @@
 <div>
+    {{-- formulario de creacion de categorias --}}
     <x-jet-form-section submit="save">
         <x-slot name="title">
             Crear una nueva categoría
@@ -60,7 +61,7 @@
             </x-jet-button>
         </x-slot>
     </x-jet-form-section>
-
+    {{-- tabla de categorias --}}
     <x-jet-action-section class="mt-6">
         <x-slot name="title">
             Lista de categorias
@@ -103,7 +104,7 @@
         </x-slot>
     </x-jet-action-section>
 
-    {{-- modal  --}}
+    {{-- modal editar categoria --}}
     <x-jet-dialog-modal wire:model="editForm.open">
         <x-slot name="title">
             Editar categoría

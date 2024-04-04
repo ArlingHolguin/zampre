@@ -68,6 +68,7 @@ class CreateCategory extends Component
     public function updatedCreateFormName($value){
         $this->createForm['slug'] = Str::slug($value);
     }
+    
     public function updatedEditFormName($value){
         $this->editForm['slug'] = Str::slug($value);
     }

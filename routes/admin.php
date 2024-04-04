@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Livewire\Admin\BrandComponent;
 use App\Http\Livewire\Admin\CreateProducts;
 use App\Http\Livewire\Admin\EditProduct;
 use App\Http\Livewire\Admin\ShowCategory;
@@ -28,4 +29,8 @@ Route::post('/product/{product}/file', [ProductController::class, 'files'])->nam
 // Category Routes
 Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
 Route::get('/categories/{category}', ShowCategory::class)->name('admin.categories.show');
+
+//routes brand 
+Route::get('/brands', BrandComponent::class)->name('admin.brands.index');
+
 
