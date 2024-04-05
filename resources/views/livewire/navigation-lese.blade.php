@@ -113,9 +113,17 @@
                         class="text-gray-100 font-semibols hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
                         <a href="{{ route('profile.show') }}" class="py-2 px-4 text-sm flex items-center">
                             <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
-                            Perfil
+                            Cuenta
                         </a>
                     </span>
+                    <span style="margin-top: 0.10rem;"
+                        class="text-gray-100 font-semibols hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
+                        <a href="{{ route('orders.index') }}" class="py-2 px-4 text-sm flex items-center">
+                            <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
+                            Ordenes
+                        </a>
+                    </span>
+                    
                     <span style="margin-top: 0.10rem;"
                         class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
                         <a href=""

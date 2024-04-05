@@ -26,10 +26,11 @@
                 <x-jet-dropdown-link href="{{ route('orders.index') }}">
                     {{ __('Orders') }}
                 </x-jet-dropdown-link>
-
+                @role('superadmin|admin')
                 <x-jet-dropdown-link href="{{ route('dashboard') }}">
                     {{ __('Administrator') }}
                 </x-jet-dropdown-link>
+                @endrole
 
 
 
