@@ -46,11 +46,11 @@ Route::group(['middleware' => ['can:productos']], function () {
 
    });
 
-//    Route::group(['middleware' => ['can:settings']], function () { 
+   Route::group(['middleware' => ['can:settings']], function () { 
     //users
     Route::get('/settings', SettingsComponent::class)->name('admin.settings.index');
 
-//  });
+ });
 
 
 
