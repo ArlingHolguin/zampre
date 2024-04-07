@@ -4,7 +4,7 @@
             <ul class="glider-{{ $category->id }}">
                 @foreach ($products as $product)
                     <li class="bg-white rounded-lg shadow-lg {{ $loop->last ? '' : 'mr-4' }} ">
-                        <article>
+                        <article class="h-80">
                             <a href="{{ route('products.show', $product) }}">
                             <figure>
                                 {{-- {{ Storage::url($product->images->first()->url ?? 'hola.jpg')  }} --}}
@@ -12,7 +12,7 @@
                                     src="{{ $product->images->first() ? Storage::url($product->images->first()->url) :'' }}"
                                     alt="{{ $product->name }}">
                             </figure>
-                            <div class="py-4 px-6 text-gray-600">                                
+                            <div class="py-4 px-4 text-gray-600">                                
                                 <p class="text-xs line-through ml-2">$ {{ number_format($product->price, 0, ',', '.') }}</p>
                                 <div>
                                     <span class="font-semibold text-xl ">$  {{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : number_format($product->price, 0, ',', '.')}}</span>
@@ -21,7 +21,7 @@
                                     @endif                                   
                                 </div>
                                 <h1 class="text-md font-light">
-                                    <div>{{ Str::limit($product->name, 25) }}</div>
+                                    <div>{{ Str::limit($product->name, 20) }}</div>
                                 </h1>
                                 {{-- <span>{{ $product->subcategory->size ? 'Talla:true' : 'Talla:false' }}</span>
                                 <span>{{ $product->subcategory->color ? 'Color:true' : 'Color:false' }}</span> --}}

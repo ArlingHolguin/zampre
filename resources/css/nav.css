@@ -32,15 +32,3 @@
     border-color: transparent #000000 transparent transparent;
 }
 
-.bg-image-opacity::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image: url('img/fondo_whatsapp.jpg'); /* Ajusta la ruta de la imagen */
-    background-size: cover;
-    background-position: center;
-    opacity: 0.5; /* Ajusta la opacidad según necesites */
-}
