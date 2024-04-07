@@ -11,7 +11,13 @@
                 @forelse ($products as $product)
                     <a href="{{ route('products.show', $product) }}" class="flex items-center gap-2 bg-white hover:bg-gray-100 px-3 mt-3" >
                         
-                            <img class="w-16 h-16 object-cover rounded-md" src="{{  Storage::url($product->images->first()->url) }}" alt="{{$product->name}}">
+                        @if($product->images->first())
+                            <img class="w-16 h-16 object-cover rounded-md" src="{{ Storage::url($product->images->first()->url) }}" alt="{{$product->name}}">
+                        @else
+                            {{-- Puedes poner una imagen por defecto aquí --}}
+                            <img class="w-16 h-16 object-cover rounded-md" src="{{ asset('path/to/default/image.png') }}" alt="Default Image">
+                        @endif
+
                             <div class="text-gray-700 py-1">
                                 <p class="text-lg font-medium">{{$product->name}}</p>
                                 <p class="text-sm font-bold text-gray-600">${{ $product->price_discount ? number_format($product->price_discount, 0, ',', '.') : number_format($product->price, 0, ',', '.')  }}</p>
@@ -24,7 +30,9 @@
                     <div class="divider divider-orange-100"></div>
                 @empty
                     <p class="text-lg leading-5 p-4">
-                        No existe ningún registro con los parametros especificados
+                        <x-not-found-message>
+                            No se encontraron productos con el nombre 👉 "{{ $search }}"
+                        </x-not-found-message>
                     </p>
                 @endforelse
             </div>
