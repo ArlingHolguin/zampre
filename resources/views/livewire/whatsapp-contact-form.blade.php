@@ -1,4 +1,4 @@
-<div class="fixed bottom-4 right-4 {{ $whatsappNumber ? 'block' : 'hidden' }}">
+<div class="fixed bottom-4 right-4 z-50 {{ $whatsappNumber ? 'block' : 'hidden' }}">
     @if(!$showForm)
         <!-- Botón Flotante -->
         <button wire:click="$set('showForm', true)" class="bg-green-500 p-4 rounded-full">
