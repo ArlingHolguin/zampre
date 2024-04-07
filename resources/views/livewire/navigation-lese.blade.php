@@ -29,7 +29,9 @@
         </a>
         {{-- buscador --}}
         <div class="flex-1 hidden md:block">
+            @if(isset($categories))
             @livewire('search')
+            @endif
         </div>
 
 
@@ -51,114 +53,122 @@
 
         </div>
     </div>
+    @if($categories->count() > 0)
+        <nav id="navigation-menu" x-show="open" :class="{ 'block': open, 'hidden': !open }"
+            x-transition:enter="transition duration-500" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition duration-500"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            class="w-full absolute bg-white hidden duration-500">
+            {{-- Menu computador --}}
+            
+            <div class="container h-full hidden md:block">
+                <div class="grid grid-cols-4 h-full relative">
+                    <ul class="bg-lese-900 h-full">                    
+                        
+                        @foreach ($categories as $category)
+                            <li class="navigation-link text-white hover:text-gray-700 font-bold hover:bg-orange-400  hover:font-black transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-110 duration-300">
+                                <a href="{{ route('categories.show', $category) }}"
+                                    class="py-2 px-4 text-sm flex items-center">
+                                    <span class="flex justify-center w-9 mr-2 hover:animate-spin">
+                                        @if ($category->icon)
+                                            <img src="{{ asset('img/' . $category->icon . '.png') }}" width="50"
+                                                alt="Icono de {{ $category->name }}">
+                                        @else
+                                            {{-- Puedes poner un icono por defecto aquí si quieres --}}
+                                            <i class="fas fa-heart"></i>
+                                        @endif
+                                    </span>
+                                    <span class="">
+                                        {{ $category->name }}
+                                    </span>
+                                </a>
 
-    <nav id="navigation-menu" x-show="open" :class="{ 'block': open, 'hidden': !open }"
-        x-transition:enter="transition duration-500" x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100" x-transition:leave="transition duration-500"
-        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-        class="w-full absolute bg-white hidden duration-500">
-        {{-- Menu computador --}}
-        <div class="container h-full hidden md:block">
-            <div class="grid grid-cols-4 h-full relative">
-                <ul class="bg-lese-900 h-full">
+                                <div class="navigation-submenu bg-orange-400 absolute w-3/4 h-full top-0 right-0 hidden">
+                                    <x-navigation-subcategories :category="$category" />
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <x-navigation-subcategories :category="$category->first()" />
+                </div>
+            </div>
+            {{-- Menu mobil --}}
+            <div class="bg-lese-900 h-full overflow-y-auto">
+                {{-- Buscador mobile  --}}
+                <div class="container p-3 bg-white mb-3">
+                    @livewire('search')
+                </div>
+                <ul class="mt-2">
                     @foreach ($categories as $category)
-                        <li class="navigation-link text-white hover:text-gray-700 font-bold hover:bg-orange-400  hover:font-black transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-110 duration-300">
-                            <a href="{{ route('categories.show', $category) }}"
-                                class="py-2 px-4 text-sm flex items-center">
+                        <li style="margin-top: 0.10rem;"
+                            class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 hover:font-semibold transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
+                            <a href="{{ route('categories.show', $category) }}" class="py-2 px-4 text-sm flex items-center">
                                 <span class="flex justify-center w-9 mr-2 hover:animate-spin">
-                                    @if ($category->icon)
-                                        <img src="{{ asset('img/' . $category->icon . '.png') }}" width="50"
-                                            alt="Icono de {{ $category->name }}">
-                                    @else
-                                        {{-- Puedes poner un icono por defecto aquí si quieres --}}
-                                        <i class="fas fa-heart"></i>
-                                    @endif
+                                    <img src="{{ asset('img/' . $category->icon . '.png') }}" width="50" alt="Icono de {{ $category->name }}">
                                 </span>
-                                <span class="">
-                                    {{ $category->name }}
-                                </span>
+                                {{ $category->name }}
                             </a>
-
-                            <div class="navigation-submenu bg-orange-400 absolute w-3/4 h-full top-0 right-0 hidden">
-                                <x-navigation-subcategories :category="$category" />
-                            </div>
                         </li>
                     @endforeach
                 </ul>
-                <x-navigation-subcategories :category="$category->first()" />
+                <div class="mt-3">
+                    @auth
+                        <span style="margin-top: 0.10rem;"
+                            class="text-gray-100 font-semibols hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
+                            <a href="{{ route('profile.show') }}" class="py-2 px-4 text-sm flex items-center">
+                                <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
+                                Cuenta
+                            </a>
+                        </span>
+                        <span style="margin-top: 0.10rem;"
+                            class="text-gray-100 font-semibols hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
+                            <a href="{{ route('orders.index') }}" class="py-2 px-4 text-sm flex items-center">
+                                <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
+                                Ordenes
+                            </a>
+                        </span>
+                        
+                        <span style="margin-top: 0.10rem;"
+                            class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
+                            <a href=""
+                                onclick="event.preventDefault();
+                                document.getElementById('logout_form').submit()"
+                                class="py-2 px-4 text-sm flex items-center">
+                                <i class="fas fa-power-off ml-3 text-lg mr-2"></i>
+                                Cerrar Sesión
+                            </a>
+
+                            <form id="logout_form" action="{{ route('logout') }}" method="post" class="hidden">
+                                @csrf
+                            </form>
+                        </span>
+                    @else
+                        <span style="margin-top: 0.10rem;"
+                            class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
+                            <a href="{{ route('register') }}" class="py-2 px-4 text-sm flex items-center">
+                                <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
+                                Registro
+                            </a>
+                        </span>
+                        <span style="margin-top: 0.10rem;"
+                            class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
+                            <a href="{{ route('login') }}" class="py-2 px-4 text-sm flex items-center">
+                                <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
+                                Entrar
+                            </a>
+                        </span>
+                    @endauth
+                </div>
+
+
             </div>
+
+
+        </nav>
+        @else
+        <div class="container">
+            <x-not-found-message />
         </div>
-        {{-- Menu mobil --}}
-        <div class="bg-lese-900 h-full overflow-y-auto">
-            {{-- Buscador mobile  --}}
-            <div class="container p-3 bg-white mb-3">
-                @livewire('search')
-            </div>
-            <ul class="mt-2">
-                @foreach ($categories as $category)
-                    <li style="margin-top: 0.10rem;"
-                        class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 hover:font-semibold transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
-                        <a href="{{ route('categories.show', $category) }}" class="py-2 px-4 text-sm flex items-center">
-                            <span class="flex justify-center w-9 mr-2 hover:animate-spin">
-                                <img src="{{ asset('img/' . $category->icon . '.png') }}" width="50" alt="Icono de {{ $category->name }}">
-                            </span>
-                            {{ $category->name }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-            <div class="mt-3">
-                @auth
-                    <span style="margin-top: 0.10rem;"
-                        class="text-gray-100 font-semibols hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
-                        <a href="{{ route('profile.show') }}" class="py-2 px-4 text-sm flex items-center">
-                            <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
-                            Cuenta
-                        </a>
-                    </span>
-                    <span style="margin-top: 0.10rem;"
-                        class="text-gray-100 font-semibols hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
-                        <a href="{{ route('orders.index') }}" class="py-2 px-4 text-sm flex items-center">
-                            <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
-                            Ordenes
-                        </a>
-                    </span>
-                    
-                    <span style="margin-top: 0.10rem;"
-                        class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
-                        <a href=""
-                            onclick="event.preventDefault();
-                            document.getElementById('logout_form').submit()"
-                            class="py-2 px-4 text-sm flex items-center">
-                            <i class="fas fa-power-off ml-3 text-lg mr-2"></i>
-                            Cerrar Sesión
-                        </a>
-
-                        <form id="logout_form" action="{{ route('logout') }}" method="post" class="hidden">
-                            @csrf
-                        </form>
-                    </span>
-                @else
-                    <span style="margin-top: 0.10rem;"
-                        class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
-                        <a href="{{ route('register') }}" class="py-2 px-4 text-sm flex items-center">
-                            <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
-                            Registro
-                        </a>
-                    </span>
-                    <span style="margin-top: 0.10rem;"
-                        class="text-gray-100 font-semibold hover:bg-yellow-400 hover:text-gray-900 transition ease-in-out delay-100 hover:-translate-x-1 hover:scale-100 duration-300">
-                        <a href="{{ route('login') }}" class="py-2 px-4 text-sm flex items-center">
-                            <i class="fas fa-id-badge ml-3 text-lg mr-2"></i>
-                            Entrar
-                        </a>
-                    </span>
-                @endauth
-            </div>
-
-
-        </div>
-
-
-    </nav>
+    @endif
+    
 </header>
