@@ -25,13 +25,13 @@
                                 </a>
                             </li>
                         @endif
-                        @if(!empty($socialLinks['whatsapp']['url']))
+                        {{-- @if(!empty($socialLinks['whatsapp']['url']))
                             <li>
                                 <a href="{{ 'https://wa.me/57'.$socialLinks['whatsapp']['url'] }}" target="_blank" class="block px-3 py-1 text-sm font-semibold text-white hover:text-gray-400">
                                     <x-whatsapp size="30px" color="white"/>
                                 </a>
                             </li>
-                        @endif
+                        @endif --}}
                     </ul>
 
                 </div>

@@ -15,7 +15,7 @@ class SocialComponent extends Component
 
     public function mount()
     {
-        $settings = Setting::first();
+        $settings = Setting::first() ?? new Setting;
         $socialData = $settings->social ? json_decode($settings->social, true) : [];
 
         // Asegúrate de que estas líneas coincidan con las estructuras de datos en tu base de datos

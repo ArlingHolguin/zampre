@@ -67,6 +67,7 @@
         </main>
     </div>
     @livewire('footer-component')
+    @livewire('whatsapp-contact-form')
     @stack('modals')
 
     @livewireScripts

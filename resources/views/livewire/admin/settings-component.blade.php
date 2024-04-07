@@ -60,6 +60,7 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-300">
+                @if(is_array($items))
                 @foreach ($items as $item)
                 <tr>
                     <td class="py-2">
@@ -73,6 +74,7 @@
                     </td>
                     </tr> 
                 @endforeach
+                @endif
             </tbody>
         </table>  
         </x-slot>
