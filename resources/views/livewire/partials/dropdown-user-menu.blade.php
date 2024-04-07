@@ -32,6 +32,12 @@
                 </x-jet-dropdown-link>
                 @endrole
 
+                @role('superadmin|admin')
+                <x-jet-dropdown-link href="{{ route('admin.settings.index') }}">
+                    {{ __('Ajustes') }}
+                </x-jet-dropdown-link>
+                @endrole
+
 
 
                 <div class="border-t border-gray-100"></div>

@@ -5,12 +5,17 @@
               {{-- <div class="flex items-center justify-center">
                 <img  class=" object-center object-cover" src="{{asset('img/tienda.jpg')}}" alt="">
               </div> --}}
-              <div class="flex items-center justify-center">
+              @foreach ($banners as $banner)
+                    <div class="flex items-center justify-center">
+                        <img class="object-center object-cover" src="{{ Storage::url($banner['image']) }}" alt="{{ $banner['name'] }}">
+                    </div>
+                @endforeach
+              {{-- <div class="flex items-center justify-center">
                 <img  class=" object-center object-cover" src="{{asset('img/new.jpg')}}" alt="">
               </div>
               <div class="flex items-center justify-center">
                 <img  class=" object-center object-cover" src="{{asset('img/day.jpg')}}" alt="">
-              </div>
+              </div> --}}
               
             </div>
           

@@ -8,6 +8,7 @@ use App\Models\Courier;
 use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Orden;
+use App\Models\Setting;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -40,6 +41,7 @@ class CreateOrder extends Component
     public $freeShipping = null;
 
     public $userAuth;
+    public $contactEmail;
     
     
     public $rules = [
@@ -63,7 +65,7 @@ class CreateOrder extends Component
         $this->contact = Auth::user()->name;
         $this->phone = Auth::user()->profile ? Auth::user()->profile->phone : '';
         $this->address = Auth::user()->profile ? Auth::user()->profile->address : '';
-        $this->identification = Auth::user()->profile ? Auth::user()->profile->identification : '';
+        $this->identification = Auth::user()->profile ? Auth::user()->profile->document_number : '';
         $this->isLoading = false;
         // $this->freeShipping = Cart::content()->where('options.free_shipping', true)->count();
         $this->freeShipping = Cart::content()->contains(function ($item) {
@@ -72,6 +74,11 @@ class CreateOrder extends Component
 
 
         // dd(Cart::content());
+        $settings = Setting::first();
+        if ($settings && $settings->contact) {
+            $contactData = json_decode($settings->contact, true);
+            $this->contactEmail = $contactData['email'] ?? 'ventas@zampreonline.com'; // Correo por defecto
+        }
        
     }
 
@@ -267,7 +274,7 @@ class CreateOrder extends Component
         // Evia correo confirmacion al cliente
         Mail::to($orden->user->email)->send(new PedidoMailable($orden)); 
         // Evia correo confirmacion al admin
-        Mail::to(['ventas@zampreonline.com'])->send(new PlacedOrderMailable($orden)); 
+        Mail::to([$this->contactEmail])->send(new PlacedOrderMailable($orden)); 
         
         $this->emit('showSuccessMessage', __('Revisa tu correo electrónico para ver el detalle de la orden '.$orden->user->email));
          //whatsapp notification al cliente - > activar linea

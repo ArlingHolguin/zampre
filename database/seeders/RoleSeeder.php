@@ -88,6 +88,7 @@ class RoleSeeder extends Seeder
 
         //cambiar el estado de una orden admin y super
         $changeOrderStatusPermission = Permission::create(['name' => 'change order status']);
+        $settings = Permission::create(['name' => 'settings']);
 
         
 
@@ -95,7 +96,7 @@ class RoleSeeder extends Seeder
         $r_admin->syncPermissions([
                     $viewAllUserPermission, $viewSingleUserPermission, $addUserPermission, $editUserPermission, $deleteUserPermission, $viewAllRolePermission,
                     $viewSingleRolePermission, $addRolePermission, $editRolePermission, $deleteRolePermission, $viewAllPermissionPermission, $viewSinglePermissionPermission,
-                    $addPermissionPermission, $editPermissionPermission, $deletePermissionPermission, $manageUserRolesPermission, $changeOrderStatusPermission, $productos, $ordenes, $categorias, $marcas, $users
+                    $addPermissionPermission, $editPermissionPermission, $deletePermissionPermission, $manageUserRolesPermission, $changeOrderStatusPermission, $productos, $ordenes, $categorias, $marcas, $users, $settings
                 ]);
 
         $c_superAdmin->assignRole($r_superAdmin);

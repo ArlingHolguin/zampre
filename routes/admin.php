@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Livewire\Admin\BrandComponent;
 use App\Http\Livewire\Admin\CreateProducts;
 use App\Http\Livewire\Admin\EditProduct;
+use App\Http\Livewire\Admin\SettingsComponent;
 use App\Http\Livewire\Admin\ShowCategory;
 use App\Http\Livewire\Admin\ShowProducts;
 use App\Http\Livewire\Admin\UserComponent;
@@ -44,6 +45,12 @@ Route::group(['middleware' => ['can:productos']], function () {
       Route::get('/users', UserComponent::class)->name('admin.users.index');
 
    });
+
+//    Route::group(['middleware' => ['can:settings']], function () { 
+    //users
+    Route::get('/settings', SettingsComponent::class)->name('admin.settings.index');
+
+//  });
 
 
 
