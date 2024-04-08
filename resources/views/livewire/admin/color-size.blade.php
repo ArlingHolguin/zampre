@@ -1,8 +1,12 @@
 <div>
     <div class="mx-4 mt-4 rounded-lg bg-gray-100 px-4 py-4 shadow-lg md:mx-0 md:px-8">
+        {{-- Agregar Color --}}
+        <div class="flex">
+            <x-jet-button class="ml-auto" wire:click="showAddColorModal">Agregar Color Nuevo</x-jet-button>
+        </div>
         <div class="flex flex-col gap-3">
             <x-jet-label for="color" value="{{ __('Color*') }}" />
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
                 @foreach ($colors as $color)
                     <div class="flex items-center" wire:key="color-{{ $color->id }}">
                         <input type="radio" wire:model="color_id" value="{{ $color->id }}" id="color_{{ $color->id }}"
@@ -38,7 +42,7 @@
                 </x-jet-action-message>
                 <x-jet-button class="" wire:loading.attr="disabled" wire:target="save"
                     wire:loading.class.remove="cursor-pointer" wire:click="save">
-                    Agregar
+                    Agregar 
                 </x-jet-button>
             </div>
         </div>
@@ -107,6 +111,25 @@
             </x-jet-secondary-button>
             <x-jet-button wire:click="update" wire:loading.attr="disabled" wire:target="update" class="ml-4">
                 Actualizar
+            </x-jet-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+    <x-jet-dialog-modal wire:model="showAddColorModal">
+        <x-slot name="title">
+            Agregar Nuevo Color
+        </x-slot>
+        <x-slot name="content">
+            <x-jet-label for="newColorName" value="Nombre del Color" />
+            <x-jet-input id="newColorName" type="text" class="mt-1 block w-full" wire:model.defer="newColorName" />
+            <x-jet-input-error for="newColorName" class="mt-2" />
+        </x-slot>
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$set('showAddColorModal', false)">Cancelar</x-jet-secondary-button>
+            <x-jet-button class="ml-3" 
+                wire:click="saveNewColor"
+                wire:loading.attr="disabled" wire:target="saveNewColor">
+                Guardar
             </x-jet-button>
         </x-slot>
     </x-jet-dialog-modal>

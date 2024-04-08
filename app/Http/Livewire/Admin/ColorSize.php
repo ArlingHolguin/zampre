@@ -10,6 +10,8 @@ class ColorSize extends Component
 {
     public $colors, $color_id, $quantity, $size, $open = false;
     public $pivot, $pivot_color_id, $pivot_quantity;
+    public $showAddColorModal = false;
+    public $newColorName;
 
     protected $rules = [
         'color_id' => 'required',
@@ -21,6 +23,31 @@ class ColorSize extends Component
     public function mount()
     {
         $this->colors = Color::all();
+    }
+
+    public function showAddColorModal()
+    {
+        $this->showAddColorModal = true;
+        $this->reset('newColorName');
+        //resetaraer les erreurs de validation  
+        $this->resetValidation();
+
+    }
+
+    public function saveNewColor()
+    {
+        $this->validate([
+            'newColorName' => 'required|string|unique:colors,name'
+        ]);
+
+        $color = Color::create([
+            'name' => $this->newColorName
+        ]);
+
+        $this->colors->push($color);
+        $this->color_id = $color->id;
+        $this->showAddColorModal = false;
+        $this->reset('newColorName');
     }
 
     public function save()

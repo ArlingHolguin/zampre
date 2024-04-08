@@ -17,9 +17,9 @@
                             </span>
                             <h1 class="ml-2 font-bold text-white uppercase">
                                 {{ $category->name }}
-                                <span  class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-green-500 rounded-full font-black">
+                                {{-- <span  class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-green-500 rounded-full font-black">
                                     {{ $category->products->count() }}
-                                </span>
+                                </span> --}}
                             </h1>
 
                         </div>

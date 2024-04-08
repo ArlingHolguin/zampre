@@ -198,7 +198,7 @@
         </div>
         {{-- Configuracion de stock  --}}
         @if ($this->subcategory)        
-            @if (!$this->subcategory->color && !$this->subcategory->color)
+            @if (!$this->subcategory->color && !$this->subcategory->size)
                 <div class="bg-white px-8 py-4 rounded mt-4">
                     <x-jet-label value="Cantidad*" />
                     <x-jet-input type="text" wire:model="product.quantity" class="form-control w-full"

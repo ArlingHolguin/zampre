@@ -42,7 +42,6 @@ class CreateProducts extends Component
         'extracto' => 'nullable|max:150',
         'keywords' => 'nullable|max:150',
         'price' => 'required|numeric|digits_between:0,8',
-        'quantity' => 'required|numeric|digits_between:0,5',
         'dimensions.width' => 'nullable|numeric|digits_between:0,5',
         'dimensions.height' => 'nullable|numeric|digits_between:0,5',
         'dimensions.length' => 'nullable|numeric|digits_between:0,5',
@@ -108,8 +107,13 @@ class CreateProducts extends Component
     public function save(){
         $rules = $this->rules;
 
+        // if($this->subcategory_id){
+        //     if(!$this->subcategory->color && !$this->subcategory->color){
+        //         $rules['quantity'] = 'required|numeric|digits_between:0,5';
+        //     }
+        // }
         if($this->subcategory_id){
-            if(!$this->subcategory->color && !$this->subcategory->color){
+            if(!$this->subcategory->color || !$this->subcategory->size){                
                 $rules['quantity'] = 'required|numeric|digits_between:0,5';
             }
         }
