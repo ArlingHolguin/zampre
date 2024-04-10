@@ -11,6 +11,8 @@
 |
 */
 
+use Artesaos\SEOTools\Providers\SEOToolsServiceProvider;
+
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
@@ -51,5 +53,8 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+
+//linea de seoToolss
+$app->register(SEOToolsServiceProvider::class);
 
 return $app;

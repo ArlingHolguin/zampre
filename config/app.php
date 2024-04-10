@@ -182,6 +182,7 @@ return [
         /*
          * Application Service Providers...
          */
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -250,7 +251,9 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         
         'Webp' => Buglinjo\LaravelWebp\Facades\Webp::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+
 
         
 
