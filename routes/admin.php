@@ -25,8 +25,8 @@ Route::group(['middleware' => ['can:productos']], function () {
  Route::group(['middleware' => ['can:ordenes']], function () {
      Route::get('/ordenes', [OrderController::class, 'index'])->name('admin.ordenes.index');
      Route::get('/ordenes/{orden}', [OrderController::class, 'show'])->name('admin.orders.show');
-
- });
+     
+    });
 
  Route::group(['middleware' => ['can:categorias']], function () { 
      // Category Routes

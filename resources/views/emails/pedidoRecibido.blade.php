@@ -63,7 +63,7 @@
                                 <h1
                                     style="margin-top:0;margin-bottom:16px;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">
                                     Gracias por tu pedido!😎</h1>
-                                <p style="margin:0;">{{ $orden->user->name }}, hemos recibido tu pedido
+                                <p style="margin:0;">{{ $orden->contact }}, hemos recibido tu pedido
                                     {{ $orden->code_id }}, vamos a empezar el proceso de embalaje lo más prontro
                                     posible. Gracias por confiar en nosotros. <a href="{{route('orders.resumen', $orden)}}"
                                         style="color:#f06e17;text-decoration:underline;">Ver orden: 

@@ -33,11 +33,19 @@
                 </div>
 
                 {{-- Telefono Contacto --}}
-                <div>
+                <div class="mb-4">
                     <x-jet-label value="Celular" />
                     <x-jet-input type="text" placeholder="*Número de celular sin comas, ni espacios ej: 3124536767 "
                         class="form-control w-full" wire:model.defer="phone" />
                     <x-jet-input-error for="phone" />
+                </div>
+
+                {{-- Telefono Contacto --}}
+                <div>
+                    <x-jet-label value="Correo electrónico*" />
+                    <x-jet-input type="email" placeholder="*Ingrese su correo electrónico"
+                        class="form-control w-full" wire:model.defer="email" />
+                    <x-jet-input-error for="email" />
                 </div>
             </div>
             <div x-data="{ envio_type: @entangle('envio_type') }">
@@ -214,29 +222,50 @@
                             <a href="/">Ir a la tienda</a>
                         </div>
                     @else
-                    @if ($userAuth->status)
-                        <x-jet-button
-                            class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50"
-                            wire:click="create_order" wire:loading.attr="disabled" wire:target="create_order"
-                            :disabled="(!$selectedShippingOption || !$shipping_cost) && $freeShipping != 1">
-                            <div wire:loading.delay wire:target="create_order">
-                                <div class="flex items-center justify-center">
-                                    <svg class="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10"
-                                            stroke="currentColor" stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor"
-                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                        </path>
-                                    </svg>
-                                </div>
-                            </div>
-                            Continuar con el pedido
-                        </x-jet-button>
-                        
-                    @else
-                        <div class="my-4 bg-red-600 text-white p-2 rounded-lg shadow">Su usuario por alguna razón ha sido bloqueado.</div>
-                    @endif
+                        @if ($userAuth && $userAuth->status)
+                            @if ($userAuth)
+                                <x-jet-button
+                                    class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50"
+                                    wire:click="create_order" wire:loading.attr="disabled" wire:target="create_order"
+                                    :disabled="(!$selectedShippingOption || !$shipping_cost) && $freeShipping != 1">
+                                    <div wire:loading.delay wire:target="create_order">
+                                        <div class="flex items-center justify-center">
+                                            <svg class="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                    stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    Continuar con el pedido
+                                </x-jet-button>
+                                
+                            @else
+                                <div class="my-4 bg-red-600 text-white p-2 rounded-lg shadow">Su usuario por alguna razón ha sido bloqueado.</div>
+                            @endif
+                         @else
+                         <x-jet-button
+                         class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50"
+                         wire:click="create_order" wire:loading.attr="disabled" wire:target="create_order"
+                         :disabled="(!$selectedShippingOption || !$shipping_cost) && $freeShipping != 1">
+                         <div wire:loading.delay wire:target="create_order">
+                             <div class="flex items-center justify-center">
+                                 <svg class="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                     <circle class="opacity-25" cx="12" cy="12" r="10"
+                                         stroke="currentColor" stroke-width="4"></circle>
+                                     <path class="opacity-75" fill="currentColor"
+                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                     </path>
+                                 </svg>
+                             </div>
+                         </div>
+                         Continuar
+                     </x-jet-button>
+                        @endif
                 
                     @endif
 
@@ -482,7 +511,7 @@
                                 <div class="flex flex-col items-center ">
                                     <img class="w-32 mb-1" src="{{ asset('img/bancolombia_logo.svg') }}" alt="logo ">
                                     <img src="{{ asset('img/qr_bancolombia.jpg') }}" alt="Card">
-                                    <span>Lady Zamudio</span>
+                                    <span>Zampre SAS</span>
 
                                 </div>
                                 
@@ -504,40 +533,38 @@
     <div class="md:hidden sticky bottom-0 z-40 bg-white shadow-t-lg px-2 py-2 grid justify-center">
         <div class="flex">
             @if (Cart::count() == 0)
-                <div class="mt-2 rounded bg-lese-100 px-4 text-sm">No tiene agregado ningun item en el carrito
-                </div>
-
-                <div
-                    class="mb-4 ml-auto mt-4 rounded bg-trueGray-900 px-5 text-lese-200 hover:bg-trueGray-700 hover:text-teal-50">
+                <div class="mt-2 rounded bg-lese-100 px-4 text-sm">No tiene agregado ningun item en el carrito</div>
+                <div class="mb-4 ml-auto mt-4 rounded bg-trueGray-900 px-5 text-lese-200 hover:bg-trueGray-700 hover:text-teal-50">
                     <a href="/">Ir a la tienda</a>
                 </div>
             @else
-            @if ($userAuth->status)
-                <x-jet-button
-                    class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50"
-                    wire:click="create_order" wire:loading.attr="disabled" wire:target="create_order"
-                    :disabled="(!$selectedShippingOption || !$shipping_cost) && $freeShipping != 1">
-                    <div wire:loading.delay wire:target="create_order">
-                        <div class="flex items-center justify-center">
-                            <svg class="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10"
-                                    stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                </path>
-                            </svg>
+            
+                @if ($userAuth && $userAuth->status)
+                    {{-- Botón para usuarios autenticados y activos --}}
+                    <x-jet-button class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50" wire:click="create_order" wire:loading.attr="disabled" wire:target="create_order" :disabled="(!$selectedShippingOption || !$shipping_cost) && $freeShipping != 1">
+                        <div wire:loading.delay wire:target="create_order">
+                            <div class="flex items-center justify-center">
+                                <!-- contenido del botón aquí -->
+                            </div>
                         </div>
-                    </div>
-                    Continuar
-                </x-jet-button>
-                
-            @else
-                <div class="my-4 bg-red-600 text-white p-2 rounded-lg shadow">Su usuario por alguna razón ha sido bloqueado.</div>
+                        Continuar
+                    </x-jet-button>
+                @elseif ($userAuth)
+                    {{-- Mensaje para usuarios bloqueados --}}
+                    <div class="my-4 bg-red-600 text-white p-2 rounded-lg shadow">Su usuario por alguna razón ha sido bloqueado.</div>
+                @else
+                    {{-- Botón para usuarios no autenticados --}}
+                    <x-jet-button class="mb-4 ml-auto mt-4 bg-trueGray-900 text-white hover:!bg-trueGray-700 hover:text-teal-50" wire:click="create_order" wire:loading.attr="disabled" wire:target="create_order" :disabled="(!$selectedShippingOption || !$shipping_cost) && $freeShipping != 1">
+                        <div wire:loading.delay wire:target="create_order">
+                            <div class="flex items-center justify-center">
+                                <!-- contenido del botón aquí -->
+                            </div>
+                        </div>
+                        Continuar
+                    </x-jet-button>
+                @endif
             @endif
-        
-            @endif
-
         </div>
+        
     </div>
 </div>

@@ -42,6 +42,7 @@ class CreateOrder extends Component
 
     public $userAuth;
     public $contactEmail;
+    public $email;
     
     
     public $rules = [
@@ -50,6 +51,7 @@ class CreateOrder extends Component
         'envio_type' => 'required',
         'references' => 'required|max:100|min:5',
         'identification' => 'required|max:15|min:5',
+        'email' => 'required|email',
         'departamento_id' => 'required',
         'municipio_id' => 'required',
         'casa' => 'required_if:envio_type,2',
@@ -60,12 +62,23 @@ class CreateOrder extends Component
    
 
     public function mount(){
-        $this->userAuth = Auth::user();
+        if (Auth::check()) {
+            $this->userAuth = Auth::user();
+            $this->contact = $this->userAuth->name;
+            $this->phone = $this->userAuth->profile ? $this->userAuth->profile->phone : '';
+            $this->email = $this->userAuth->email ?? '';
+            $this->address = $this->userAuth->profile ? $this->userAuth->profile->address : '';
+            $this->identification = $this->userAuth->profile ? $this->userAuth->profile->document_number : '';
+        } else {
+            // Define valores por defecto o maneja el caso para usuarios invitados
+            $this->userAuth = null;
+            $this->contact = '';
+            $this->phone = '';
+            $this->address = '';
+            $this->identification = '';
+        }
+        
         $this->departamentos = Departamento::all();
-        $this->contact = Auth::user()->name;
-        $this->phone = Auth::user()->profile ? Auth::user()->profile->phone : '';
-        $this->address = Auth::user()->profile ? Auth::user()->profile->address : '';
-        $this->identification = Auth::user()->profile ? Auth::user()->profile->document_number : '';
         $this->isLoading = false;
         // $this->freeShipping = Cart::content()->where('options.free_shipping', true)->count();
         $this->freeShipping = Cart::content()->contains(function ($item) {
@@ -115,9 +128,9 @@ class CreateOrder extends Component
                     ]
                 ],
                 "destination" => [
-                    'name' => Auth::user()->name,
+                    'name' => Auth::user()->name ?? $this->contact,
                     'company' => $this->contact ?? Auth::user()->name,
-                    'email' =>  Auth::user()->email,
+                    'email' => $this->email ?? Auth::user()->email,
                     'phone' =>  $this->phone ?? Auth::user()->profile->phone,
                     'street' => $this->address ?? '',
                     'number' => $this->address ?? '',
@@ -127,7 +140,7 @@ class CreateOrder extends Component
                     'country' => "CO",
                     'postalCode' => "",
                     'reference' => $this->references,
-                    'identificationNumber' => "66236890",
+                    'identificationNumber' => $this->identification,
                     "coordinates" => [
                         "latitude" => "",
                         "longitude" => ""
@@ -206,7 +219,7 @@ class CreateOrder extends Component
 
 
     public function create_order(){
-
+        // dd($this->email);
         $rules = $this->rules;
 
         if($this->envio_type == 2){
@@ -238,8 +251,13 @@ class CreateOrder extends Component
         $code_id = IDGenerator(new Orden, 'code_id', 3, 'ZON');
         $infoClient = getClientInfo();
         $orden = new Orden();
-
-        $orden->user_id = auth()->user()->id;
+        if (auth()->check()) {
+            $orden->user_id = auth()->user()->id;
+        } else {
+            $orden->user_id = 3; 
+        }
+        $orden->email = $this->email;
+        
         $orden->code_id = $code_id;
         $orden->contact = $this->contact;
         $orden->identification = $this->identification;
@@ -264,25 +282,27 @@ class CreateOrder extends Component
         $orden->payment_type = $this->payment_type;
 
         $orden->save();
-        
+        Cart::destroy();
         foreach (Cart::content() as $item) {
             discount($item);
         }
 
-        Cart::destroy();
+        
         $this->emit('showSuccessMessage', __('Orden creada con éxito. '. $orden->code_id));
         // Evia correo confirmacion al cliente
-        Mail::to($orden->user->email)->send(new PedidoMailable($orden)); 
+        if($this->email != null){
+            Mail::to( $orden->email )->send(new PedidoMailable($orden)); 
+        }
         // Evia correo confirmacion al admin
-        Mail::to([$this->contactEmail])->send(new PlacedOrderMailable($orden)); 
+        Mail::to([$this->contactEmail ?? 'gerencia@zampreonline.com'])->send(new PlacedOrderMailable($orden)); 
         
-        $this->emit('showSuccessMessage', __('Revisa tu correo electrónico para ver el detalle de la orden '.$orden->user->email));
+        $this->emit('showSuccessMessage', __('Revisa tu correo electrónico para ver el detalle de la orden '.$orden->email));
          //whatsapp notification al cliente - > activar linea
         // $orden->user->notify(new OrderProcessed($orden));
 
         // $this->emit('alert', 'success', __('Orden creada con éxito. '. $orden->code_id));
         $this->emit('showSuccessMessage', __('Orden '. $orden->code_id.''.' creada, tes estaremos llamando para confirmar el envio.'));
-
+        
         return redirect()->route('orders.resumen', $orden);
 
         //envio de notificacion indicando que se ha recibido el pedido
