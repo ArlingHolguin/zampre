@@ -1,7 +1,7 @@
 @props(['product'])
 <div class="flex w-full bg-white shadow-lg rounded-lg">
     <div class="md:w-3/12 h-56 overflow-hidden rounded-l-lg border">
-        <img src="{{ Storage::url($product->images->first()->url) }}"
+        <img src="{{ optional($product->images->first())->url ? Storage::url($product->images->first()->url) : 'https://via.placeholder.com/150' }}"
         alt="{{ $product->name }}" class="w-full h-full object-cover">
     </div>
     <div class="w-9/12  border flex flex-col p-3 justify-between">

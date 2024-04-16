@@ -13,8 +13,10 @@ class ProductController extends Controller
 {
     public function show(Product $product){
         $currenrUrl = url()->current();
-        // $firstImageUrl = $product->images->first()->url;
-        $firstImageUrl = Storage::url($product->images->first()->url);
+        $firstImage = $product->images->first();  // Intenta obtener el primer elemento de la colección
+        $firstImageUrl = $firstImage ? Storage::url($firstImage->url) : 'https://via.placeholder.com/150';
+
+        
         $keywordsJson = $product->keywords;
         $keywordsJson = trim($keywordsJson, "\"");
         $keywordsArray = json_decode($keywordsJson, true);

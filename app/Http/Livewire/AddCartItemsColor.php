@@ -22,7 +22,8 @@ class AddCartItemsColor extends Component
     public function mount(){
         
         $this->colors = $this->product->colors;        
-        $this->options['image'] = Storage::url($this->product->images->first()->url);
+        // $this->options['image'] = Storage::url($this->product->images->first()->url);
+        $this->options['image'] = optional($this->product->images->first())->url ? Storage::url($this->product->images->first()->url) : 'https://via.placeholder.com/150';
         //dimensions es un campo json en la base de datos
         $this->options['dimensions'] = ($this->product->dimensions);
         //prodcuto con envio gratis

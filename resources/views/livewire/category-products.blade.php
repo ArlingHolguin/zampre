@@ -9,7 +9,7 @@
                             <figure>
                                 {{-- {{ Storage::url($product->images->first()->url ?? 'hola.jpg')  }} --}}
                                 <img class="h-48 w-full md:w-56 object-cover object-center rounded-t-lg shadow-lg shadow-gray-100/50"
-                                    src="{{ $product->images->first() ? Storage::url($product->images->first()->url) :'' }}"
+                                    src="{{ $product->images->first() ? Storage::url($product->images->first()->url) :'https://via.placeholder.com/150' }}"
                                     alt="{{ $product->name }}">
                             </figure>
                             <div class="py-4 px-4 text-gray-600">                                

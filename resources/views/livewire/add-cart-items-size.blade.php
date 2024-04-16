@@ -10,7 +10,7 @@
             @endif
         </span> 
     </div>
-    
+        
     <div>
         <span>Talla:</span>
         <select wire:model="size_id" class="form-control w-full">

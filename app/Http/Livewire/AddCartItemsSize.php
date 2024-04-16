@@ -21,7 +21,10 @@ class AddCartItemsSize extends Component
     public function mount()
     {
         $this->sizes = $this->product->sizes;
-        $this->options['image'] = Storage::url($this->product->images->first()->url);
+        // En tu componente o método donde defines las opciones:
+        $this->options['image'] = optional($this->product->images->first())->url ? Storage::url($this->product->images->first()->url) : 'https://via.placeholder.com/150';
+
+
         $this->options['dimensions'] = ($this->product->dimensions);
         //prodcuto con envio gratis
         $this->options['free_shipping'] = $this->product->free_shipping;

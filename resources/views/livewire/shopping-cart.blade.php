@@ -1,4 +1,23 @@
 <div class="container py-8">
+    <style>
+        [wire\:loading-inline] {
+    display: inline-block;
+}
+
+/* Estilos personalizados para el modal */
+.jetstream-modal {
+    display: flex;
+    margin-top: 50px;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.jetstream-modal .modal {
+    width: 50%; /* Ajusta esto según el tamaño deseado */
+    margin: 0 auto;
+}
+    </style>
     <section class="bg-white rounded-lg shadow-lg p-6 text-trueGray-900">
         <div class="flex items-center bg-gray-100 p-2 rounded-md">
             <div>
@@ -171,4 +190,32 @@
         </div>
 
     @endif
+    @if($showJoggerModal)
+        <x-jet-dialog-modal wire:model="open">
+            <x-slot name="title" >
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold">PROMO! 😍</h1>                
+                    <x-jet-secondary-button wire:click="$toggle('open')" wire:loading.attr="disabled">
+                        x
+                    </x-jet-secondary-button>
+                </div>
+            </x-slot>
+            <x-slot name="content">
+                <div class="flex flex-col items-center justify-center">
+                    <div class="py-8 text-lg font-medium">
+                        😎 Compra Jogger Mujer + Beisbolera en tan solo $100.000.                    
+                        Agrega al carrito y disfruta de esta promoción. 😍
+                    </div>
+                    <img src="{{ asset('img/jogger.jpg') }}" alt="jogger promo">
+
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                
+                <a class="bg-orange-600 rounded-lg text-white py-2 px-6 flex justify-center items-center"
+                     href="{{ url('categorias/ropa?subcategoria=Jogger+deportivo+') }}">Ir a agregar</a>
+            </x-slot>
+        </x-jet-dialog-modal>
+    @endif
+    
 </div>
