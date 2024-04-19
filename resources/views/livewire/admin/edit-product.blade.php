@@ -187,6 +187,18 @@
                 </div>               
             </div>
         </div>
+        {{-- is comboi  --}}
+        <div class="mt-4">
+            <x-jet-label value="¿Es un combo?" />
+            <div class="flex items-center">
+                <input type="radio" id="combo_yes" value="1" wire:model="product.is_combo" class="mr-2">
+                <x-jet-label for="combo_yes" value="Sí" class="mr-4" />
+        
+                <input type="radio" id="combo_no" value="0" wire:model="product.is_combo" class="mr-2">
+                <x-jet-label for="combo_no" value="No" />
+            </div>
+            <x-jet-input-error for="product.is_combo" />
+        </div>
         <div class="flex justify-end items-center mt-4 px-2">
             <x-jet-action-message class="mr-3" on="saved">
                 Actualizado
@@ -197,7 +209,27 @@
             </x-jet-button>
         </div>
         {{-- Configuracion de stock  --}}
-        @if ($this->subcategory)        
+        @if ($product->is_combo)
+            <div>
+                <div>
+                    <select wire:model="selectedComboType">
+                        <option value="">Sleccione un combo</option>
+                        <option value="Combo x2 Adulto/Infante">Combo x2 Adulto/Infante</option>
+                        <option value="Combo x2 Adultos">Combo x2 Adultos</option>
+                        <option value="Combo x3 Adultos/Infante">Combo x3 Adultos/Infante</option>
+                        <option value="Combo x4 Todos">Combo x4 Todos</option>
+                    </select>
+                
+                    {{-- Agregar interfaces para seleccionar personas y tallas según el combo seleccionado --}}
+                
+                    <button wire:click="saveComboProperties">Guardar Configuración del Combo</button>
+                </div>
+            </div>
+            
+            
+            
+        @else
+            @if ($this->subcategory)        
             @if (!$this->subcategory->color && !$this->subcategory->size)
                 <div class="bg-white px-8 py-4 rounded mt-4">
                     <x-jet-label value="Cantidad*" />
@@ -209,10 +241,10 @@
                     @livewire('admin.size-product', ['product' => $product], key('size-product-'.$product->id))
                 @elseif ($this->subcategory->color)
                     @livewire('admin.color-product', ['product' => $product], key('color-product-'.$product->id))
-
-            @endif  
-
-            @endif
+            @endif 
+    @endif
+            
+        @endif
         <div class="flex">
             <div wire:loading wire:target="save" class="mr-4 font-black ml-auto">
                 Actualizando ....

@@ -20,11 +20,13 @@ class Product extends Model
     protected $casts = [
         'dimensions' => 'array',
         'keywords' => 'array',
+        'is_combo' => 'boolean',
+        'combo_properties' => 'array'
         // 'price' => 'integer',
         // 'price_discount' => 'integer',
         // 'price_discount_percent' => 'integer',
     ];
-
+    
     //Accesores Stock
     public function getStockAttribute(){
         

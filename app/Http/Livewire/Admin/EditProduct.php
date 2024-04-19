@@ -36,6 +36,12 @@ class EditProduct extends Component
     public $price;
     public $price_discount_percent;
 
+    public $is_combo;
+    public $selectedComboType = 'Combo x2'; // Valor predeterminado
+    public $comboProperties = []; 
+
+    public $selectedSizes = [];
+
     protected $listeners = [
         'refresh'
     ];
@@ -56,6 +62,7 @@ class EditProduct extends Component
         'product.dimensions.length' => 'nullable|numeric|digits_between:0,5',
         'product.dimensions.weight' => 'nullable|numeric|digits_between:0,5',
         'product.quantity' => 'required|numeric|digits_between:0,5',
+        'product.is_combo' => 'required|boolean',
 
 
     ];
@@ -63,6 +70,9 @@ class EditProduct extends Component
     public function mount(Product $product)
     {
         $this->product = $product;
+        $this->is_combo = $product->is_combo;
+        $this->comboProperties = $product->combo_properties ?? $this->defaultComboProperties();
+        // dd($this->is_combo);
         $this->categories = Category::all();
         $this->price_discount_percent = $product->price_discount_percent;
 
@@ -80,6 +90,36 @@ class EditProduct extends Component
             $this->product->images = collect();
         }
     }
+
+    public function defaultComboProperties()
+    {
+        // Retorna una estructura básica de las propiedades del combo
+        return [
+            'type' => $this->selectedComboType,
+            'groups' => [
+                'adultos' => [
+                    'personas' => ['Mujer', 'Hombre'],
+                    'tallas' => ['S', 'M', 'L', 'XL']
+                ],
+                'infantes' => [
+                    'personas' => ['Niño', 'Niña'],
+                    'tallas' => [4, 6, 8, 10, 12, 14]
+                ]
+            ]
+        ];
+    }
+
+    public function saveComboProperties()
+    {
+        $this->comboProperties['type'] = $this->selectedComboType; // Asegura que el tipo actualizado esté guardado
+        $this->product->combo_properties = $this->comboProperties;
+        $this->product->save();
+
+        $this->emit('saved');
+    }
+
+    
+    
 
     public function updatedCategoryId($value)
     {
@@ -141,26 +181,18 @@ class EditProduct extends Component
 
     public function updateProduct()
     {
-        // $rules = $this->rules;
 
-        // $rules['product.slug'] = 'required|unique:products,slug,' . $this->product->id;
-
-        // if($this->subcategory_id){
-        //     if(!$this->subcategory->color && !$this->subcategory->color){
-        //         $rules['product.quantity'] = 'required|numeric|digits_between:0,5';
-        //     }
-        // }
-        // $this->validate($rules);
-
+        // dd($this->product); 
         if (!is_null($this->price_discount_percent) && $this->price_discount_percent > 0) {
             // Calcular el precio con descuento
             $discountAmount = $this->product->price * ($this->price_discount_percent / 100);
             $this->product->price_discount = $this->product->price - $discountAmount;
         }
         
+        
         $this->product->keywords = json_encode($this->keywords);
         $this->product->category_id = $this->category_id;
-        
+        // $this->product->is_combo = $this->is_combo;
         $this->product->save();
         $this->emit('saved');
     }

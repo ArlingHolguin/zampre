@@ -5,7 +5,12 @@
             <div class="">
                 <div class="flexslider">
                     <ul class="slides">
-                        
+                        @foreach ( $product->images as $image)
+                            <li data-thumb="{{ Storage::url($image->url) ? Storage::url($image->url) : '' }}">
+                                <img src="{{ Storage::url($image->url) ? Storage::url($image->url) : ''  }}" alt="{{ $product->name}}"/>
+                            </li> 
+                        @endforeach
+{{--                         
                         @forelse ($product->images as $image)
                             <li data-thumb="{{ Storage::url($image->url) ? Storage::url($image->url) : '' }}">
                                 <img src="{{ $product->images->isNotEmpty() ? Storage::url($product->images->first()->url) : 'https://via.placeholder.com/150' }}" alt="{{ $product->name }}" />
@@ -15,7 +20,7 @@
                         <li data-thumb="https://via.placeholder.com/150">
                             <img src="https://via.placeholder.com/150" alt="No image available" />
                         </li>                  
-                        @endforelse
+                        @endforelse --}}
                      
                     </ul>
                   </div>
